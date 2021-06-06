@@ -25,7 +25,7 @@ To define your own element, simply use the `<element>` tag:
 
 The best practice is to define elements in their own file, so that
 they can be imported into the scope using an
-[<include src=".." />](Directive:-include.md) tag:
+[<include src=".." />](Directive-include.md) tag:
 
 ```html
 <extend src="layout.jl">
