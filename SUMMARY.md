@@ -1,10 +1,11 @@
-* Migration from Angel 2.x.x to Angel3
-  * [Rationale - Why a new Version?](migration/rationale.md)
-  * [Framework Changelog](https://github.com/angel-dart/framework/blob/master/CHANGELOG.md)
-  * [3.0.0 Migration Guide](migration/migration-guide-3.md)
-* Migration from Angel 1.x.x to 2.x.x
-  * [Framework Changelog](https://github.com/dukefirehawk/angel/blob/sdk-2.10.x/packages/framework/CHANGELOG.md)
-  * [2.0.0 Migration Guide](migration/migration-guide.md)
+* Migration
+  * Angel 2.x.x to Angel3
+    * [Rationale - Why a new Version?](migration/rationale.md)
+    * [Framework Changelog](https://github.com/angel-dart/framework/blob/master/CHANGELOG.md)
+    * [3.0.0 Migration Guide](migration/migration-guide-3.md)
+  * Angel 1.x.x to 2.x.x
+    * [Framework Changelog](https://github.com/dukefirehawk/angel/blob/sdk-2.10.x/packages/framework/CHANGELOG.md)
+    * [2.0.0 Migration Guide](migration/migration-guide.md)
 * ORM
   * [About](orm/about.md)
   * [Basic Functionality](orm/basic-functionality.md)
