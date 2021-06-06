@@ -1,4 +1,4 @@
-# Installation
+# Angel CLI Setup
 
 * [Getting Started](installation.md#getting-started)
   * [Installation](installation.md#installation)
@@ -49,5 +49,5 @@ And there you have it - you've created an Angel application!
 
 ## Next Up...
 
-Continue reading to learn about [requests and responses](requests-and-responses.md).
+Continue reading to learn about [Basic Routing](basic-routing.md).
 

@@ -1,4 +1,4 @@
-# Without-the-Boilerplate
+# Minimal Setup
 
 It's very easy to setup a bare-bones Angel server.
 
@@ -42,4 +42,10 @@ That's it! Your server is ready to serve requests. You can easily start it from 
 ```text
 dart bin/main.dart
 ```
+
+## Next Up...
+
+Continue reading to learn about [Basic Routing](basic-routing.md).
+
+
 

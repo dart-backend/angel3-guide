@@ -116,3 +116,7 @@ However, the following alternatives exist:
 * Generation via `package:angel_container_generator`
 * Creating an instance of `StaticReflector`
 * Manually implementing the `Reflector` interface (cumbersome; not recommended)
+
+## Next Up...
+
+Continue reading to learn about [Middleware](middleware.md).

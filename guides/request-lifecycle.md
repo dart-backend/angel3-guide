@@ -16,3 +16,6 @@ Requests in the Angel framework go through a relatively complex lifecycle, and t
 
 If at any point an error occurs, Angel will catch it. See the [error handling](error-handling.md) docs for more.
 
+## Next Up...
+
+Continue reading to learn about [Dependency Injection](dependency-injection.md).

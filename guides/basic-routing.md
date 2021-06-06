@@ -73,14 +73,14 @@ app.get(r'/number/:num([0-9]+(\.[0-9])?)', ...);
 You can `mount` routers, or `use` entire sub-apps.
 
 ```dart
-var app = new Angel();
+var app = Angel();
 app.get('/', 'Hello!');
 
-var subRouter = new Router()..get('/', 'Subroute');
+var subRouter = Router()..get('/', 'Subroute');
 app.mount('/sub', subApp);
 // Now, you can visit /sub and receive the message "Subroute"
 
-var subApp = new Angel()..get('/hello', 'world');
+var subApp = Angel()..get('/hello', 'world');
 app.use('/api', subApp);
 
 // GET /api/hello returns "world"
@@ -100,9 +100,9 @@ app.group('/user/:id', (router) {
 
 ## Extended Documentation
 
-For more documentation on the router, see [its repository](https://github.com/angel-dart/route). [`package:angel_route`](https://pub.dartlang.org/packages/angel_route) has no `dart:io` or `dart:mirrors` dependency, and it also supports browser use \(both hash and push state\).
+For more documentation on the router, see [its repository](https://github.com/dukefirehawk/angel/tree/master/packages/route). [`package:angel3_route`](https://pub.dartlang.org/packages/angel3_route) has no `dart:io` or `dart:mirrors` dependency, and it also supports browser use \(both hash and push state\).
 
 ## Next Up...
 
-Learn how [middleware](middleware.md) let you reuse functionality across your entire routing setup.
+Learn how [Requests and Responses](requests-and-responses.md) let you reuse functionality across your entire routing setup.
 

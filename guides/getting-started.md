@@ -324,7 +324,7 @@ The choice is now yours: either continue reading the
 other guides posted on this site, or tinker around and
 learn the ropes yourself.
 
-You can find `angel_*` packages on the Pub site, and
+You can find `angel3_*` packages on the Pub site, and
 read the documentation found in their
 respective `README` files:
 
@@ -334,3 +334,8 @@ Don't forget that for discussion and support, you can either
 file a Github issue, or join the Gitter chat:
 
 https://gitter.im/angel_dart/discussion
+
+## Next Up...
+
+Continue reading to learn about [Basic Routing](basic-routing.md).
+
