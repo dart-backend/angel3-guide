@@ -1,6 +1,9 @@
-* Migration from Angel 1.1.x
+* Migration from Angel 2.x.x to Angel3
   * [Rationale - Why a new Version?](migration/rationale.md)
   * [Framework Changelog](https://github.com/angel-dart/framework/blob/master/CHANGELOG.md)
+  * [3.0.0 Migration Guide](migration/migration-guide-3.md)
+* Migration from Angel 1.x.x to 2.x.x
+  * [Framework Changelog](https://github.com/dukefirehawk/angel/blob/sdk-2.10.x/packages/framework/CHANGELOG.md)
   * [2.0.0 Migration Guide](migration/migration-guide.md)
 * ORM
   * [About](orm/about.md)
@@ -60,12 +63,12 @@
         * [Basics](front-end/jael/Basics.md)
         * [Custom Elements](front-end/jael/Custom-Elements.md)
         * [Strict Resolution](front-end/jael/Strict-Resolution.md)
-        * [Directive: `declare`](front-end/jael/Directive:-declare.md)
-        * [Directive: `for-each`](front-end/jael/Directive:-for-each.md)
-        * [Directive: `extend`](front-end/jael/Directive:-extend.md)
-        * [Directive: `if`](front-end/jael/Directive:-if.md)
-        * [Directive: `include`](front-end/jael/Directive:-include.md)
-        * [Directive: `switch`](front-end/jael/Directive:-switch.md)
+        * [Directive: `declare`](front-end/jael/Directive-declare.md)
+        * [Directive: `for-each`](front-end/jael/Directive-for-each.md)
+        * [Directive: `extend`](front-end/jael/Directive-extend.md)
+        * [Directive: `if`](front-end/jael/Directive-if.md)
+        * [Directive: `include`](front-end/jael/Directive-include.md)
+        * [Directive: `switch`](front-end/jael/Directive-switch.md)
     * [`compiled_mustache`-based engine](https://github.com/thislooksfun/angel_compiled_mustache)
     * [`html_builder`-based engine](https://github.com/angel-dart/html)
     * [Markdown template engine](https://github.com/angel-dart/markdown)

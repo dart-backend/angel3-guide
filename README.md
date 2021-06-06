@@ -1,15 +1,18 @@
 # README
+[![Angel 3 Framework](./logo3.png)](https://github.com/dukefirehawk/angel)
 
-[![The Angel Framework](https://angel-dart.github.io/assets/images/logo.png)](https://angel-dart.github.io)
+<!--- (https://angel-dart.dev) -->
+[![version](https://img.shields.io/badge/pub-v4.0.0-brightgreen)](https://pub.dartlang.org/packages/framework)
+[![Null Safety](https://img.shields.io/badge/null-safety-brightgreen)](https://dart.dev/null-safety)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/angel_dart/discussion)
 
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/angel_dart/discussion) [![Pub](https://img.shields.io/pub/v/angel_framework.svg)](https://pub.dartlang.org/packages/angel_framework) [![Build status](https://travis-ci.org/angel-dart/framework.svg?branch=master)](https://travis-ci.org/angel-dart/framework) ![License](https://img.shields.io/github/license/angel-dart/framework.svg)
+[![License](https://img.shields.io/github/license/dukefirehawk/angel)](https://github.com/dukefirehawk/angel/LICENSE)
 
 
-This is the documentation for [Angel](https://angel-dart.dev), a backend framework in the Dart language.
+This is the documentation for [Angel3](https://github.com/dukefirehawk), a backend framework in the Dart language.
 This website consists of multiple guides and pages about features within the framework, as well
 as external links to YouTube videos, Pub packages, and Github repositories providing supplemental information.
 
 New to Angel? Read the getting started guide, and you'll be well on your way:
 
-https://docs.angel-dart.dev/v/2.x/guides/getting-started
-
+https://angel3-docs.dukefirehawk.com/guides/getting-started
