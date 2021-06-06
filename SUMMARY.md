@@ -6,13 +6,6 @@
   * Angel 1.x.x to 2.x.x
     * [Framework Changelog](https://github.com/dukefirehawk/angel/blob/sdk-2.10.x/packages/framework/CHANGELOG.md)
     * [2.0.0 Migration Guide](migration/migration-guide.md)
-* ORM
-  * [About](orm/about.md)
-  * [Basic Functionality](orm/basic-functionality.md)
-  * [Relations](orm/relations.md)
-  * [Migrations](orm/migrations.md)
-  * [NoSQL](orm/nosql.md)
-  * [PostgreSQL](orm/postgresql.md)
 * Guides 
     * [Getting Started](guides/getting-started.md)
     * [Angel CLI Setup](guides/cli-setup.md)
@@ -33,6 +26,14 @@
     * [Pattern Matching and `Parameter`](guides/pattern-matching.md)
     * [Command Line](guides/cli.md)
     * [Writing a Plugin](guides/writing-a-plugin.md)
+    * ORM
+      * [About](orm/about.md)
+      * [Basic Functionality](orm/basic-functionality.md)
+      * [Relations](orm/relations.md)
+      * [Migrations](orm/migrations.md)
+      * [NoSQL](orm/nosql.md)
+      * [PostgreSQL](orm/postgresql.md)
+
 * Resources
   * [Dependency Injection Patterns](https://thosakwe.com/dependency-injection-patterns-in-angel-2/)
   * [Example Projects](https://github.com/angel-dart/examples-v2)
