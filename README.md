@@ -12,3 +12,4 @@ as external links to YouTube videos, Pub packages, and Github repositories provi
 New to Angel? Read the getting started guide, and you'll be well on your way:
 
 https://docs.angel-dart.dev/v/2.x/guides/getting-started
+
