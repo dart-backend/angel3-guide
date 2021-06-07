@@ -44,8 +44,8 @@ Finally, your plugin should expose common options in a simple way. For example, 
 This can greatly aid readability, as there is simply less text to read in the most common cases.
 
 ```dart
-main() {
-  var app = new Angel();
+void main() {
+  var app = Angel();
 
   // Calling gzip()
   app.responseFinalizers.add(gzip());

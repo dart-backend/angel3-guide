@@ -9,17 +9,17 @@
 
 Just like `res.render` in Express, Angel's `ResponseContext` exposes a `Future` called `render`. This invokes whichever function is assigned to your server's `viewGenerator`.
 
-There is a Mustache templating plug-in for Angel available: [https://github.com/angel-dart/mustache](https://github.com/angel-dart/mustache)
+There is a Mustache templating plug-in for Angel available: [https://github.com/dukefirehawk/angel/tree/master/packages/mustache](https://github.com/dukefirehawk/angel/tree/master/packages/mustache)
 
-There is also [Jael](https://github.com/angel-dart/jael), one of the few actively-developed HTML templating engines for Dart.
+There is also [Jael](https://github.com/dukefirehawk/angel/tree/master/packages/jael3), one of the few actively-developed HTML templating engines for Dart.
 
-Angel support for Jael is provided through [`package:angel_jael`](https://pub.dartlang.org/packages/angel_jael).
+Angel support for Jael is provided through [`package:angel_jael`](https://github.com/dukefirehawk/angel/tree/master/packages/angel_jael).
 
 Another is Jinja2, which was recently ported by to Dart by
 [Olzhas Suleimen](https://github.com/ykmnkmi/jinja.dart).
 
 Angel support for Jinja2 can be found here:
-https://pub.dartlang.org/packages/angel_jinja
+https://github.com/dukefirehawk/angel/tree/master/packages/angel_jinja
 
 ### Example
 
@@ -40,7 +40,7 @@ A templating plug-in can assign one of these to `app.viewGenerator` to set itsel
 
 ```dart
 import 'dart:io';
-import 'package:angel_framework/angel_framework.dart';
+import 'package:angel3_framework/angel3_framework.dart';
 
 Future<void> plugin(Angel app) async {
   app.viewGenerator = (String path, [Map data]) async {
@@ -48,8 +48,8 @@ Future<void> plugin(Angel app) async {
   };
 }
 
-main() async {
-  var app = new Angel();
+void main() async {
+  var app = Angel();
   await app.configure(plugin);
   await app.startServer();
 }
@@ -57,6 +57,6 @@ main() async {
 
 ## Next Up...
 
-1. Explore Angel's isomorphic [client library](https://github.com/angel-dart/client).
+1. Explore Angel's isomorphic [client library](https://github.com/dukefirehawk/angel/tree/master/packages/client).
 2. Find out how to [test Angel applications](testing.md).
 

@@ -10,13 +10,13 @@
 
 ## Controllers
 
-Angel has built-in support for controllers. This is yet another way to define routes in a manageable group, and can be leveraged to structure your application in the [MVC](https://en.wikipedia.org/wiki/Model–view–controller) format. You can also use the [`group()`](basic-routing.md#route-groups) method of any [`Router`](https://www.dartdocs.org/documentation/angel_common/latest/angel_framework/Router-class.html).
+Angel has built-in support for controllers. This is yet another way to define routes in a manageable group, and can be leveraged to structure your application in the [MVC](https://en.wikipedia.org/wiki/Model–view–controller) format. You can also use the [`group()`](basic-routing.md#route-groups) method of any [`Router`](https://pub.dev/documentation/angel3_route/latest/angel3_route/Router-class.html).
 
 The metadata on controller classes is processed via reflection _only once_, at startup. Do not believe that your controllers will be crippled by reflection during request handling, because that possibility is eliminated by [pre-injecting dependencies](dependency-injection.md).
 
 ```dart
-import 'package:angel_framework/angel_framework.dart';
-import 'package:angel_container/mirrors.dart';
+import 'package:angel3_framework/angel3_framework.dart';
+import 'package:angel3_container/mirrors.dart';
 
 @Expose("/todos")
 class TodoController extends Controller {
@@ -32,12 +32,12 @@ class TodoController extends Controller {
 }
 
 main() async {
-  Angel app = new Angel(reflector: MirrorsReflector());
-  await app.configure(new TodoController().configureServer);
+  Angel app = Angel(reflector: MirrorsReflector());
+  await app.configure(TodoController().configureServer);
 }
 ```
 
-Rather than extending from `Routable`, controllers act as [plugins](https://github.com/angel-dart/angel/wiki/Using-Plug-ins) when called. This pseudo-plugin will wire all your routes for you.
+Rather than extending from `Routable`, controllers act as [plugins](using-plugins.md) when called. This pseudo-plugin will wire all your routes for you.
 
 ### @Expose\(\)
 
@@ -125,8 +125,8 @@ class UserController extends Controller {
 }
 
 main() async {
-  Angel app = new Angel();
-  await app.configure(new UserController().configureServer);
+  Angel app = Angel();
+  await app.configure(UserController().configureServer);
 }
 ```
 

@@ -9,16 +9,16 @@
 
 ## Testing
 
-Dart already has fantastic testing support, through a library of [testing helpers](https://github.com/angel-dart/test) that will make test writing faster. The following functions are exported by [`package:angel_test`](https://github.com/angel-dart/test), and will make your testing much easier.
+Dart already has fantastic testing support, through a library of [testing helpers](https://github.com/dukefirehawk/angel/tree/master/packages/test) that will make test writing faster. The following functions are exported by [`package:angel3_test`](https://github.com/dukefirehawk/angel/tree/master/packages/test), and will make your testing much easier.
 
 ### connectTo
 
-[Full definition](https://www.dartdocs.org/documentation/angel_test/latest/angel_test/connectTo.html)
+[Full definition](https://pub.dev/documentation/angel3_test/latest/angel3_test/connectTo.html)
 
-This function will start `app` on an available port, and return a `TestClient` instance \(based on [`package:angel_client`](https://github.com/angel-dart/client)\) configured to send requests to the server. The client also supports session manipulation.
+This function will start `app` on an available port, and return a `TestClient` instance \(based on [`package:angel3_client`](https://github.com/dukefirehawk/angel/tree/master/packages/client)\) configured to send requests to the server. The client also supports session manipulation.
 
 ```dart
-main() {
+void main() {
   TestClient client;
 
   setUp(() async {
@@ -46,10 +46,10 @@ A `Matcher` that asserts the given `http.Response` has the given `status` code.
 
 ### More Matchers
 
-The complete set of `angel_test` Matchers can be found [here](https://www.dartdocs.org/documentation/angel_test/latest/angel_test/angel_test-library.html).
+The complete set of `angel_test` Matchers can be found [here](https://pub.dev/documentation/angel3_test/latest/angel3_test/angel_test-library.html).
 
 ## Next Up...
 
 1. Find out how to [handle errors](error-handling.md) in an Angel application.
-2. Learn how to use the handy [Angel CLI](https://github.com/angel-dart/cli).
+2. Learn how to use the handy [Angel CLI](https://github.com/dukefirehawk/angel3-cli).
 

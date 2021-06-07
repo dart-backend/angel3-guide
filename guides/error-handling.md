@@ -10,7 +10,7 @@ Error handling is one of the most important concerns in building Web application
 ```dart
 app.get('/this-page-does-not-exist', (req, res) async {
   // 404 Not Found
-  throw new AngelHttpException.notFound();
+  throw AngelHttpException.notFound();
 });
 ```
 

@@ -1,4 +1,4 @@
-PostgreSQL support is provided by way of `package:angel_orm_postgres`.
+PostgreSQL support is provided by way of `package:angel3_orm_postgres`.
 The `PostgreSQLExecutor` implements `QueryExecutor`, and takes care of
 running prepared queries, and passing values to the database server.
 

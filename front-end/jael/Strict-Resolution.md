@@ -9,7 +9,7 @@ considerably less control over the flow of data and type information. Functional
 like type checks, which are manageable in Dart, are both unintuitive and verbose in a markup language.
 
 To compensate, Jael can enable or disable what can be referred to as *strict resolution*.
-`package:angel_jael` by default disables strict resolution, and
+`package:angel3_jael` by default disables strict resolution, and
 `strictResolution` is available as a parameter to both the
 `jael` function in Angel, and the `Render()` constructor in Jael.
 

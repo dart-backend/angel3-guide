@@ -1,8 +1,8 @@
 # The Basics
 
-* [Installation & Setup](installation.md)
-  * [Without the Boilerplate](without-the-boilerplate.md)
-* [Requests & Responses](https://github.com/angel-dart/gitbook/tree/b0cc75e0fd287d121f47c7c80c221c69640a37b3/the-basics/requests-&-responses.md)
+* [Getting Started](getting-started.md)
+* [Minimal Setup](minimal-setup.md)
+* [Requests & Responses](requests-and-responses.md)
 * [Basic Routing](basic-routing.md)
 * [Middleware](middleware.md)
 * [Controllers](controllers.md)

@@ -1,9 +1,9 @@
 # Angel CLI Setup
 
-* [Getting Started](installation.md#getting-started)
-  * [Installation](installation.md#installation)
-    * [Prerequisites](installation.md#prequisites)
-* [Next Up...](installation.md#next-up)
+* [Getting Started](cli-setup.md#getting-started)
+  * [Installation](cli-setup.md#installation)
+    * [Prerequisites](cli-setup.md#prequisites)
+* [Next Up...](cli-setup.md#next-up)
 
 ## Getting Started
 
@@ -29,7 +29,7 @@ Run:
 $ angel init hello
 ```
 
-This will create a folder called `hello`, and copy the [Angel boilerplate](https://github.com/angel-dart/angel) into it. If you wanted to initialize a project within the current directory, instead of making new one, you could have run:
+This will create a folder called `hello`, and copy the [Angel boilerplate](https://github.com/dukefirehawk/boilerplates) into it. If you wanted to initialize a project within the current directory, instead of making new one, you could have run:
 
 ```bash
 $ angel init

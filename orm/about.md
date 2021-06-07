@@ -35,7 +35,7 @@ abstract class _Pokemon extends Model {
 }
 ```
 
-`package:angel_orm_generator` will generate code that lets
+`package:angel3_orm_generator` will generate code that lets
 you do the following:
 
 ```dart
@@ -53,6 +53,6 @@ This section of the Angel documentation consists mostly of
 guides, rather than technical documentation.
 
 For more in-depth documentation, see the actual
-`angel_orm` project on Github:
+`angel3_orm` project on Github:
 
-https://github.com/angel-dart/orm
+https://github.com/dukefirehawk/angel/tree/master/packages/orm

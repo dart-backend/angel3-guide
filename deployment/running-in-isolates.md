@@ -3,7 +3,7 @@ How to run Angel in multiple isolates.
 The concept is pretty simple. A normal server would look like this:
 
 ```dart
-var app = new Angel();
+var app = Angel();
 ```
 
 If you use the `Angel.custom` constructor, you can provide a custom `ServerGenerator`, which is
@@ -30,9 +30,9 @@ To run in multiple isolates, the concept is simple as well:
 import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
-import 'package:angel_framework/angel_framework.dart';
+import 'package:angel3_framework/angel3_framework.dart';
 
-main(List<String> args) async {
+void main(List<String> args) async {
   int concurrency = Platform.numberOfProcessors;
 
   // Start child isolates...
@@ -46,8 +46,8 @@ main(List<String> args) async {
 
 void serverMain(int id) {
   // Start shared!!!
-  var app = new Angel();
-  var http = new AngelHttp.custom(app, startShared);
+  var app = Angel();
+  var http = AngelHttp.custom(app, startShared);
   
   app.get('/json', () => {'hello': 'world'});
 

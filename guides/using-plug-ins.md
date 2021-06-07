@@ -2,7 +2,7 @@
 
 * [Using Plug-ins](using-plug-ins.md#using-plug-ins)
   * [Execution Order](using-plug-ins.md#execution-order)
-  * [Writing a Plug-in](https://github.com/angel-dart/angel/wiki/Writing-a-Plugin)
+  * [Writing a Plug-in](writing-a-plugin.md)
 * [Next Up...](using-plug-ins.md#next-up)
 
 ## Using Plug-ins
@@ -19,14 +19,14 @@ As a convention, Angel plug-ins should be hooked up **before** the call to `star
 
 ```dart
 import 'dart:io';
-import 'package:angel_framework/angel_framework';
+import 'package:angel3_framework/angel3_framework';
 
 plugin(Angel app) async {
   print("Do stuff here");
 }
 
-main() async {
-  Angel app = new Angel();
+void main() async {
+  Angel app = Angel();
   await app.configure(plugin);
   await app.startServer();
 }
@@ -35,7 +35,7 @@ main() async {
 ### Execution Order
 
 Plugins are usually immediately invoked by `app.configure()`. However, you may run into certain plug-ins
-that depend on other facilities already being available, or all of your [services](ervice-basics.md) already being mounted. You can set aside a plug-in to be run just before server startupby adding it to `app.startupHooks`, instead of directly calling `app.configure()`.
+that depend on other facilities already being available, or all of your [services](service-basics.md) already being mounted. You can set aside a plug-in to be run just before server startupby adding it to `app.startupHooks`, instead of directly calling `app.configure()`.
 
 ```dart
 app.startupHooks.addAll([

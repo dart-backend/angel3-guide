@@ -4,7 +4,7 @@ Angel can optionally run in "production mode," where several optimizations are a
 
 Production mode is considered a global setting.
 
-`angel_configuration` will load a `config/production.yaml` file to read configuration.
+`angel3_configuration` will load a `config/production.yaml` file to read configuration.
 
 To run your application in production mode, set `ANGEL_ENV` in your environment to `production`. If you are writing a plug-in with production mode-specific code, query its value as follows:
 

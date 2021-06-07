@@ -1,6 +1,6 @@
 # Dependency-Injection
 
-Angel uses a [container hierarchy](https://github.com/angel-dart/container) for DI.
+Angel uses a [container hierarchy](https://github.com/dukefirehawk/angel/tree/master/packages/container) for DI.
 Dependency injection makes it easier to build applications with multiple moving parts, because logic can be contained in one location and reused at another place in your application.
 
 ## Adding a Singleton
@@ -31,7 +31,7 @@ var collection = db.collection('pets');
 ```
 
 ## In Routes and Controllers
-In Angel 2.0, by wrapping a function in a call to `ioc`, you can automatically
+In Angel, by wrapping a function in a call to `ioc`, you can automatically
 inject the dependencies of any route handler.
 
 ```dart
@@ -83,7 +83,7 @@ class MyController {
   login() => auth.authenticate('local');
 }
 
-main() async {
+void main() async {
   // At some point in your application, register necessary dependencies as singletons...
   app.container.registerSingleton(auth);
   app.container.registerSingleton(db);
@@ -109,7 +109,7 @@ The following use cases require reflection:
 * Use of dependency injection into **constructors**, whether in controllers or plain `container.make` calls
 * Use of the `ioc` function in any route
 
-The `MirrorsReflector` from `package:angel_container/mirrors.dart` is by far the most convenient pattern,
+The `MirrorsReflector` from `package:angel3_container/mirrors.dart` is by far the most convenient pattern,
 so use it if possible.
 
 However, the following alternatives exist:

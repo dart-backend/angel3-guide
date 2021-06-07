@@ -1,6 +1,6 @@
 # Angel CLI
 
-The [Angel CLI](https://github.com/angel-dart/cli) is a friendly
+The [Angel CLI](https://github.com/dukefirehawk/angel3-cli) is a friendly
 command line tool enabling quick scaffolding of common project
 constructs.
 
@@ -32,7 +32,7 @@ You'll be ready to go after this!
 
 ### Project Files
 Use `angel make` to scaffold common Dart files:
-*  `angel make service` - Generate an in-memory, MongoDB, RethinkDB, file-based, or other [service](../services/service-basics.md).
+*  `angel make service` - Generate an in-memory, MongoDB, RethinkDB, file-based, or other [service](service-basics.md).
 * `angel make test`
 * `angel make plugin`
 * `angel make model`
@@ -49,3 +49,4 @@ To rename your project, and fix all references, run:
 ```bash
 $ angel rename <new-name>
 ```
+

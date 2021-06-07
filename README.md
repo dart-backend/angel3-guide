@@ -9,7 +9,7 @@
 [![License](https://img.shields.io/github/license/dukefirehawk/angel)](https://github.com/dukefirehawk/angel/LICENSE)
 
 
-This is the documentation for [Angel3](https://github.com/dukefirehawk), a backend framework in the Dart language.
+This is the documentation for [Angel3](https://github.com/dukefirehawk/angel), a backend framework in the Dart language.
 This website consists of multiple guides and pages about features within the framework, as well
 as external links to YouTube videos, Pub packages, and Github repositories providing supplemental information.
 

@@ -1,13 +1,13 @@
 # Getting Started
 In this first guide, we will:
-* Download the `angel_framework` package from Pub.
+* Download the `angel3_framework` package from Pub.
 * Launch an `AngelHttp` server.
 * Add some basic routes to an app.
 * Add a 404 error handler.
 
 The source code for this example can be found here:
 
-https://github.com/angel-dart/examples-v2/tree/master/docs_examples/getting_started
+https://github.com/dukefirehawk/angel3-examples/tree/master/docs_examples/getting_started
 
 # First Steps
 This tutorial relies on the terminal/command-line, so if
@@ -17,7 +17,7 @@ copy/paste the snippets found on this page.
 If you have not yet installed the Dart SDK, then it is
 required that you do so before continuing:
 
-https://www.dartlang.org/tools/sdk#install
+https://dart.dev/get-dart
 
 In addition, the `curl` tool will be used to send requests
 to our server:
@@ -27,8 +27,6 @@ https://curl.haxx.se/download.html
 Also, you will need to have the Dart SDK in your
 `PATH` environment variable, so that the `dart` and `pub`
 executables can be found from your command line:
-
-https://www.java.com/en/download/help/path.xml
 
 Finally, note that some steps will mention Unix-specific
 programs, like `nano`. Windows users should instead use
@@ -50,17 +48,17 @@ following contents:
 ```yaml
 name: hello_angel
 dependencies:
-    angel_framework: ^2.0.0
+    angel3_framework: ^4.0.0
 ```
 
 Now, just run `pub get`, which will install the
-`angel_framework` library, and its dependencies:
+`angel3_framework` library, and its dependencies:
 
 ```
 Resolving dependencies... (3.3s)
-+ angel_container 1.0.0
-+ angel_framework 2.0.0
-+ angel_http_exception 1.0.0+3
++ angel3_container 3.0.0
++ angel3_framework 4.0.0
++ angel3_http_exception 3.0.0
 (... more output omitted)
 Changed 33 dependencies!
 ```
@@ -83,10 +81,10 @@ hello_angel
 Add the following to `bin/main.dart`:
 
 ```dart
-import 'package:angel_framework/angel_framework.dart';
-import 'package:angel_framework/http.dart';
+import 'package:angel3_framework/angel3_framework.dart';
+import 'package:angel3_framework/http.dart';
 
-main() async {
+void main() async {
     var app = Angel();
     var http = AngelHttp(app);
     await http.startServer('localhost', 3000);
@@ -127,8 +125,8 @@ app.get('/', (req, res) => res.write('Hello, world!'));
 `bin/main.dart` should now look like the following:
 
 ```dart
-import 'package:angel_framework/angel_framework.dart';
-import 'package:angel_framework/http.dart';
+import 'package:angel3_framework/angel3_framework.dart';
+import 'package:angel3_framework/http.dart';
 
 main() async {
     var app = Angel();
@@ -328,7 +326,7 @@ You can find `angel3_*` packages on the Pub site, and
 read the documentation found in their
 respective `README` files:
 
-https://pub.dartlang.org/packages?q=dependency%3Aangel_framework
+https://pub.dev/packages?q=dependency%3Aangel3_framework
 
 Don't forget that for discussion and support, you can either
 file a Github issue, or join the Gitter chat:
