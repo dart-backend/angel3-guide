@@ -1,5 +1,5 @@
 Before starting with the ORM, it is highly recommended to familiar one's self with
-`package:angel_serialize`, as it is the foundation for `package:angel_orm`:
+`package:angel3_serialize`, as it is the foundation for `package:angel3_orm`:
 
 https://github.com/dukefirehawk/angel/tree/master/packages/serialize
 

@@ -1,0 +1,6 @@
+* [Home](https://github.com/angel-dart/auth/wiki)
+* [Strategies](https://github.com/angel-dart/auth/wiki/Strategies)
+  * [Local](https://github.com/angel-dart/auth/wiki/Local-Auth)
+  * [Google OAuth2](https://github.com/angel-dart/auth_google)
+  * [General OAuth2](https://github.com/angel-dart/auth_oauth2)
+  * [Twitter](https://github.com/angel-dart/auth_twitter)

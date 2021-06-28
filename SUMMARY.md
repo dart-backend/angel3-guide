@@ -33,7 +33,12 @@
       * [Migrations](orm/migrations.md)
       * [NoSQL](orm/nosql.md)
       * [PostgreSQL](orm/postgresql.md)
-
+    * Authentication
+      * [About](auth/about.md)
+      * [Strategies](auth/strategies.md)
+      * [Local](auth/local-auth.md)
+      * [OAuth2](https://github.com/dukefirehawk/angel/packages/auth_oauth2)
+      * [Twitter](https://github.com/dukefirehawk/angel/packages/auth_twitter)
 * Resources
   * [Dependency Injection Patterns](https://thosakwe.com/dependency-injection-patterns-in-angel-2/)
   * [Example Projects](https://github.com/dukefirehawk/angel3-examples)

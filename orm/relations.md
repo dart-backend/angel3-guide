@@ -2,6 +2,7 @@ Relational modeling is one of the most commonly-used features of sql databases -
 after all, it *is* the namesake of the term "relational database."
 
 Angel supports the following kinds of relations by means of annotations on fields:
+
 * `@hasOne` (one-to-one)
 * `@hasMany` (one-to-many)
 * `@belongsTo` (one-to-one)

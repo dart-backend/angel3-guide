@@ -1,4 +1,4 @@
-How to run Angel in multiple isolates.
+# How to run Angel3 in multiple isolates
 
 The concept is pretty simple. A normal server would look like this:
 
@@ -14,16 +14,19 @@ typedef Future<HttpServer> ServerGenerator(InternetAddress address, int port);
 ```
 
 With this in mind, you can start a server passing the `shared` argument to `HttpServer.bind`:
+
 ```dart
-new Angel.custom((address, port) => HttpServer.bind(address, port, shared: true));
+Angel.custom((address, port) => HttpServer.bind(address, port, shared: true));
 ```
 
 `startShared` is a function that accomplishes this for you, since it's commonly-used functionality:
+
 ```dart
-new Angel.custom(startShared);
+Angel.custom(startShared);
 ```
 
 ## Multiple Isolates
+
 To run in multiple isolates, the concept is simple as well:
 
 ```dart
