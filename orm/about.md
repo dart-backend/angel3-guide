@@ -1,8 +1,8 @@
-Angel, like many other Web server frameworks, features support for object-relational mapping,
-or *ORM*. ORM tools allow for conversion from database results to Dart classes.
+# About ORM
 
-Angel's ORM uses Dart's `build` system to generate query builder classes from your `Model` classes,
-and takes advantage of Dart's strong typing to prevent errors at runtime.
+Angel3, like many other Web server frameworks, features support for object-relational mapping, or _ORM_. ORM tools allow for conversion from database results to Dart classes.
+
+Angel3's ORM uses Dart's `build` system to generate query builder classes from your `Model` classes, and takes advantage of Dart's strong typing to prevent errors at runtime.
 
 Take, for example, the following class:
 
@@ -49,10 +49,10 @@ app.get('/trainer/int:id/first_moves', (req, res) async {
 });
 ```
 
-This section of the Angel documentation consists mostly of
+This section of the Angel3 documentation consists mostly of
 guides, rather than technical documentation.
 
 For more in-depth documentation, see the actual
 `angel3_orm` project on Github:
 
-https://github.com/dukefirehawk/angel/tree/master/packages/orm
+<https://github.com/dukefirehawk/angel/tree/master/packages/orm>

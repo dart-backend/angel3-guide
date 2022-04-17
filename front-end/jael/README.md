@@ -1,8 +1,11 @@
+# JAEL
+
 **Jael** is a simple, yet powerful, server-side HTML templating engine for Dart.
 Although it can be used in any application, it comes with first-class support for the
-[Angel](https://github.com/dukefirehawk/angel) framework.
+[Angel3](https://github.com/dukefirehawk/angel) framework.
 
 Though its syntax is but a superset of HTML, it supports features such as:
+
 * **Custom elements**
 * Loops
 * Conditionals
@@ -11,7 +14,7 @@ Though its syntax is but a superset of HTML, it supports features such as:
 * `switch` syntax
 * Interpolation of any Dart expression
 
-### Small Example
+## Small Example
 
 ```html
 <!-- layout.jl -->
@@ -43,8 +46,9 @@ Though its syntax is but a superset of HTML, it supports features such as:
 ```
 
 The typical flow of a full-stack Dart application is to develop two separate apps:
-  * The server
-  * The client, an entire SPA
+
+* The server
+* The client, an entire SPA
 
 However, the truth is, many projects will never reach great scale, or are not extensive Web applications, and thus do not need the added complexity of an SPA. In such a case, creating an SPA will consume much excess time.
 
@@ -53,9 +57,10 @@ Jael allows developers to create a frontend for their application without having
 Rather than forcing you to learn an entire DSL, Jael's syntax is one you already know - HTML. All directives take the form of HTML elements, and are applied either by the preprocessor or at runtime. Jael's AST is simple to patch, so it is relatively straightforward to patch it to add new features.
 
 Jael can easily be used in any application with the following two packages:
-  * `package:jael3`
-  * `package:jael3_preprocessor`
 
-However, [Angel](https://github.com/dukefirehawk/angel) users only need install `package:angel3_jael` to include
-templating in their server-side applications. One of Angel's goals is to make Web development faster, and having
+* `package:jael3`
+* `package:jael3_preprocessor`
+
+However, [Angel3](https://github.com/dukefirehawk/angel) users only need install `package:angel3_jael` to include
+templating in their server-side applications. One of Angel3's goals is to make Web development faster, and having
 a tool like Jael at its disposal only brings that goal even closer to fruition.

@@ -1,4 +1,5 @@
 # Custom Elements
+
 HTML is good for its purpose, because each element (ex. `div`, `a`, `ul`),
 has its own purpose, and when invoked, reproduces specific functionality.
 
@@ -14,6 +15,7 @@ a client-side framework is that they build directly to standard HTML,
 and require no additional features in an end-user's browser.
 
 ## Defining Elements
+
 To define your own element, simply use the `<element>` tag:
 
 ```html
@@ -25,7 +27,7 @@ To define your own element, simply use the `<element>` tag:
 
 The best practice is to define elements in their own file, so that
 they can be imported into the scope using an
-[<include src=".." />](Directive-include.md) tag:
+[include](Directive-include.md) tag:
 
 ```html
 <extend src="layout.jl">
@@ -37,6 +39,7 @@ they can be imported into the scope using an
 ```
 
 ## Passing Data
+
 You might have noticed that in the earlier example, some attributes of
 the `todo-item` were prefixed with an arroba (`@`), while others were not.
 There is, of course, a reason for this.
@@ -53,6 +56,7 @@ Directives like `if` and `for-each` also work with custom elements,
 of course.
 
 ## Specifying a Tag Name
+
 By default, custom elements are replaced with a `div`. There may
 be times you wish to override this, for example, to render a `todo-item`
 as an `a` element.
@@ -64,6 +68,7 @@ Use the special `as` attribute to facilitate this:
 ```
 
 ## Emitting without a Tag Name
+
 There may be times when you need to emit the contents of an element,
 *without* a container element. In such a case, pass `as=false`, and
 the contents will be rendered in the current context, rather than

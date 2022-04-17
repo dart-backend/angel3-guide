@@ -30,9 +30,8 @@ await app.configure(MyAwesomePlugin().configureServer);
 * Functions are preferred to classes.
 * Always need to be well-documented and thoroughly tested.
 * Make sure no other plugin already serves the purpose.
-* Use the provided Angel API's whenever possible. This will help your plugin resist breaking change in the future.
-* Try to get it added to the `angel-dart` organization (ask in the chat).
-* Plugins should *generally* be small, as they usually serve just one purpose.
+* Use the provided Angel3 API's whenever possible. This will help your plugin resist breaking change in the future.
+* Plugins should _generally_ be small, as they usually serve just one purpose.
 * Plugins are allowed to modify app configuration.
 * Stay away from `req.rawRequest` and `res.rawResponse` if possible. This can restrict people from
 using your plugin on multiple platforms.
@@ -54,4 +53,3 @@ void main() {
   app.responseFinalizers.add(compress('lzma', lzma));
 }
 ```
-

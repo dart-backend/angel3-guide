@@ -1,4 +1,4 @@
-# Hooks
+# Developer Guide
 
 * [Hooks](hooks.md#hooks)
 * [Bundled Hooks](hooks.md#bundled-hooks)
@@ -8,7 +8,7 @@
 
 Another concept borrowed from FeathersJS is the concept of _hooking services_. This is a mechanism that allows you to separate concerns within your application. For example, many sites send their users confirmation e-mails after successful registration. The logic to do this is often included in the same place as the code to create the user. Hooks allow you to keep the logic for these two tasks, which are more or less unrelated, in two separate places. And what's more, this frees you up to change your service code without having to update the confirmation code in multiple places. For example, you can easily use an in-memory user store in development, and a MongoDB one in production, and use the same confirmation code for each service. So, let's take a look.
 
-When you `use` a service class, Angel can optionally wrap it in a `HookedService` class. A `HookedService` fires events before and after its inner service runs. This opens the opportunity for events to be canceled, or have parameters modified. `use` takes a named parameter `{bool hooked: true}`. You can also affix a `@Hooked` annotation to your service class for the same effect.
+When you `use` a service class, Angel3 can optionally wrap it in a `HookedService` class. A `HookedService` fires events before and after its inner service runs. This opens the opportunity for events to be canceled, or have parameters modified. `use` takes a named parameter `{bool hooked: true}`. You can also affix a `@Hooked` annotation to your service class for the same effect.
 
 This is similar to middleware, but whereas middleware only runs before requests, hooks can run before and after.
 
@@ -101,7 +101,7 @@ class MyService extends Service {
 
 ## `package:angel_hooks`
 
-As of Angel 2, common hooks can be found in `package:angel_hooks`:
+As of Angel3, common hooks can be found in `package:angel_hooks`:
 
 ```dart
 import 'package:angel_hooks/angel_hooks.dart` as hooks;
@@ -112,7 +112,6 @@ main() {
 }
 ```
 
-## Next Up...
+## Next Up
 
-Congratulations! Not only have you gotten through the basic Angel tutorials, but you've also completed the service tutorials! However, there's still a lot more to Angel for you to explore. Check out the sidebar for more! _**Happy coding!**_
-
+Congratulations! Not only have you gotten through the basic Angel3 tutorials, but you've also completed the service tutorials! However, there's still a lot more to Angel3 for you to explore. Check out the sidebar for more! _**Happy coding!**_

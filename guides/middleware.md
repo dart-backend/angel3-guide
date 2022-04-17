@@ -1,4 +1,4 @@
-# Middleware
+# Developer Guide
 
 * [Middleware](middleware.md#middleware)
   * [Denying Requests via Middleware](middleware.md#denying-requests-via-middleware)
@@ -11,7 +11,7 @@
 
 ## Middleware
 
-Sometimes, it becomes to recycle code to run on multiple routes. Angel allows for this in the form of _middleware_. Middleware are frequently used as authorization filters, or to serialize database data for use in subsequent routes. Middleware in Angel can be any route handler, whether a function or arbitrary data. You can also throw exceptions in middleware.
+Sometimes, it becomes to recycle code to run on multiple routes. Angel3 allows for this in the form of _middleware_. Middleware are frequently used as authorization filters, or to serialize database data for use in subsequent routes. Middleware in Angel3 can be any route handler, whether a function or arbitrary data. You can also throw exceptions in middleware.
 
 ### Denying Requests via Middleware
 
@@ -55,7 +55,8 @@ app.get('/', 'world!', middleware: [someListOfMiddleware]);
 
 Though this might at first seem redundant, there are actually reasons for all three existing.
 
-By convention, though, follow these *readability* rules when building Angel servers:
+By convention, though, follow these _readability_ rules when building Angel3 servers:
+
 * Routes with no middleware should not use `chain`, `app.chain`, or `middleware. Self-explanatory.
 * Routes with one middleware and one handler should use `app.chain([...])` when:
   * The construction of all the middleware does not take more than one line.
@@ -64,9 +65,9 @@ By convention, though, follow these *readability* rules when building Angel serv
 
 ### Global Middleware
 
-To add a handler that handles *every* request, call `app.fallback`.
-This is merely shorthand for calling `app.all('*', <handler>)`. 
-\(more info on request lifecycle [here](request-lifecycle.md)\). 
+To add a handler that handles _every_ request, call `app.fallback`.
+This is merely shorthand for calling `app.all('*', <handler>)`.
+\(more info on request lifecycle [here](request-lifecycle.md)\).
 
 ```dart
 app.fallback((req, res) async => res.close());
@@ -74,7 +75,7 @@ app.fallback((req, res) async => res.close());
 
 For more complicated middleware, you can also create a class.
 
-Canonically, when using a class as a request handler, it should provide a `handleRequest(RequestContext, ResponseContext)` method. This pattern is seen throughout many Angel plugins, such as `VirtualDirectory` or `Proxy`.
+Canonically, when using a class as a request handler, it should provide a `handleRequest(RequestContext, ResponseContext)` method. This pattern is seen throughout many Angel3 plugins, such as `VirtualDirectory` or `Proxy`.
 
 The reason for this is that a name like `handleRequest` makes it very clear to anyone reading the code what it is supposed to do.
 This is the same rationale behind [controllers](controllers.md) providing a `configureServer` method.
@@ -106,11 +107,9 @@ app.get('/the-route', chain([
 ]));
 ```
 
-In general, consider it a code smell to stack multiple handlers onto a route like this; it hampers readability,
-and in general just doesn't look good.
+In general, consider it a code smell to stack multiple handlers onto a route like this; it hampers readability, and in general just doesn't look good.
 
-Instead, when you have multiple handlers, you can split them into multiple `chain` calls, assigned to variables,
-which have the added benefit of communicating what each set of middleware does:
+Instead, when you have multiple handlers, you can split them into multiple `chain` calls, assigned to variables, which have the added benefit of communicating what each set of middleware does:
 
 ```dart
 var authorizationMiddleware = chain([
@@ -138,7 +137,6 @@ app.get('/the-route', chain([
 
 **Tip**: Prefer using named functions as handlers, rather than anonymous functions, or concrete objects.
 
-## Next Up...
+## Next Up
 
-Take a good look at [controllers](controllers.md) in Angel!
-
+Take a good look at [controllers](controllers.md) in Angel3!

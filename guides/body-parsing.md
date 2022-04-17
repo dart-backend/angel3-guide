@@ -1,14 +1,14 @@
-Interactive Web applications typically require some type of user input (whether that user is a human,
-machine, or otherwise is irrelevant). Angel features built-in support for parsing request bodies with the
-following content types:
+# Developer Guide
+
+Interactive Web applications typically require some type of user input (whether that user is a human, machine, or otherwise is irrelevant). Angel3 features built-in support for parsing request bodies with the following content types:
+
 * `application/x-www-form-urlencoded`
 * `application/json`
 * `multipart/form-data`
 
-## Parsing the body
-All you need to do to parse a request body is call `RequestContext.parseBody`. This method
-is idempotent, and only ever performs the body-parsing logic once, so it is recommended to call
-it any time you access the request body, unless you are 100% sure that it has been parsed before.
+## Body Parsing
+
+All you need to do to parse a request body is call `RequestContext.parseBody`. This method is idempotent, and only ever performs the body-parsing logic once, so it is recommended to call it any time you access the request body, unless you are 100% sure that it has been parsed before.
 
 You can access the body as a `Map`, `List`, or `Object`, depending on your use case:
 
@@ -29,9 +29,8 @@ app.post('/my_form', (req, res) async {
 ```
 
 ## Handling File Uploads
-In the case of `multipart/form-data`, Angel will also populate the `uploadedFiles` field.
-The `UploadedFile` wrapper class provides mechanisms for reading content types, metadata, and
-accessing the contents of an uploaded file as a `Stream<List<int>>`:
+
+In the case of `multipart/form-data`, Angel will also populate the `uploadedFiles` field. The `UploadedFile` wrapper class provides mechanisms for reading content types, metadata, and accessing the contents of an uploaded file as a `Stream<List<int>>`:
 
 ```dart
 app.post('/upload', (req, res) async {
@@ -47,8 +46,8 @@ app.post('/upload', (req, res) async {
 ```
 
 ## Custom Body Parsing
-You can handle other content types by manually parsing the body.
-You can set `bodyAsObject`, `bodyAsMap`, or `bodyAsList` exactly
+
+You can handle other content types by manually parsing the body. You can set `bodyAsObject`, `bodyAsMap`, or `bodyAsList` exactly
 once:
 
 ```dart
@@ -71,5 +70,4 @@ Future<void> unzipPlugin(Angel app) async {
 }
 ```
 
-If the user did not provide a `content-type` header when `parseBody` is called, a `400 Bad Request` error
-will be thrown.
+If the user did not provide a `content-type` header when `parseBody` is called, a `400 Bad Request` error will be thrown.

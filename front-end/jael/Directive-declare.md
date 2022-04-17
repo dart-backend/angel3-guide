@@ -1,7 +1,10 @@
+# declare
+
 Use a `declare` tag to *create* named variables within a block scope.
 This is analogous to a variable declaration in Dart.
 
 This Dart code:
+
 ```dart
 var one = 1, two = 2, three = null;
 ```

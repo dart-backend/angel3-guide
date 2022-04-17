@@ -1,3 +1,5 @@
+# extends
+
 Jael supports template inheritance by means of `extend` and `block`.
 
 Note the following example:

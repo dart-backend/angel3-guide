@@ -315,7 +315,7 @@ If your model (`Author`) depends on a model defined in another file (`Book`), th
 
 ## ID and Dates
 
-This package will automatically generate `id`, `createdAt`, and `updatedAt` fields for you, in the style of an Angel `Model`. This will automatically be generated, **only** for classes extending `Model`.
+This package will automatically generate `id`, `createdAt`, and `updatedAt` fields for you, in the style of an Angel3 `Model`. This will automatically be generated, **only** for classes extending `Model`.
 
 ## Binary Data
 

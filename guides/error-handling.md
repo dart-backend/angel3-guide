@@ -1,11 +1,11 @@
-# Error-Handling
+# Developer Guide
 
 * [Error Handling](error-handling.md#error-handling)
 * [Next Up...](error-handling.md#next-up)
 
 ## Error Handling
 
-Error handling is one of the most important concerns in building Web applications. The easiest way to throw an HTTP exception is to actually `throw` one. Angel provides an `AngelHttpException` class to take care of this.
+Error handling is one of the most important concerns in building Web applications. The easiest way to throw an HTTP exception is to actually `throw` one. Angel3 provides an `AngelHttpException` class to take care of this.
 
 ```dart
 app.get('/this-page-does-not-exist', (req, res) async {
@@ -16,10 +16,9 @@ app.get('/this-page-does-not-exist', (req, res) async {
 
 Of course, you will probably want to handle these errors, and potentially render views upon catching them.
 
-Fortunately, Angel runs every request in a `try`/`catch`, and gracefully intercepts exceptions. This enables Angel to catch errors on every request, and not crash the server. Unhandled errors are wrapped in instances of `AngelHttpException`, which can be handled as follows.
+Fortunately, Angel3 runs every request in a `try`/`catch`, and gracefully intercepts exceptions. This enables Angel3 to catch errors on every request, and not crash the server. Unhandled errors are wrapped in instances of `AngelHttpException`, which can be handled as follows.
 
-You can also turn on the `useZone` flag in `AngelHttp` or another driver (i.e. HTTP/2) to run each
-request in its own `Zone`, though by Angel 2, this is no longer necessary.
+You can also turn on the `useZone` flag in `AngelHttp` or another driver (i.e. HTTP/2) to run each request in its own `Zone`, though by Angel3, this is no longer necessary.
 
 To provide custom error handling logic:
 
@@ -38,7 +37,6 @@ app.errorHandler = (e, req, res) {
 }
 ```
 
-## Next Up...
+## Next Up
 
-Congratulations! You have completed the basic Angel tutorials. Take what you've learned on a spin in a small side project, and then move on to learning about [services](service-basics.md).
-
+Congratulations! You have completed the basic Angel3 tutorials. Take what you've learned on a spin in a small side project, and then move on to learning about [services](service-basics.md).

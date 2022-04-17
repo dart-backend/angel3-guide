@@ -1,9 +1,9 @@
-PostgreSQL support is provided by way of `package:angel3_orm_postgres`.
-The `PostgreSQLExecutor` implements `QueryExecutor`, and takes care of
+# PostgreSQL Support
+
+PostgreSQL support is provided by way of `package:angel3_orm_postgres`. The `PostgreSQLExecutor` implements `QueryExecutor`, and takes care of
 running prepared queries, and passing values to the database server.
 
-`angel init` projects using the ORM include helpers like this to load app
-configuration into a database connection:
+`angel3 init` projects using the ORM include helpers like this to load app configuration into a database connection:
 
 ```dart
 Future<void> configureServer(Angel app) async {
@@ -31,5 +31,4 @@ Future<PostgreSQLConnection> connectToPostgres(Map configuration) async {
   return connection;
 ```
 
-Typically, you'll want to use app configuration to create the connection,
-rather than hard coding values.
+Typically, you'll want to use app configuration to create the connection, rather than hard coding values.

@@ -11,7 +11,7 @@ like type checks, which are manageable in Dart, are both unintuitive and verbose
 To compensate, Jael can enable or disable what can be referred to as *strict resolution*.
 `package:angel3_jael` by default disables strict resolution, and
 `strictResolution` is available as a parameter to both the
-`jael` function in Angel, and the `Render()` constructor in Jael.
+`jael` function in Angel3, and the `Render()` constructor in Jael.
 
 Jael's expression parser is **not** the one from `package:analyzer`, so the evaluation
 of expressions at runtime is up to the `Renderer` class. When strict resolution is on, all
@@ -29,11 +29,13 @@ For example, take the following snippet:
 ```
 
 If strict resolution is **on**:
+
 * If `user` is not in the scope of values passed to the renderer, an error will be thrown.
 * If the expression `user?.name?.isNotEmpty` is `null`,
 then an error will be thrown.
 
 If strict resolution is **off**:
+
 * If `user` is not in the scope of values, Jael will just substitute it with `null`.
 * If `user?.name` is `null`, Jael will substitute the expression with `null`.
 * If the expression `user?.name?.isNotEmpty` does not evaluate to `true`

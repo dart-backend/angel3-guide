@@ -1,8 +1,11 @@
-* [Interpolation](#interpolation)
-* [Attributes](#attributes)
-  * [Attribute Values](#attribute-values)
-  * [Quoted Attribute Names](#quoted-attribute-names)
-  * [Unescaped Attributes](#unescaped-attributes)
+# Developer Guide
+
+- [Developer Guide](#developer-guide)
+  - [Interpolation](#interpolation)
+  - [Attributes](#attributes)
+    - [Attribute Values](#attribute-values)
+    - [Quoted Attribute Names](#quoted-attribute-names)
+    - [Unescaped Attributes](#unescaped-attributes)
 
 Jael syntax is a superset of HTML. The following is valid both in HTML and Jael:
 
@@ -21,7 +24,8 @@ Jael syntax is a superset of HTML. The following is valid both in HTML and Jael:
 However, Jael adds two major changes.
 
 ## Interpolation
-Firstly, text blocks can contain *interpolations*, which are merely Dart expression contained in double curly braces (`{{ }}`). The value within the braces, once evaluated will be HTML escaped, to prevent XSS. To achieve unescaped output, append a hyphen (`-`) to the first brace (`{{- }}`).
+
+Firstly, text blocks can contain _interpolations_, which are merely Dart expression contained in double curly braces (`{{ }}`). The value within the braces, once evaluated will be HTML escaped, to prevent XSS. To achieve unescaped output, append a hyphen (`-`) to the first brace (`{{- }}`).
 
 ```html
 <div>
@@ -35,6 +39,7 @@ Firstly, text blocks can contain *interpolations*, which are merely Dart express
 ```
 
 ## Attributes
+
 Secondly, whereas in HTML, the values of attributes can only be strings, Jael allows for their values to be any Dart expression:
 
 ```html
@@ -44,12 +49,15 @@ Secondly, whereas in HTML, the values of attributes can only be strings, Jael al
 ```
 
 ### Attribute Values
+
 Values are handled as such:
-* Maps: Serialized as though they were `style` attributes.
-* Iterables: Joined by a space, like `class` attributes.
-* Anything else: `toString()` is invoked.
+
+- Maps: Serialized as though they were `style` attributes.
+- Iterables: Joined by a space, like `class` attributes.
+- Anything else: `toString()` is invoked.
 
 ### Quoted Attribute Names
+
 In case the name of your attribute is not a valid Dart identifier, you can wrap it with quotes, and it will still be processed as per normal:
 
 ```html
@@ -57,6 +65,7 @@ In case the name of your attribute is not a valid Dart identifier, you can wrap 
 ```
 
 ### Unescaped Attributes
+
 These will also be HTML escaped; however, you can replace `=` with `!=` to print unescaped text:
 
 ```html

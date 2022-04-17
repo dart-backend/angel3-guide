@@ -20,7 +20,7 @@ Watch the video tutorial [here](https://www.youtube.com/watch?v=7tpO9vhUhf4&t=98
   a. `https://askubuntu.com/questions/919054/how-do-i-run-a-single-command-at-startup-using-systemd`
 7. Basic nginx setup with `proxy_pass`
   a. Don't run your application server as `root`
-  b. Serve static files via `nginx` instead of Angel
+  b. Serve static files via `nginx` instead of Angel3
     * Even though `CachingVirtualDirectory` is extremely simple to use, it would be served via proxy
     * It's faster for `nginx` to serve your static files directly.
   

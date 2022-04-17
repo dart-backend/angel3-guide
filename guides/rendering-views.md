@@ -19,7 +19,7 @@ Another is Jinja2, which was recently ported by to Dart by
 [Olzhas Suleimen](https://github.com/ykmnkmi/jinja.dart).
 
 Angel support for Jinja2 can be found here:
-https://github.com/dukefirehawk/angel/tree/master/packages/angel_jinja
+<https://github.com/dukefirehawk/angel/tree/master/packages/angel_jinja>
 
 ### Example
 
@@ -55,8 +55,7 @@ void main() async {
 }
 ```
 
-## Next Up...
+## Next Up
 
 1. Explore Angel's isomorphic [client library](https://github.com/dukefirehawk/angel/tree/master/packages/client).
 2. Find out how to [test Angel applications](testing.md).
-

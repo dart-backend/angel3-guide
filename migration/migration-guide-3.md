@@ -1,4 +1,4 @@
-# Main Points
+# Migration Steps
 
 **WARNING**, backup your existing code before proceeding with migration as the process cannot be reversed. Angel project can be upgraded to Angel3 by following the steps below:
 
@@ -6,8 +6,8 @@
 
 2. Check that all `angel_*` packages can be upgraded by referring to [Migrated Angel3 Packages](https://github.com/dukefirehawk/angel/wiki/Migrated-Angel3-Packages).
 
-3. Upgrade all `angel_*` packages manually in `pubspec.yml` by referring to 
-[NNDB Basic Starter Template](https://github.com/dukefirehawk/boilerplates/blob/basic-sdk-2.12.x_nnbd/pubspec.yaml) or 
+3. Upgrade all `angel_*` packages manually in `pubspec.yml` by referring to
+[NNDB Basic Starter Template](https://github.com/dukefirehawk/boilerplates/blob/basic-sdk-2.12.x_nnbd/pubspec.yaml) or
 [NNDB ORM Starter Template](https://github.com/dukefirehawk/boilerplates/blob/orm-sdk-2.12.x_nnbd/pubspec.yaml)
 
 4. Run `dart pub upgrade --null-safety` to upgrade the rest of the packages automatically.

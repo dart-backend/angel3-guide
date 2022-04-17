@@ -1,3 +1,5 @@
+# Developer Guide
+
 * [Routing](basic-routing.md#routing)
 * [Route Parameters](basic-routing.md#route-parameters)
   * [Parsing Parameters](basic-routing.md#parsing-parameters)
@@ -52,6 +54,7 @@ Examples:
 * `info_about_:username`
 
 ### Parsing Parameters
+
 With a special syntax, you can build routes that automatically parse parameters as `ints` or `doubles`:
 
 ```dart
@@ -100,9 +103,8 @@ app.group('/user/:id', (router) {
 
 ## Extended Documentation
 
-For more documentation on the router, see [its repository](https://github.com/dukefirehawk/angel/tree/master/packages/route). [`package:angel3_route`](https://pub.dartlang.org/packages/angel3_route) has no `dart:io` or `dart:mirrors` dependency, and it also supports browser use \(both hash and push state\).
+For more documentation on the router, see [Angel3 Route Repository](https://github.com/dukefirehawk/angel/tree/master/packages/route). [`angel3_route`](https://pub.dartlang.org/packages/angel3_route) has no `dart:io` or `dart:mirrors` dependency, and it also supports browser use \(both hash and push state\).
 
-## Next Up...
+## Next Up
 
 Learn how [Requests and Responses](requests-and-responses.md) let you reuse functionality across your entire routing setup.
-

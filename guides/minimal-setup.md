@@ -1,8 +1,8 @@
 # Minimal Setup
 
-It's very easy to setup a bare-bones Angel server.
+It's very easy to setup a bare-bones Angel3 server.
 
-Any Dart project needs a project file, called `pubspec.yaml`. This file almost always contains a `dependencies` section, where you will install the Angel framework libraries.
+Any Dart project needs a project file, called `pubspec.yaml`. This file almost always contains a `dependencies` section, where you will install the Angel3 framework libraries.
 
 ```yaml
 dependencies:
@@ -33,19 +33,16 @@ void main() async {
 
 The specifics are not that important, but there are a few important calls here:
 
-* `var app = Angel()` - The base Angel server is a simple class, and we need an instance of it to run our server. The name `app` is a convention adopted from Express. In general, call an Angel instance `app`. This has no effect on functionality, but it makes it easier for other developers to understand your code.
+* `var app = Angel()` - The base Angel3 server is a simple class, and we need an instance of it to run our server. The name `app` is a convention adopted from Express. In general, call an Angel3 instance `app`. This has no effect on functionality, but it makes it easier for other developers to understand your code.
 * `app.get("/", (req, res) => "Hello, world!");` - This is a [route](basic-routing.md), and tells our server to respond to all GET requests at our server root with `"Hello, world!"`. The response will automatically be encoded as JSON. Head over to the [Basic Routing](basic-routing.md) tutorial to learn about routes, and how they work.
-3. `await http.startServer(...)` - This asynchronous call is what actually starts the server listening. Without it, your application won't be accessible over HTTP \(as it won't ever listen for requests\).
+* `await http.startServer(...)` - This asynchronous call is what actually starts the server listening. Without it, your application won't be accessible over HTTP \(as it won't ever listen for requests\).
 
 That's it! Your server is ready to serve requests. You can easily start it from the command line like this:
 
-```text
+```dart
 dart bin/main.dart
 ```
 
-## Next Up...
+## Next Up
 
 Continue reading to learn about [Basic Routing](basic-routing.md).
-
-
-

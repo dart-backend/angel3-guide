@@ -1,6 +1,6 @@
 # Production Mode
 
-Angel can optionally run in "production mode," where several optimizations are applied to the base server, such as running reflective dependency injection before server startup, and flattening the server's route tree.
+Angel3 can optionally run in "production mode," where several optimizations are applied to the base server, such as running reflective dependency injection before server startup, and flattening the server's route tree.
 
 Production mode is considered a global setting.
 
@@ -13,5 +13,3 @@ if (app.isProduction) {
   // Do some production-only stuff...
 }
 ```
-
- 

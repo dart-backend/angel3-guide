@@ -1,10 +1,9 @@
-As one can imagine, a SQL ORM cannot be used with a NoSQL database.
-However, this is usually not a problem, because the ideal use cases for NoSQL databases
+# NoSQL Support
+
+As one can imagine, a SQL ORM cannot be used with a NoSQL database. However, this is usually not a problem, because the ideal use cases for NoSQL databases
 typically do not require the functionality present in an ORM (namely, relation support).
 
-With a NoSQL databases, you can use the `Service` API (you likely already are!),
-and use `Service.map` to deal with Dart data only, rather than messing around with
-`Map`s, and risking typos and refactoring challenges.
+With a NoSQL databases, you can use the `Service` API (you likely already are!), and use `Service.map` to deal with Dart data only, rather than messing around with `Map`s, and risking typos and refactoring challenges.
 
 If you are using `package:angel3_serialize`, this is pretty easy:
 

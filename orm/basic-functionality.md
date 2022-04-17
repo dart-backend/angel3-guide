@@ -1,7 +1,8 @@
-Before starting with the ORM, it is highly recommended to familiar one's self with
-`package:angel3_serialize`, as it is the foundation for `package:angel3_orm`:
+# Basi ORM
 
-https://github.com/dukefirehawk/angel/tree/master/packages/serialize
+Before starting with the ORM, it is highly recommended to familiar one's self with `package:angel3_serialize`, as it is the foundation for `package:angel3_orm`:
+
+<https://github.com/dukefirehawk/angel/tree/master/packages/serialize>
 
 To enable the ORM for a given model, simply add the `@orm` annotation to its definition:
 
@@ -18,9 +19,7 @@ abstract class _Todo {
 }
 ```
 
-The generator will produce a `TodoQuery` class, which contains fields corresponding to each field declared in `_Todo`.
-Each of `TodoQuery`'s fields is a subclass of `SqlExpressionBuilder`, corresponding to the given type. For example, `TodoQuery`
-would look *something* like:
+The generator will produce a `TodoQuery` class, which contains fields corresponding to each field declared in `_Todo`. Each of `TodoQuery`'s fields is a subclass of `SqlExpressionBuilder`, corresponding to the given type. For example, `TodoQuery` would look *something* like:
 
 ```dart
 class TodoQuery extends Query<Todo, TodoQueryWhere> {
@@ -49,11 +48,9 @@ Future<void> markAsComplete(Todo todo, QueryExecutor executor) async {
 }
 ```
 
-The glue holding everything together is the `QueryExecutor` interface. To support the ORM
-for any arbitrary database, simply extend the class and implement its abstract methods.
+The glue holding everything together is the `QueryExecutor` interface. To support the ORM for any arbitrary database, simply extend the class and implement its abstract methods.
 
-Consumers of a `QueryExecutor` typically inject it into the app's
-[dependency injection](../dependency-injection.md) container:
+Consumers of a `QueryExecutor` typically inject it into the app's [dependency injection](../dependency-injection.md) container:
 
 ```dart
 app.container.registerSingleton<QueryExecutor>(PostgresExecutor(...));

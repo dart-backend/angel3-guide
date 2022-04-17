@@ -1,3 +1,5 @@
+# include
+
 Use an `include` tag to copy in the contents of another template into the current one.
 The path, specified with a `src` attribute, will be resolved relative to the path of the current file.
 

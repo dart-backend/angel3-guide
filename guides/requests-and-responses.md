@@ -1,4 +1,4 @@
-# Requests-and-Responses
+# Developer Guide
 
 * [Requests and Responses](requests-and-responses.md#requests-and-responses)
   * [Return Values](requests-and-responses.md#return-values)
@@ -8,9 +8,9 @@
 
 ## Requests and Responses
 
-Angel is inspired by Express, and such, request handlers in general resemble those from Express. Request handlers can return any Dart object \(see [how they are handled](requests-and-responses.md#return-values)\). Basic request handlers accept two parameters:
+Angel3 is inspired by Express, and such, request handlers in general resemble those from Express. Request handlers can return any Dart object \(see [how they are handled](requests-and-responses.md#return-values)\). Basic request handlers accept two parameters:
 
-* [`RequestContext`](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/RequestContext-class.html) - Contains vital information about the client requesting a resource, such as request method, request body, IP address, etc. The request object can also be used to pass information from one handler to the next. 
+* [`RequestContext`](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/RequestContext-class.html) - Contains vital information about the client requesting a resource, such as request method, request body, IP address, etc. The request object can also be used to pass information from one handler to the next.
 * [`ResponseContext`](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/ResponseContext-class.html) - Allows you to send headers, write data, and more, to be sent to the client. To prevent a response from being modified by future handlers, call `res.end()` to prevent further writing.
 
 ### Return Values
@@ -26,8 +26,7 @@ Request handlers can return any Dart value. Return values are handled as follows
 
 ### Other Parameters
 
-Request handlers can take other parameters, instead of just a `RequestContext` and `ResponseContext`.
-Consult the [dependency injection documentation](dependency-injection.md#in-routes-and-controllers).
+Request handlers can take other parameters, instead of just a `RequestContext` and `ResponseContext`. Consult the [dependency injection documentation](dependency-injection.md#in-routes-and-controllers).
 
 ### Queries, Files and Bodies
 
@@ -43,7 +42,6 @@ For more information, see the API docs:
 
 [ResponseContext](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/ResponseContext-class.html)
 
-## Next Up...
+## Next Up
 
-Now, let's learn about Angel's [Request Lifecycle](request-lifecyle.md). 
-
+Now, let's learn about Angel3's [Request Lifecycle](request-lifecyle.md).

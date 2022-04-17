@@ -1,4 +1,4 @@
-# Testing
+# Developer Guide
 
 * [Testing](testing.md#testing)
   * [`connectTo(...)`](testing.md#connectto)
@@ -46,10 +46,9 @@ A `Matcher` that asserts the given `http.Response` has the given `status` code.
 
 ### More Matchers
 
-The complete set of `angel_test` Matchers can be found [here](https://pub.dev/documentation/angel3_test/latest/angel3_test/angel_test-library.html).
+The complete set of `angel3_test` Matchers can be found [here](https://pub.dev/documentation/angel3_test/latest/angel3_test/angel_test-library.html).
 
-## Next Up...
+## Next Up
 
-1. Find out how to [handle errors](error-handling.md) in an Angel application.
-2. Learn how to use the handy [Angel CLI](https://github.com/dukefirehawk/angel3-cli).
-
+1. Find out how to [handle errors](error-handling.md) in an Angel3 application.
+2. Learn how to use the handy [Angel3 CLI](https://github.com/dukefirehawk/angel3-cli).

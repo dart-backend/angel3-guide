@@ -1,4 +1,4 @@
-# Controllers
+# Developer Guide
 
 * [Controllers](controllers.md#controllers)
   * [`@Expose()`](controllers.md#expose)
@@ -10,7 +10,7 @@
 
 ## Controllers
 
-Angel has built-in support for controllers. This is yet another way to define routes in a manageable group, and can be leveraged to structure your application in the [MVC](https://en.wikipedia.org/wiki/Model–view–controller) format. You can also use the [`group()`](basic-routing.md#route-groups) method of any [`Router`](https://pub.dev/documentation/angel3_route/latest/angel3_route/Router-class.html).
+Angel3 has built-in support for controllers. This is yet another way to define routes in a manageable group, and can be leveraged to structure your application in the [MVC](https://en.wikipedia.org/wiki/Model–view–controller) format. You can also use the [`group()`](basic-routing.md#route-groups) method of any [`Router`](https://pub.dev/documentation/angel3_route/latest/angel3_route/Router-class.html).
 
 The metadata on controller classes is processed via reflection _only once_, at startup. Do not believe that your controllers will be crippled by reflection during request handling, because that possibility is eliminated by [pre-injecting dependencies](dependency-injection.md).
 
@@ -80,7 +80,7 @@ class FooController extends Controller {
 }
 
 main() async {
-  Angel app = new Angel();
+  Angel app = Angel();
 
   app.get("/some/path", (req, res) async => res.redirectToAction("FooController@bar", {"id": 1337}));
 }
@@ -130,8 +130,7 @@ main() async {
 }
 ```
 
-## Next Up...
+## Next Up
 
-1. How to [handle parse request bodies](body-parsing.md) with Angel
-2. [Using Angel Plug-ins](using-plug-ins.md)
-
+1. How to [handle parse request bodies](body-parsing.md) with Angel3
+2. [Using Angel3 Plug-ins](using-plug-ins.md)

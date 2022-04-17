@@ -1,3 +1,5 @@
-# 4.0.0
-* Updated guides to use `angel3_` packages
+# Change Log
 
+## 4.0.0
+
+* Updated guides to use `angel3_` packages

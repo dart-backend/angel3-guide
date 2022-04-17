@@ -1,7 +1,6 @@
 # Dependency-Injection
 
-Angel uses a [container hierarchy](https://github.com/dukefirehawk/angel/tree/master/packages/container) for DI.
-Dependency injection makes it easier to build applications with multiple moving parts, because logic can be contained in one location and reused at another place in your application.
+Angel3 uses a [container hierarchy](https://github.com/dukefirehawk/angel/tree/master/packages/container) for DI. Dependency injection makes it easier to build applications with multiple moving parts, because logic can be contained in one location and reused at another place in your application.
 
 ## Adding a Singleton
 
@@ -15,8 +14,7 @@ Future<void> myPlugin(Angel app) async  {
 }
 ```
 
-You can also inject within a `RequestContext`, as each one has a `controller` property
-that extends from the app's global container.
+You can also inject within a `RequestContext`, as each one has a `controller` property that extends from the app's global container.
 
 Accessing these injected properties is easy, and strongly typed:
 
@@ -31,8 +29,8 @@ var collection = db.collection('pets');
 ```
 
 ## In Routes and Controllers
-In Angel, by wrapping a function in a call to `ioc`, you can automatically
-inject the dependencies of any route handler.
+
+In Angel3, by wrapping a function in a call to `ioc`, you can automatically inject the dependencies of any route handler.
 
 ```dart
 app.get("/some/class/text", ioc((SomeClass singleton) => singleton.text)); // Always "foo"
@@ -94,29 +92,27 @@ void main() async {
 ```
 
 ## Enabling `dart:mirrors` or other Reflection
-By default, Angel will use the `EmptyReflector()` to power its `Container` instances,
-which has no support for `dart:mirrors`, so that it can be used in contexts where Dart
-reflection is not available.
 
-However, by using a different `Reflector`, you can use the full power of Angel's DI system.
-`angel init` projects use the `MirrorsReflector()` by default.
+By default, Angel3 will use the `EmptyReflector()` to power its `Container` instances, which has no support for `dart:mirrors`, so that it can be used in contexts where Dart reflection is not available.
 
-If your application is using any sort of functionality reliant on annotations or reflection,
-either include the MirrorsReflector, or use a static reflector variant.
+However, by using a different `Reflector`, you can use the full power of Angel3's DI system. `angel3 init` projects use the `MirrorsReflector()` by default.
+
+If your application is using any sort of functionality reliant on annotations or reflection, either include the MirrorsReflector, or use a static reflector variant.
 
 The following use cases require reflection:
+
 * Use of `Controller`s, via `@Expose()` or `@ExposeWS()`
 * Use of dependency injection into **constructors**, whether in controllers or plain `container.make` calls
 * Use of the `ioc` function in any route
 
-The `MirrorsReflector` from `package:angel3_container/mirrors.dart` is by far the most convenient pattern,
-so use it if possible.
+The `MirrorsReflector` from `package:angel3_container/mirrors.dart` is by far the most convenient pattern, so use it if possible.
 
 However, the following alternatives exist:
-* Generation via `package:angel_container_generator`
+
+* Generation via `package:angel3_container_generator`
 * Creating an instance of `StaticReflector`
 * Manually implementing the `Reflector` interface (cumbersome; not recommended)
 
-## Next Up...
+## Next Up
 
 Continue reading to learn about [Middleware](middleware.md).
