@@ -5,47 +5,50 @@
     * [Prerequisites](cli-setup.md#prequisites)
 * [Next Up...](cli-setup.md#next-up)
 
-## Getting Started
+## Installation
 
-Let's get it started, ha!
+* Download and install [Dart SDK](https://www.dartlang.org/downloads/).
 
-### Installation
-
-#### Prerequisites
-
-* Firstly, ensure you have the [Dart SDK](https://www.dartlang.org/downloads/) installed.
-
-Now, install the [Angel3 CLI](cli.md). The CLI includes several code generators and commands that will help you expedite your development cycle.
+* Install [Angel3 CLI](cli.md). The CLI includes several code generators and commands that will help Angel3 development.
 
 ```bash
   pub global activate angel3_cli
 ```
 
-Now, let's create a sample project, called `hello`.
+## Creating a New Project
 
-Run:
+* Create a sample project, called `hello`, run:
 
 ```bash
   angel3 init hello
 ```
 
-This will create a folder called `hello`, and copy the [Angel3 boilerplate](https://github.com/dukefirehawk/boilerplates) into it. If you wanted to initialize a project within the current directory, instead of making new one, you could have run:
+This will create a folder called `hello`.
+
+* If you prefer to initialize a project within the current directory, run:
 
 ```bash
   angel3 init
 ```
 
-Follow the instructions given. There are different types of boilerplates, but all of the server
-templates will generate very similarly-structured projects.
+* Follow the instructions given to complete initializing the new project. Choose from one of the available [Angel3 templates](https://github.com/dukefirehawk/boilerplates) to best represents what you would like your backend server to do. A well structured project will be generated.
 
-It's easy to run our server. Just type the following:
+## Starting Angel3 Server
+
+* Running the server in development mode:
 
 ```bash
-  # Use the `--observe` flag to enable hot reloading in Angel.
-  dart --observe bin/server.dart
+  # Use the `--observe` flag to enable hot reloading in Angel3.
+  dart --observe bin/dev.dart
 ```
 
-And there you have it - you've created an Angel application!
+* Running the server in production mode:
+
+```bash
+  dart bin/prod.dart
+```
+
+* And there you have it - you've created an Angel3 backend server!
 
 ## Next Up
 
