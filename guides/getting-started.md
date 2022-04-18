@@ -50,7 +50,7 @@ Now, just run `pub get`, which will install the `angel3_framework` library, and 
 ```yaml
 Resolving dependencies... (3.3s)
 + angel3_container 3.0.0
-+ angel3_framework 4.0.0
++ angel3_framework 4.2.0
 + angel3_http_exception 3.0.0
 (... more output omitted)
 Changed 33 dependencies!
@@ -207,7 +207,7 @@ Afterwards, it reads the `name` value from the body, and computes a greeting str
 app.post('/greet', (req, res) async {
     await req.parseBody();
 
-    var name = req.bodyAsMap['name'] as String;
+    var name = req.bodyAsMap['name'] as String?;
 
     if (name == null) {
         throw AngelHttpException.badRequest(message: 'Missing name.');
