@@ -42,16 +42,16 @@ Next, we create a `pubspec.yaml` file, and enter the following contents:
 ```yaml
 name: hello_angel
 dependencies:
-    angel3_framework: ^4.2.0
+    angel3_framework: ^6.0.0
 ```
 
-Now, just run `pub get`, which will install the `angel3_framework` library, and its dependencies:
+Now, just run `dart pub get`, which will install the `angel3_framework` library, and its dependencies:
 
 ```yaml
 Resolving dependencies... (3.3s)
-+ angel3_container 3.0.0
-+ angel3_framework 4.2.0
-+ angel3_http_exception 3.0.0
++ angel3_container 6.0.0
++ angel3_framework 6.0.0
++ angel3_http_exception 6.0.0
 (... more output omitted)
 Changed 33 dependencies!
 ```
@@ -278,7 +278,3 @@ You can find `angel3_*` packages on the Pub site, and read the documentation fou
 Don't forget that for discussion and support, you can either file a Github issue, or join the Gitter chat:
 
 <https://gitter.im/angel_dart/discussion>
-
-## Next Up
-
-Continue reading to learn about [Basic Routing](basic-routing.md).

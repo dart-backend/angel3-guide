@@ -1,17 +1,40 @@
 # Menu
 
-* Migration
-  * Angel 2.x.x to Angel3
-    * [Rationale - Why a new Version?](migration/rationale.md)
-    * [Framework Changelog](https://github.com/dukefirehawk/angel/tree/master/packages/framework/blob/master/CHANGELOG.md)
-    * [3.0.0 Migration Guide](migration/migration-guide-3.md)
-  * Angel 1.x.x to 2.x.x
-    * [Framework Changelog](https://github.com/dukefirehawk/angel/blob/sdk-2.10.x/packages/framework/CHANGELOG.md)
-    * [2.0.0 Migration Guide](migration/migration-guide.md)
-* Guides
+* [Foreword](foreword.md)
+* Tutorial
   * [Getting Started](guides/getting-started.md)
-  * [Angel3 CLI Setup](guides/cli-setup.md)
   * [Minimal Setup](guides/minimal-setup.md)
+* Command Line Interface
+  * [Setup](cli/cli-setup.md)
+* Templates and Views
+  * [Rendering Views](views/rendering-views.md)
+  * JAEL3
+    * [About](views/jael/about.md)
+    * [Basics](views/jael/Basics.md)
+    * [Custom Elements](views/jael/Custom-Elements.md)
+    * [Strict Resolution](views/jael/Strict-Resolution.md)
+    * [Directive: `declare`](views/jael/Directive-declare.md)
+    * [Directive: `for-each`](views/jael/Directive-for-each.md)
+    * [Directive: `extend`](views/jael/Directive-extend.md)
+    * [Directive: `if`](views/jael/Directive-if.md)
+    * [Directive: `include`](views/jael/Directive-include.md)
+    * [Directive: `switch`](views/jael/Directive-switch.md)
+* Authentication
+  * [About](auth/about.md)
+  * [Strategies](auth/strategies.md)
+  * [Local](auth/local-auth.md)
+* Databases
+  * Object Relational Mapping (ORM)
+    * [About](orm/about.md)
+    * [Basic Functionality](orm/basic-functionality.md)
+    * [Relations](orm/relations.md)
+    * [Migrations](orm/migrations.md)
+    * [PostgreSQL](orm/postgresql.md)
+  * [NoSQL](orm/nosql.md)
+* Extensions and Plugins
+  * [Using Plug-ins](guides/using-plug-ins.md)
+  * [Writing a Plugin](guides/writing-a-plugin.md)
+* Under the hood
   * [Basic Routing](guides/basic-routing.md)
   * [Requests & Responses](guides/requests-and-responses.md)
   * [Request Lifecycle](guides/request-lifecycle.md)
@@ -20,65 +43,36 @@
   * [Controllers](guides/controllers.md)
   * [Parsing Request Bodies](guides/body-parsing.md)
   * [Serialization](guides/serialization.md)
-  * [Using Plug-ins](guides/using-plug-ins.md)
-  * [Rendering Views](guides/rendering-views.md)
   * [Service Basics](guides/service-basics.md)
   * [REST Client](https://pub.dev/packages/angel3_client)
   * [Testing](guides/testing.md)
   * [Error Handling](guides/error-handling.md)
   * [Pattern Matching and `Parameter`](guides/pattern-matching.md)
-  * [Command Line](guides/cli.md)
-  * [Writing a Plugin](guides/writing-a-plugin.md)
-  * ORM
-    * [About](orm/about.md)
-    * [Basic Functionality](orm/basic-functionality.md)
-    * [Relations](orm/relations.md)
-    * [Migrations](orm/migrations.md)
-    * [NoSQL](orm/nosql.md)
-    * [PostgreSQL](orm/postgresql.md)
-  * Authentication
-    * [About](auth/about.md)
-    * [Strategies](auth/strategies.md)
-    * [Local](auth/local-auth.md)
-    * [OAuth2](https://github.com/dukefirehawk/angel/packages/auth_oauth2)
-    * [Twitter](https://github.com/dukefirehawk/angel/packages/auth_twitter)
-* Resources
-  * [Dependency Injection Patterns](https://thosakwe.com/dependency-injection-patterns-in-angel-2/)
-  * [Example Projects](https://github.com/dukefirehawk/angel3-examples)
-  * [YouTube Tutorials](https://www.youtube.com/playlist?list=PLl3P3tmiT-fqGCB2vSPq8HhpugEDNWUo6)
-  * [Ecosystem](https://github.com/dukefirehawk/angel3-awesome)
+* Angel Framework Migration
+  * Angel 2.x.x to Angel3
+    * [Rationale - Why a new Version?](migration/rationale.md)
+    * [Framework Changelog](https://github.com/dukefirehawk/angel/tree/master/packages/framework/blob/master/CHANGELOG.md)
+    * [3.0.0 Migration Guide](migration/migration-guide-3.md)
+  * Angel 1.x.x to 2.x.x
+    * [Framework Changelog](https://github.com/dukefirehawk/angel/blob/sdk-2.10.x/packages/framework/CHANGELOG.md)
+    * [2.0.0 Migration Guide](migration/migration-guide.md)
 * Packages
   * [Authentication](https://github.com/dukefirehawk/angel/tree/master/packages/auth)
     * [Local](https://pub.dev/documentation/angel3_auth/latest/angel3_auth/LocalAuthStrategy-class.html)
-    * [Twitter SSO](https://github.com/dukefirehawk/angel/tree/master/packages/auth_twitter)
+    * [Twitter](https://github.com/dukefirehawk/angel/tree/master/packages/auth_twitter)
     * [OAuth2 \(generic\)](https://github.com/dukefirehawk/angel/tree/master/packages/auth_oauth2)
     * [OAuth2 server implementation](https://github.com/dukefirehawk/angel/tree/master/packages/oauth2)
   * [CORS](https://github.com/dukefirehawk/angel/tree/master/packages/cors)
   * [Database-Agnostic Relations](https://github.com/dukefirehawk/angel/tree/master/packages/relations)
   * [Configuration](https://github.com/dukefirehawk/angel/tree/master/packages/configuration)
-  * Database Adapters
-    * [MongoDB](https://github.com/dukefirehawk/angel/tree/master/packages/mongo)
-    * [RethinkDB](https://github.com/dukefirehawk/angel/tree/master/packages/rethink)
-    * [JSON File-based](https://github.com/dukefirehawk/angel/tree/master/packages/file_service)
+  * Databases
     * [ORM](https://github.com/dukefirehawk/angel/tree/master/packages/orm)
-      * [Basic Functionality](orm/basic-functionality.md)
-      * [Relations](orm/relations.md)
-      * [NoSQL](orm/nosql.md)
-      * [PostgreSQL](orm/postgresql.md)
-      * [Migrations](orm/migrations.md)
-  * Front-end
+    * [MongoDB](https://github.com/dukefirehawk/angel/tree/master/packages/mongo)
+    * [JSON File-based](https://github.com/dukefirehawk/angel/tree/master/packages/file_service)
+    * [RethinkDB](https://github.com/dukefirehawk/angel/tree/master/packages/rethink)
+  * Templates and Views
+    * [Jael template engine](https://github.com/dukefirehawk/angel/tree/master/packages/jael3)
     * [Mustache Templates](https://github.com/dukefirehawk/angel/tree/master/packages/mustache)
-    * [Jael template engine](front-end/jael/README.md)
-      * [Github](https://github.com/dukefirehawk/angel/tree/master/packages/jael3)
-      * [Basics](front-end/jael/Basics.md)
-      * [Custom Elements](front-end/jael/Custom-Elements.md)
-      * [Strict Resolution](front-end/jael/Strict-Resolution.md)
-      * [Directive: `declare`](front-end/jael/Directive-declare.md)
-      * [Directive: `for-each`](front-end/jael/Directive-for-each.md)
-      * [Directive: `extend`](front-end/jael/Directive-extend.md)
-      * [Directive: `if`](front-end/jael/Directive-if.md)
-      * [Directive: `include`](front-end/jael/Directive-include.md)
-      * [Directive: `switch`](front-end/jael/Directive-switch.md)
     * [`compiled_mustache`-based engine](https://github.com/thislooksfun/angel_compiled_mustache)
     * [`html_builder`-based engine](https://github.com/dukefirehawk/angel/tree/master/packages/html)
     * [Markdown template engine](https://github.com/dukefirehawk/angel/tree/master/packages/markdown)
@@ -100,3 +94,8 @@
   * [Validation](https://github.com/dukefirehawk/angel/tree/master/packages/validate)
   * [Websockets](https://github.com/dukefirehawk/angel/tree/master/packages/websocket)
     * [WebSocket synchronization via `pub_sub`](https://github.com/dukefirehawk/angel/tree/master/packages/sync)
+* Resources
+  * [Dependency Injection Patterns](https://thosakwe.com/dependency-injection-patterns-in-angel-2/)
+  * [Example Projects](https://github.com/dukefirehawk/angel3-examples)
+  * [YouTube Tutorials](https://www.youtube.com/playlist?list=PLl3P3tmiT-fqGCB2vSPq8HhpugEDNWUo6)
+  * [Ecosystem](https://github.com/dukefirehawk/angel3-awesome)

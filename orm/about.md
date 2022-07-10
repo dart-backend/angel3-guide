@@ -35,8 +35,7 @@ abstract class _Pokemon extends Model {
 }
 ```
 
-`package:angel3_orm_generator` will generate code that lets
-you do the following:
+`package:angel3_orm_generator` will generate code that lets you do the following:
 
 ```dart
 app.get('/trainer/int:id/first_moves', (req, res) async {
@@ -49,10 +48,8 @@ app.get('/trainer/int:id/first_moves', (req, res) async {
 });
 ```
 
-This section of the Angel3 documentation consists mostly of
-guides, rather than technical documentation.
+This section of the Angel3 documentation consists mostly of guides, rather than technical documentation.
 
-For more in-depth documentation, see the actual
-`angel3_orm` project on Github:
+For more in-depth documentation, see the actual `angel3_orm` project on Github:
 
 <https://github.com/dukefirehawk/angel/tree/master/packages/orm>

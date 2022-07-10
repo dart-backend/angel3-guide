@@ -1,9 +1,8 @@
-# Rendering-Views
+# Templates and Views
 
 * [Rendering Views](rendering-views.md#rendering-views)
   * [Example](rendering-views.md#example)
   * [`ViewGenerator` typedef](rendering-views.md#viewgenerator)
-* [Next Up...](rendering-views.md#next-up)
 
 ## Rendering Views
 
@@ -13,7 +12,7 @@ There is a Mustache templating plug-in for Angel available: [https://github.com/
 
 There is also [Jael](https://github.com/dukefirehawk/angel/tree/master/packages/jael3), one of the few actively-developed HTML templating engines for Dart.
 
-Angel support for Jael is provided through [`package:angel_jael`](https://github.com/dukefirehawk/angel/tree/master/packages/angel_jael).
+Angel support for Jael is provided through [`package:angel3_jael`](https://github.com/dukefirehawk/angel/tree/master/packages/angel_jael).
 
 Another is Jinja2, which was recently ported by to Dart by
 [Olzhas Suleimen](https://github.com/ykmnkmi/jinja.dart).
@@ -54,8 +53,3 @@ void main() async {
   await app.startServer();
 }
 ```
-
-## Next Up
-
-1. Explore Angel's isomorphic [client library](https://github.com/dukefirehawk/angel/tree/master/packages/client).
-2. Find out how to [test Angel applications](testing.md).
