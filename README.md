@@ -8,8 +8,6 @@
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/angel_dart/discussion)
 [![License](https://img.shields.io/github/license/dukefirehawk/angel)](https://github.com/dukefirehawk/angel/LICENSE)
 
-This is the documentation for [Angel3](https://github.com/dukefirehawk/angel), a backend framework in the Dart language.This website consists of multiple guides and pages about features within the framework, as wellas external links to YouTube videos, Pub packages, and Github repositories providing supplemental information.
+This is the documentation site for [Angel3](https://github.com/dukefirehawk/angel), a dart backend framework. It contains tutorials and development guide as well as links to packages of Angel3 framework.
 
-New to Angel3? Read the getting started [guide][guide], and you'll be well on your way.
-
-[guide]:https://angel3-docs.dukefirehawk.com/guides/getting-started
+New to Angel3? Read the getting started [Tutorial](https://angel3-docs.dukefirehawk.com/tutorial/getting-started), and you'll be well on your way.
