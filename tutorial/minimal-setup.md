@@ -6,7 +6,7 @@ Any Dart project needs a project file, called `pubspec.yaml`. This file almost a
 
 ```yaml
 dependencies:
-    angel3_framework: ^4.0.0
+    angel3_framework: ^6.0.0
 ```
 
 You might also want to install packages such as `angel3_static`, `angel3_cache`, `angel3_jael`, and `angel3_cors`.
@@ -42,7 +42,3 @@ That's it! Your server is ready to serve requests. You can easily start it from 
 ```dart
 dart bin/main.dart
 ```
-
-## Next Up
-
-Continue reading to learn about [Basic Routing](basic-routing.md).

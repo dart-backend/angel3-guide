@@ -1,4 +1,4 @@
-# Basi ORM
+# Basic ORM
 
 Before starting with the ORM, it is highly recommended to familiar one's self with `package:angel3_serialize`, as it is the foundation for `package:angel3_orm`:
 

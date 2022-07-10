@@ -1,6 +1,6 @@
-# Developer Guide
+# Basic
 
-- [Developer Guide](#developer-guide)
+- [Basic](#basic)
   - [Interpolation](#interpolation)
   - [Attributes](#attributes)
     - [Attribute Values](#attribute-values)
