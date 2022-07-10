@@ -2,12 +2,12 @@
 
 * [Foreword](foreword.md)
 * Tutorial
-  * [Getting Started](guides/getting-started.md)
-  * [Minimal Setup](guides/minimal-setup.md)
+  * [Getting Started](tutorial/getting-started.md)
+  * [Minimal Setup](tutorial/minimal-setup.md)
 * Command Line Interface
   * [Setup](cli/cli-setup.md)
 * Templates and Views
-  * [Rendering Views](views/rendering-views.md)
+  * [Server Side Rendered Views](views/rendering-views.md)
   * JAEL3
     * [About](views/jael/about.md)
     * [Basics](views/jael/Basics.md)
@@ -44,7 +44,6 @@
   * [Parsing Request Bodies](guides/body-parsing.md)
   * [Serialization](guides/serialization.md)
   * [Service Basics](guides/service-basics.md)
-  * [REST Client](https://pub.dev/packages/angel3_client)
   * [Testing](guides/testing.md)
   * [Error Handling](guides/error-handling.md)
   * [Pattern Matching and `Parameter`](guides/pattern-matching.md)
@@ -81,6 +80,7 @@
   * [Pagination](https://github.com/dukefirehawk/angel/tree/master/packages/paginate)
   * [Polling](https://github.com/dukefirehawk/angel/tree/master/packages/poll)
   * [Production Utilities](https://github.com/dukefirehawk/angel/tree/master/packages/production)
+  * [REST Client](https://pub.dev/packages/angel3_client)
   * [Reverse Proxy](https://github.com/dukefirehawk/angel/tree/master/packages/proxy)
   * [Router](https://github.com/dukefirehawk/angel/tree/master/packages/route)
   * [Serialization](https://github.com/dukefirehawk/angel/tree/master/packages/serialize/angel_serialize)

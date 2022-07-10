@@ -1,4 +1,4 @@
-# Templates and Views
+# Server Side Rendered Views
 
 * [Rendering Views](rendering-views.md#rendering-views)
   * [Example](rendering-views.md#example)
