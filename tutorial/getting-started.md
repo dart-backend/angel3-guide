@@ -1,32 +1,23 @@
 # Getting Started
 
-In this first guide, we will:
+In this first tutorial, we will:
 
-* Download the `angel3_framework` package from Pub.
-* Launch an `AngelHttp` server.
-* Add some basic routes to an app.
+* Download the `angel3_framework` package from `pub.dev`.
+* Launch `Angel3` as backend server.
+* Add some basic routing.
 * Add a 404 error handler.
 
-The source code for this example can be found here:
+The source code for this example can be found at: <https://github.com/dukefirehawk/angel3-examples/tree/master/docs_examples/getting_started>
 
-<https://github.com/dukefirehawk/angel3-examples/tree/master/docs_examples/getting_started>
+## Prerequisite
 
-## First Steps
+* This tutorial uses command line interface. If you are not well-versed working with it, just copy/paste the code snippets while going through this tutorial.
 
-This tutorial relies on the terminal/command-line, so if are not well-versed in using such tools, you should
-copy/paste the snippets found on this page.
+* The Dart SDK version 2.16 or later is required. Please follow the instructions on the [official dart site](https://dart.dev/get-dart) to download and install it. 
 
-If you have not yet installed the Dart SDK, then it is required that you do so before continuing:
+* The [`curl`](https://curl.haxx.se/download.html) tool will be used to send requests to the backend server.
 
-<https://dart.dev/get-dart>
-
-In addition, the `curl` tool will be used to send requests to our server:
-
-<https://curl.haxx.se/download.html>
-
-Also, you will need to have the Dart SDK in your `PATH` environment variable, so that the `dart` and `pub` executables can be found from your command line:
-
-Finally, note that some steps will mention Unix-specific programs, like `nano`. Windows users should instead use Notepad. Alternative programs will be mentioned where relevant.
+* Note that some steps will mention Unix-specific programs, like `vim`. Windows users should instead use `Notepad++`. Alternative programs will be mentioned where relevant.
 
 ## Project Setup
 
@@ -45,9 +36,9 @@ dependencies:
     angel3_framework: ^6.0.0
 ```
 
-Now, just run `dart pub get`, which will install the `angel3_framework` library, and its dependencies:
+Now, just run `dart pub get`, which will install the `angel3_framework` library, and its related dependencies:
 
-```yaml
+```bash
 Resolving dependencies... (3.3s)
 + angel3_container 6.0.0
 + angel3_framework 6.0.0
@@ -56,9 +47,9 @@ Resolving dependencies... (3.3s)
 Changed 33 dependencies!
 ```
 
-## Launching an HTTP Server
+## Launching the Backend Server
 
-Angel3 can speak different protocols, but more often than not, we'll want it to speak HTTP.
+`Angel3` can speak different protocols, but more often than not, we'll want it to speak HTTP.
 
 Create a directory named `bin`, and a file within `bin` named `main.dart`.
 
@@ -140,8 +131,7 @@ It consists of the following components:
 * A call to `app.get`
 * A string, `'/'`,
 * A closure, taking two parameters: `req` and `res`
-* The call `res.write('Hello, world!')`, which is
-also the return value of the aforementioned closure.
+* The call `res.write('Hello, world!')`, which is also the return value of the aforementioned closure.
 
 `Angel.get` is one of several methods (`addRoute`, `post`, `patch`, `delete`, `head`, `get`) that can be used to add routes that correspond to [HTTP methods](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html) to an `Angel` server instance.
 
@@ -189,7 +179,7 @@ host=[localhost:3000]
 
 Web applications very often have users send data upstream, where it is then handled by the server.
 
-Angel3 has built-in functionality for parsing bodies of three MIME types:
+`Angel3` has built-in functionality for parsing bodies of three MIME types:
 
 * `application/json`
 * `application/x-www-form-urlencoded`
@@ -267,14 +257,10 @@ You will now see `'Oops! You forgot to include your name.'` printed to the conso
 
 ## Conclusion
 
-Congratulations on creating your first Angel3 server! Hopefully this is just one of many more to come.
+Congratulations on creating your first Angel3 backend server! Hopefully this is just one of many more to come.
 
 The choice is now yours: either continue reading the other guides posted on this site, or tinker around and learn the ropes yourself.
 
-You can find `angel3_*` packages on the Pub site, and read the documentation found in their respective `README` files:
+You can find `angel3_*` packages on the [Pub.dev](https://pub.dev) site, and read the documentation found in their respective `README` files.
 
-<https://pub.dev/packages?q=dependency%3Aangel3_framework>
-
-Don't forget that for discussion and support, you can either file a Github issue, or join the Gitter chat:
-
-<https://gitter.im/angel_dart/discussion>
+Don't forget that for discussion and support, you can either file a Github issue, or join the [Gitter chat](https://gitter.im/angel_dart/discussion)
