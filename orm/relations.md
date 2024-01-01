@@ -30,17 +30,13 @@ You can manually override these:
 Car get car;
 ```
 
-The ORM computes relationships by performing `JOIN`s, so that even complex
-relationships can be fetched using just one query, rather than multiple.
+The ORM computes relationships by performing `JOIN`s, so that even complex relationships can be fetched using just one query, rather than multiple.
 
 ## Many-to-many Relationships
 
-A very common situation that occurs when using relational databases is where two tables
-may be bound to multiple copies of each other. For example, in a school database, each student
-could be registered to multiple classes, and each class could have multiple students taking it.
+A very common situation that occurs when using relational databases is where two tables may be bound to multiple copies of each other. For example, in a school database, each student could be registered to multiple classes, and each class could have multiple students taking it.
 
-This is typically handled by creating a third table, which joins the two together.
-In the Angel ORM, this is relatively straightforward:
+This is typically handled by creating a third table, which joins the two together. In the Angel ORM, this is relatively straightforward:
 
 ```dart
 @orm
