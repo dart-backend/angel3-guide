@@ -8,7 +8,7 @@
 
 ## Requests and Responses
 
-Angel3 is inspired by Express, and such, request handlers in general resemble those from Express. Request handlers can return any Dart object \(see [how they are handled](requests-and-responses.md#return-values)\). Basic request handlers accept two parameters:
+Angel3 is inspired by Express, and as such, request handlers in general resemble those from Express. Request handlers can return any Dart object \(see [how they are handled](requests-and-responses.md#return-values)\). Basic request handlers accept two parameters:
 
 * [`RequestContext`](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/RequestContext-class.html) - Contains vital information about the client requesting a resource, such as request method, request body, IP address, etc. The request object can also be used to pass information from one handler to the next.
 * [`ResponseContext`](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/ResponseContext-class.html) - Allows you to send headers, write data, and more, to be sent to the client. To prevent a response from being modified by future handlers, call `res.end()` to prevent further writing.
@@ -18,11 +18,16 @@ Angel3 is inspired by Express, and such, request handlers in general resemble th
 Request handlers can return any Dart value. Return values are handled as follows:
 
 * If you return a `bool`: Request handling will end prematurely if you return `false`, but it will continue if you return `true`.
-* If you return `null`: Request handling will continue, unless you closed the response object by calling [`res.close()`](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/ResponseContext/close.html). Some response methods, such as [`res.redirect()`](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/ResponseContext/redirect.html) or [`res.serialize()`](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/ResponseContext/serialize.html) automatically close the response.
+* If you return `null`, or nothing: Request handling will end, as if you returned `false`. Return `true` from a middleware that lets the request through. The response is sent as the handler left it, such as after `res.write()`. Some response methods, such as [`res.redirect()`](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/ResponseContext/redirect.html) or [`res.serialize()`](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/ResponseContext/serialize.html), automatically close the response.
 * A `RequestHandler`: the returned handler will be executed.
+* Another function: it will be called with its parameters injected, which needs a [reflector](dependency-injection.md#enabling-dart-mirrors-or-other-reflection).
 * A `Stream`: `toList` will be called, and then returned.
 * A `Future`: it will be awaited, and then returned.
-* Anything else: Whatever other Dart value you return will be serialized as a response. The default method is to encode responses as JSON, using `json.encode`. However, you can change a response's serialization method by setting `res.serializer = foo;`. If you want to assign the same serializer to all responses, globally set [`serializer`](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/Angel/serializer.html) on your Angel instance. If you are only returning JSON-compatible Dart objects, like Maps or Lists, you might consider injecting `JSON.encode` as a serializer, to improve runtime performance (this is the default in `2.0`).
+* Anything else: Whatever other Dart value you return will be serialized as a response. The default method is to encode responses as JSON, using `json.encode`. However, you can change a response's serialization method by setting `res.serializer = foo;`. If you want to assign the same serializer to all responses, globally set [`serializer`](https://pub.dev/documentation/angel3_framework/latest/angel3_framework/Angel/serializer.html) on your Angel instance. The default serializer is `json.encode`, which handles JSON-compatible Dart objects, like Maps and Lists, and objects with a `toJson` method.
+
+### Buffered and Streamed Responses
+
+By default, what a handler writes is streamed to the client. Call `res.useBuffer()` to buffer the response instead, so that it can still be changed, for example by `responseFinalizers`, until the request ends. A buffered response is sent with a `Content-Length` header; set `res.chunked = true` to send it with chunked transfer encoding.
 
 ### Other Parameters
 
@@ -30,11 +35,9 @@ Request handlers can take other parameters, instead of just a `RequestContext` a
 
 ### Queries, Files and Bodies
 
-You can access a mutable `Map` based on the URI query parameters by calling `RequestContext.queryParameters`.
+You can access a mutable `Map` based on the URI query parameters through `RequestContext.queryParameters`.
 
 Consult the [body parsing documentation](body-parsing.md) to understand how to handle user input.
-
-If you [write your own plugin](writing-a-plugin.md), be sure to use the `lazy` alternatives.
 
 For more information, see the API docs:
 
@@ -44,4 +47,4 @@ For more information, see the API docs:
 
 ## Next Up
 
-Now, let's learn about Angel3's [Request Lifecycle](request-lifecyle.md).
+Now, let's learn about Angel3's [Request Lifecycle](request-lifecycle.md).

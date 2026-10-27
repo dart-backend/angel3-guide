@@ -1,12 +1,12 @@
 # Angel3 CLI
 
-The [Angel3 CLI](https://github.com/dukefirehawk/angel3-cli) is a friendly command line tool enabling quick scaffolding of common project
+The [Angel3 CLI](https://github.com/dart-backend/angel3-cli) is a friendly command line tool enabling quick scaffolding of common project
 constructs.
 
 To install it:
 
 ```bash
-  pub global activate angel3_cli
+  dart pub global activate angel3_cli
 ```
 
 You'll then be able to run:
@@ -21,7 +21,7 @@ The above will print documentation about each available command.
 
 ### New Projects
 
-Bootstrapping a new Angel project, complete, CORS, hot-reloading, and more, is as easy as running:
+Bootstrapping a new Angel3 project, complete with CORS, hot-reloading, and more, is as easy as running:
 
 ```bash
     angel3 init <dirname>
@@ -33,11 +33,12 @@ You'll be ready to go after this!
 
 Use `angel3 make` to scaffold common Dart files:
 
-* `angel3 make service` - Generate an in-memory, MongoDB, RethinkDB, file-based, or other [service](service-basics.md).
+* `angel3 make service` - Generate an in-memory, MongoDB, RethinkDB, file-based, or other [service](../guides/service-basics.md).
 * `angel3 make test`
 * `angel3 make plugin`
 * `angel3 make model`
 * `angel3 make model --orm`
+* `angel3 make migration`
 * `angel3 make controller`
 
 ### Deployment helpers

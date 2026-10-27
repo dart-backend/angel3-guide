@@ -18,7 +18,7 @@ Of course, you will probably want to handle these errors, and potentially render
 
 Fortunately, Angel3 runs every request in a `try`/`catch`, and gracefully intercepts exceptions. This enables Angel3 to catch errors on every request, and not crash the server. Unhandled errors are wrapped in instances of `AngelHttpException`, which can be handled as follows.
 
-You can also turn on the `useZone` flag in `AngelHttp` or another driver (i.e. HTTP/2) to run each request in its own `Zone`, though by Angel3, this is no longer necessary.
+Each driver, such as `AngelHttp` or `AngelHttp2`, runs each request in its own `Zone` by default; pass `useZone: false` to turn this off. Malformed requests, such as bad headers or bodies, are answered with a `400 Bad Request`. If a handler fails after the response's headers were sent (`res.headersSent`), the response is aborted, as its status can no longer be changed.
 
 To provide custom error handling logic:
 
@@ -34,7 +34,7 @@ app.errorHandler = (e, req, res) {
     // Otherwise, use the default functionality.
     return oldErrorHandler(e, req, res);
   }
-}
+};
 ```
 
 ## Next Up

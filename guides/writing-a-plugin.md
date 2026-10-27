@@ -13,7 +13,6 @@ AngelConfigurer awesomeify({String message = 'This request was intercepted by an
 }
 
 class MyAwesomePlugin {
-  @override
   Future<void> configureServer(Angel app) async {
     app.responseFinalizers.add((req, res) async {
       res.headers['x-be-awesome'] = 'All the time :)';
@@ -38,7 +37,7 @@ using your plugin on multiple platforms.
 * Avoid checking `app.isProduction`; leave that to user instead.
 * Always use `req.parseBody()` before accessing the request body.
 
-Finally, your plugin should expose common options in a simple way. For example, the \(deprecated\) [compress](https://github.com/angel-dart/compress) plugin has a shortcut function, `gzip`, to set up GZIP compression, whereas for any other codec, you would manually have to specify additional options.
+Finally, your plugin should expose common options in a simple way. For example, a compression plugin could have a shortcut function, `gzip`, to set up GZIP compression, whereas for any other codec, you would manually have to specify additional options.
 
 This can greatly aid readability, as there is simply less text to read in the most common cases.
 

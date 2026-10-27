@@ -6,50 +6,59 @@
 
 ## Rendering Views
 
-Just like `res.render` in Express, Angel's `ResponseContext` exposes a `Future` called `render`. This invokes whichever function is assigned to your server's `viewGenerator`.
+Just like `res.render` in Express, Angel3's `ResponseContext` exposes a `Future` called `render`. This invokes whichever function is assigned to your server's `viewGenerator`.
 
-There is a Mustache templating plug-in for Angel available: [https://github.com/dukefirehawk/angel/tree/master/packages/mustache](https://github.com/dukefirehawk/angel/tree/master/packages/mustache)
+The following template engines have Angel3 plug-ins:
 
-There is also [Jael](https://github.com/dukefirehawk/angel/tree/master/packages/jael3), one of the few actively-developed HTML templating engines for Dart.
-
-Angel support for Jael is provided through [`package:angel3_jael`](https://github.com/dukefirehawk/angel/tree/master/packages/angel_jael).
-
-Another is Jinja2, which was recently ported by to Dart by
-[Olzhas Suleimen](https://github.com/ykmnkmi/jinja.dart).
-
-Angel support for Jinja2 can be found here:
-<https://github.com/dukefirehawk/angel/tree/master/packages/angel_jinja>
+* [Jael](jael/about.md), one of the few actively-developed HTML templating engines for Dart. Angel3 support for Jael is provided through [`package:angel3_jael`](https://pub.dev/packages/angel3_jael).
+* Mustache, through [`package:angel3_mustache`](https://pub.dev/packages/angel3_mustache).
+* Jinja, ported to Dart by [Olzhas Suleimen](https://github.com/ykmnkmi/jinja.dart), through [`package:angel3_jinja`](https://pub.dev/packages/angel3_jinja).
+* Markdown, through [`package:angel3_markdown`](https://pub.dev/packages/angel3_markdown).
+* HTML built in Dart with `belatuk_html_builder`, through [`package:angel3_html`](https://pub.dev/packages/angel3_html).
 
 ### Example
 
 ```dart
-app.get('/view', (req, res) async => await res.render('hello', {'locals': ['foo', 'bar']});
+app.get('/view', (req, res) => res.render('hello', {'locals': ['foo', 'bar']}));
+```
+
+With Jael, for example:
+
+```dart
+import 'package:angel3_framework/angel3_framework.dart';
+import 'package:angel3_jael/angel3_jael.dart';
+import 'package:file/local.dart';
+
+Future<void> configureServer(Angel app) async {
+  var fileSystem = const LocalFileSystem();
+  await app.configure(jael(fileSystem.directory('views')));
+}
 ```
 
 ### ViewGenerator
 
-Angel declares the following typedef:
+Angel3 declares the following typedef:
 
 ```dart
 /// A function that asynchronously generates a view from the given path and data.
-typedef Future<String> ViewGenerator(String path, [Map data]);
+typedef ViewGenerator = FutureOr<String> Function(String path, [Map<String, dynamic>? data]);
 ```
 
 A templating plug-in can assign one of these to `app.viewGenerator` to set itself up:
 
 ```dart
-import 'dart:io';
 import 'package:angel3_framework/angel3_framework.dart';
+import 'package:angel3_framework/http.dart';
 
 Future<void> plugin(Angel app) async {
-  app.viewGenerator = (String path, [Map data]) async {
-    return "Requested view $path with locals: $data";
+  app.viewGenerator = (String path, [Map<String, dynamic>? data]) async {
+    return 'Requested view $path with locals: $data';
   };
 }
 
 void main() async {
   var app = Angel();
   await app.configure(plugin);
-  await app.startServer();
+  await AngelHttp(app).startServer('localhost', 3000);
 }
 ```

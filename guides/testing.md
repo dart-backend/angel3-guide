@@ -9,29 +9,36 @@
 
 ## Testing
 
-Dart already has fantastic testing support, through a library of [testing helpers](https://github.com/dukefirehawk/angel/tree/master/packages/test) that will make test writing faster. The following functions are exported by [`package:angel3_test`](https://github.com/dukefirehawk/angel/tree/master/packages/test), and will make your testing much easier.
+Dart already has fantastic testing support, and Angel3 adds a library of [testing helpers](https://github.com/dart-backend/angel/tree/master/packages/test) that will make test writing faster. The following functions are exported by [`package:angel3_test`](https://pub.dev/packages/angel3_test), and will make your testing much easier.
+
+```yaml
+dev_dependencies:
+  angel3_test: ^10.0.0
+  test: ^1.25.0
+```
 
 ### connectTo
 
 [Full definition](https://pub.dev/documentation/angel3_test/latest/angel3_test/connectTo.html)
 
-This function will start `app` on an available port, and return a `TestClient` instance \(based on [`package:angel3_client`](https://github.com/dukefirehawk/angel/tree/master/packages/client)\) configured to send requests to the server. The client also supports session manipulation.
+This function returns a `TestClient` instance \(based on [`package:angel3_client`](https://github.com/dart-backend/angel/tree/master/packages/client)\) that sends mock requests to `app`, without binding it to a port. The client also supports session manipulation.
 
 ```dart
 void main() {
-  TestClient client;
+  late TestClient client;
 
   setUp(() async {
-    client = await connectTo(myApp);
+    var app = Angel()..get('/hello', (req, res) => {'hello': 'world'});
+    client = await connectTo(app);
   });
 
   // Shut down server, and cancel pending requests
   tearDown(() => client.close());
 
   test('hello', () async {
-    // The server URL is automatically prepended to paths.
     // This returns an http.Response. :)
-    var response = await client.get('/hello');
+    var response = await client.get(Uri.parse('/hello'));
+    expect(response, allOf(hasStatus(200), isJson({'hello': 'world'})));
   });
 }
 ```
@@ -46,9 +53,9 @@ A `Matcher` that asserts the given `http.Response` has the given `status` code.
 
 ### More Matchers
 
-The complete set of `angel3_test` Matchers can be found [here](https://pub.dev/documentation/angel3_test/latest/angel3_test/angel_test-library.html).
+Other matchers include `hasContentType`, `hasHeader`, `hasBody`, `hasValidBody` and `isAngelHttpException`. The complete set of `angel3_test` Matchers can be found [here](https://pub.dev/documentation/angel3_test/latest/angel3_test/).
 
 ## Next Up
 
 1. Find out how to [handle errors](error-handling.md) in an Angel3 application.
-2. Learn how to use the handy [Angel3 CLI](https://github.com/dukefirehawk/angel3-cli).
+2. Learn how to use the handy [Angel3 CLI](../cli/cli-setup.md).

@@ -8,7 +8,7 @@ Interactive Web applications typically require some type of user input (whether 
 
 ## Body Parsing
 
-All you need to do to parse a request body is call `RequestContext.parseBody`. This method is idempotent, and only ever performs the body-parsing logic once, so it is recommended to call it any time you access the request body, unless you are 100% sure that it has been parsed before.
+All you need to do to parse a request body is call `RequestContext.parseBody`. This method is idempotent, and only ever performs the body-parsing logic once, even when it is called again before the first call completes, so it is recommended to call it any time you access the request body, unless you are 100% sure that it has been parsed before.
 
 You can access the body as a `Map`, `List`, or `Object`, depending on your use case:
 
@@ -21,7 +21,7 @@ app.post('/my_form', (req, res) async {
     var userId = req.bodyAsMap['user_id'] as String;
 
     // If the user posted a List, i.e., through JSON:
-    var count = req.bodyAsList.length;
+    var count = req.bodyAsList!.length;
 
     // To access the body, regardless of its runtime type:
     var objectBody = req.bodyAsObject as SomeType;
@@ -36,7 +36,7 @@ In the case of `multipart/form-data`, Angel will also populate the `uploadedFile
 app.post('/upload', (req, res) async {
     await req.parseBody();
 
-    var file = req.uploadedFiles.first;
+    var file = req.uploadedFiles!.first;
 
     if (file.contentType.type == 'video') {
         // Write directly to a file.
@@ -55,7 +55,7 @@ Future<void> unzipPlugin(Angel app) async {
     app.fallback((req, res) async {
         if (!req.hasParsedBody
             && req.contentType.mimeType == 'application/zip') {
-            var archive = await decodeZip(req.body);
+            var archive = await decodeZip(req.body!);
             var fields = <String, dynamic>{};
 
             for (var file in archive.files) {
@@ -70,4 +70,19 @@ Future<void> unzipPlugin(Angel app) async {
 }
 ```
 
-If the user did not provide a `content-type` header when `parseBody` is called, a `400 Bad Request` error will be thrown.
+If the user did not provide a `content-type` header when `parseBody` is called, or the body is malformed, a `400 Bad Request` error will be thrown. After a failed parse, `bodyAsMap` and the other body getters are empty.
+
+## Limiting the Size of Bodies
+
+`parseBody` reads at most `app.maxBodySize` bytes, 10 MB by default, and answers larger requests with `413 Payload Too Large`. Raise the limit for one route by setting `req.maxBodySize` before the body is parsed, or set `app.maxBodySize = null` to remove it:
+
+```dart
+var app = Angel()..maxBodySize = 1024 * 1024; // 1 MB for the whole app
+
+app.post('/upload', uploadHandler, middleware: [
+  (req, res) {
+    req.maxBodySize = 100 * 1024 * 1024; // 100 MB
+    return true;
+  },
+]);
+```

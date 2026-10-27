@@ -4,7 +4,7 @@ Installing `angel3_cli` installs a command line dart application in your local e
 
 ## Installation
 
-* Prerequisite: [Dart SDK](https://www.dartlang.org/downloads/) must be installed
+* Prerequisite: [Dart SDK](https://dart.dev/get-dart) 3.13 or later must be installed
 
 * Open a terminal screen and run the following command.
 
@@ -26,7 +26,14 @@ Installing `angel3_cli` installs a command line dart application in your local e
     angel3 init
   ```
 
-* Follows the instructions given to complete setting up the new project. Choose from one of the available [Angel3 templates](https://github.com/dukefirehawk/boilerplates) to best represents what you would like your backend server to do. A well structured project will be generated and ready for development.
+* Follow the instructions given to complete setting up the new project. Choose the one of the available [Angel3 templates](https://github.com/dart-backend/boilerplates) that best represents what you would like your backend server to do. A well structured project will be generated and ready for development:
+
+  * **Basic**: a basic starter application
+  * **ORM for PostgreSQL**: a starter application with the ORM and PostgreSQL
+  * **ORM for MySQL/MariaDB**: a starter application with the ORM and MySQL or MariaDB
+  * **GraphQL**: a starter application with GraphQL
+
+* At the time of writing, the templates use Angel3 9.x packages. To use 10.0.0, change their constraints to `^10.0.0`, run `dart pub upgrade`, and follow the [10.0.0 Migration Guide](../migration/migration-guide-10.md).
 
 ### Starting Backend Server
 
