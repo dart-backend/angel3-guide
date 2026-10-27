@@ -4,14 +4,14 @@ Dart is an imperative language, where you have the agency to cast values to othe
 to execute multiple statements, and ultimately create a program by explicitly declaring
 every action that should be taken.
 
-HTML, and subseqently, Jael, are declarative markup languages, and thus give you
+HTML, and subsequently, Jael, are declarative markup languages, and thus give you
 considerably less control over the flow of data and type information. Functionality
 like type checks, which are manageable in Dart, are both unintuitive and verbose in a markup language.
 
 To compensate, Jael can enable or disable what can be referred to as *strict resolution*.
 `package:angel3_jael` by default disables strict resolution, and
 `strictResolution` is available as a parameter to both the
-`jael` function in Angel3, and the `Render()` constructor in Jael.
+`jael` function in Angel3, and the `render` method of the `Renderer` class in Jael.
 
 Jael's expression parser is **not** the one from `package:analyzer`, so the evaluation
 of expressions at runtime is up to the `Renderer` class. When strict resolution is on, all
@@ -37,7 +37,8 @@ then an error will be thrown.
 If strict resolution is **off**:
 
 * If `user` is not in the scope of values, Jael will just substitute it with `null`.
-* If `user?.name` is `null`, Jael will substitute the expression with `null`.
+* If `user` has no `name` member, or `user` is `null`, Jael will substitute `user.name` with `null`.
+* As in Dart, `?.` makes the rest of the chain `null`, so `user?.name?.isNotEmpty` is `null` if `user` is.
 * If the expression `user?.name?.isNotEmpty` does not evaluate to `true`
 (that is to say, it *can* be `null`!), then the `ul` will simply not be rendered.
 

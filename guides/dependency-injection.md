@@ -1,67 +1,78 @@
 # Dependency-Injection
 
-Angel3 uses a [container hierarchy](https://github.com/dukefirehawk/angel/tree/master/packages/container) for DI. Dependency injection makes it easier to build applications with multiple moving parts, because logic can be contained in one location and reused at another place in your application.
+Angel3 uses a [container hierarchy](https://github.com/dart-backend/angel/tree/master/packages/container) for DI. Dependency injection makes it easier to build applications with multiple moving parts, because logic can be contained in one location and reused at another place in your application.
 
 ## Adding a Singleton
 
 ```dart
-Future<void> myPlugin(Angel app) async  {
-  app.container.registerSingleton(SomeClass("foo"));
+Future<void> myPlugin(Angel app) async {
+  app.container.registerSingleton(SomeClass('foo'));
   app.container.registerSingleton<SomeAbstractClass>(MyImplClass());
-  app.container.registerFactory((_) => SomeClass("foo"));
+  app.container.registerFactory((_) => SomeClass('foo'));
   app.container.registerLazySingleton((_) => SomeOtherClass());
   app.container.registerNamedSingleton('yes', Yes());
 }
 ```
 
-You can also inject within a `RequestContext`, as each one has a `controller` property that extends from the app's global container.
+You can also inject within a `RequestContext`, as each one has a `container` property that extends from the app's global container.
 
 Accessing these injected properties is easy, and strongly typed:
 
 ```dart
 // Inject types.
-var todo = req.container.make<Todo>();
+var todo = req.container!.make<Todo>();
 print(todo.isComplete);
 
 // Or by name
-var db = await req.container.findByName<Db>('database');
+var db = req.container!.findByName<Db>('database');
 var collection = db.collection('pets');
 ```
+
+Registering and reading instances, as above, needs no reflection.
 
 ## In Routes and Controllers
 
 In Angel3, by wrapping a function in a call to `ioc`, you can automatically inject the dependencies of any route handler.
 
 ```dart
-app.get("/some/class/text", ioc((SomeClass singleton) => singleton.text)); // Always "foo"
+app.get('/some/class/text', ioc((SomeClass singleton) => singleton.text)); // Always "foo"
 
-app.post("/foo", ioc((SomeClass singleton, {Foo optionalInjection}));
+app.post('/foo', ioc((SomeClass singleton, {Foo? optionalInjection}) => ...));
 
-@Expose("/my/controller")
+@Expose('/my/controller')
 class MyController extends Controller {
-
-  @Expose("/bar")
+  @Expose('/bar')
   // Inject classes from container, request parameters or the request/response context :)
-  bar(SomeClass singleton, RequestContext req) => "${singleton.text} bar"; // Always "foo bar"
+  String bar(SomeClass singleton, RequestContext req) => '${singleton.text} bar'; // Always "foo bar"
 
-  @Expose("/baz")
-  baz({Foo optionalInjection});
+  @Expose('/baz')
+  String baz({Foo? optionalInjection}) => '...';
 }
+```
+
+`ioc` finds the parameters of the function with the app's reflector. Without one, as in an app compiled with `dart compile exe`, list them in an `InjectionRequest`; a parameter given as `[name, type]` is read from the route parameters:
+
+```dart
+app.get('/greet/:name', ioc(
+  (Greeter greeter, String name) => greeter.greet(name),
+  injection: InjectionRequest.constant(required: [Greeter, ['name', String]]),
+));
 ```
 
 As you can imagine, this is very useful for managing things such as database connections.
 
 ```dart
-configureServer(Angel app) async {
-  var db = Db("mongodb://localhost:27017/db");
+Future<void> configureServer(Angel app) async {
+  var db = Db('mongodb://localhost:27017/db');
   await db.open();
   app.container.registerSingleton(db);
 }
 
-@Expose("/users")
+@Expose('/users')
 class ApiController extends Controller {
-  @Expose("/:id")
-  fetchUser(String id, Db db) => db.collection("users").findOne(where.id(ObjectId.fromHexString(id)));
+  @Expose('/:id')
+  Future fetchUser(String id, Db db) =>
+      db.collection('users').findOne(where.id(ObjectId.fromHexString(id)));
 }
 ```
 
@@ -71,17 +82,19 @@ class ApiController extends Controller {
 
 ```dart
 @Expose('/controller')
-class MyController {
+class MyController extends Controller {
   final AngelAuth auth;
   final Db db;
 
   MyController(this.auth, this.db);
 
   @Expose('/login')
-  login() => auth.authenticate('local');
+  RequestHandler login() => auth.authenticate('local');
 }
 
 void main() async {
+  var app = Angel(reflector: MirrorsReflector());
+
   // At some point in your application, register necessary dependencies as singletons...
   app.container.registerSingleton(auth);
   app.container.registerSingleton(db);
@@ -93,25 +106,59 @@ void main() async {
 
 ## Enabling `dart:mirrors` or other Reflection
 
-By default, Angel3 will use the `EmptyReflector()` to power its `Container` instances, which has no support for `dart:mirrors`, so that it can be used in contexts where Dart reflection is not available.
+By default, an `Angel` app has no reflector, so that it runs where Dart reflection is not available, such as in an app compiled with `dart compile exe`, or in Flutter. Routes, services, plug-ins, `Controller.configureRoutes` and the types registered in the container all work without one.
 
-However, by using a different `Reflector`, you can use the full power of Angel3's DI system. `angel3 init` projects use the `MirrorsReflector()` by default.
+The following use cases require reflection, and throw an error that says so without a reflector:
 
-If your application is using any sort of functionality reliant on annotations or reflection, either include the MirrorsReflector, or use a static reflector variant.
-
-The following use cases require reflection:
-
-* Use of `Controller`s, via `@Expose()` or `@ExposeWS()`
+* Use of `Controller`s, via `@Expose()`, or of `@ExposeWs()` in a `WebSocketController`
+* The `@Middleware()` and `@Hooks()` annotations
 * Use of dependency injection into **constructors**, whether in controllers or plain `container.make` calls
-* Use of the `ioc` function in any route
+* Use of the `ioc` function without an `injection:`
 
-The `MirrorsReflector` from `package:angel3_container/mirrors.dart` is by far the most convenient pattern, so use it if possible.
+To use them, pass a reflector to the app. There are two:
 
-However, the following alternatives exist:
+* `MirrorsReflector`, from [`package:angel3_container_mirrors`](https://pub.dev/packages/angel3_container_mirrors), uses `dart:mirrors`. It is the most convenient, but works only on the Dart VM (`dart run`), not in an app compiled ahead of time. Before 10.0.0, it was imported from `package:angel3_container/mirrors.dart`.
 
-* Generation via `package:angel3_container_generator`
-* Creating an instance of `StaticReflector`
-* Manually implementing the `Reflector` interface (cumbersome; not recommended)
+  ```yaml
+  dependencies:
+    angel3_container_mirrors: ^10.0.0
+  ```
+
+  ```dart
+  import 'package:angel3_container_mirrors/angel3_container_mirrors.dart';
+
+  var app = Angel(reflector: MirrorsReflector());
+  ```
+
+* `StaticReflector`, with reflection data generated by [`package:angel3_container_generator`](https://pub.dev/packages/angel3_container_generator), works everywhere, including `dart compile exe`. Mark the controllers, services and other classes to construct with `@injectable`, add a `part` directive, and run `dart run build_runner build`. Each library gets a variable named after its file, here `todoControllerReflection`:
+
+  ```dart
+  import 'package:angel3_container/angel3_container.dart';
+  import 'package:angel3_framework/angel3_framework.dart';
+
+  part 'todo_controller.g.dart';
+
+  @injectable
+  @Expose('/todos')
+  class TodoController extends Controller {
+    final TodoRepository repository;
+
+    TodoController(this.repository);
+
+    @Expose('/')
+    Future<List<Todo>> index() => repository.all();
+  }
+  ```
+
+  ```dart
+  var app = Angel(
+    reflector: StaticReflector.combine([todoControllerReflection]),
+  );
+  ```
+
+  The [README of `angel3_container_generator`](https://pub.dev/packages/angel3_container_generator) tells what it supports.
+
+Implementing the `Reflector` interface by hand is also possible, but cumbersome and not recommended.
 
 ## Next Up
 

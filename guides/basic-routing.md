@@ -4,7 +4,7 @@
 * [Route Parameters](basic-routing.md#route-parameters)
   * [Parsing Parameters](basic-routing.md#parsing-parameters)
 * [`RegExp` Routes](basic-routing.md#regexp-routes)
-* [Mounting and Sub-Apps](basic-routing.md#sub-apps)
+* [Mounting Routers](basic-routing.md#mounting-routers)
 * [Route Groups](basic-routing.md#route-groups)
 * [Extended Documentation](basic-routing.md#extended-documentation)
 * [Next Up...](basic-routing.md#next-up)
@@ -22,14 +22,16 @@ However, the following methods are available for convenience, and are the ones y
 ```dart
 app.get('<path>', requestHandler);
 app.post('<path>', requestHandler);
+app.put('<path>', requestHandler);
 app.patch('<path>', requestHandler);
 app.delete('<path>', requestHandler);
+app.head('<path>', requestHandler);
 ```
 
 Your `requestHandler` should take the following form:
 
 ```dart
-typedef FutureOr<dynamic> RequestHandler(RequestContext req, ResponseContext res);
+typedef RequestHandler = FutureOr<dynamic> Function(RequestContext req, ResponseContext res);
 ```
 
 Your `requestHandler` can return any Dart value, whether a function, or an object. See the [Requests and Responses](requests-and-responses.md#return-values) pages for detailed documentation.
@@ -55,12 +57,12 @@ Examples:
 
 ### Parsing Parameters
 
-With a special syntax, you can build routes that automatically parse parameters as `ints` or `doubles`:
+With a special syntax, you can build routes that automatically parse parameters as `ints` or `doubles`. A typed parameter matches only a number, so `/add/abc` is not routed to the handler below:
 
 ```dart
 app
-  ..get('/add/int:number', (req, res) => req.params['number'] * 3)
-  ..get('/multiply/double:number', (req, res) => req.params['number'] * 5.0);
+  ..get('/add/int:number', (req, res) => (req.params['number'] as int) * 3)
+  ..get('/multiply/double:number', (req, res) => (req.params['number'] as double) * 5.0);
 ```
 
 ## RegExp Routes
@@ -71,40 +73,37 @@ Route parameters can also have custom regular expressions, to remove the require
 app.get(r'/number/:num([0-9]+(\.[0-9])?)', ...);
 ```
 
-## Sub-Apps
+## Mounting Routers
 
-You can `mount` routers, or `use` entire sub-apps.
+You can `mount` routers, and their routes are added under the given path. Services are mounted with `use`, as [Service Basics](service-basics.md#mounting-services) describes.
 
 ```dart
 var app = Angel();
-app.get('/', 'Hello!');
+app.get('/', (req, res) => 'Hello!');
 
-var subRouter = Router()..get('/', 'Subroute');
-app.mount('/sub', subApp);
+var subRouter = Router<RequestHandler>()..get('/', (req, res) => 'Subroute');
+app.mount('/sub', subRouter);
 // Now, you can visit /sub and receive the message "Subroute"
-
-var subApp = Angel()..get('/hello', 'world');
-app.use('/api', subApp);
-
-// GET /api/hello returns "world"
 ```
 
 ## Route Groups
 
-Routes can also be grouped together. Route parameters will be applied to sub-routes automatically. Route groups can be nested as well.
+Routes can also be grouped together. Route parameters, and the group's `middleware`, will be applied to sub-routes automatically. Route groups can be nested as well.
 
 ```dart
 app.group('/user/:id', (router) {
   router
-    ..get('/messages', (String id) => fetchUserMessages(id))
-    ..group('/nested', ...);
-});
+    ..get('/messages', (req, res) => fetchUserMessages(req.params['id']))
+    ..group('/nested', (nested) {
+      // ...
+    });
+}, middleware: [requireAuthentication]);
 ```
 
 ## Extended Documentation
 
-For more documentation on the router, see [Angel3 Route Repository](https://github.com/dukefirehawk/angel/tree/master/packages/route). [`angel3_route`](https://pub.dartlang.org/packages/angel3_route) has no `dart:io` or `dart:mirrors` dependency, and it also supports browser use \(both hash and push state\).
+For more documentation on the router, see [Angel3 Route Repository](https://github.com/dart-backend/angel/tree/master/packages/route). [`angel3_route`](https://pub.dev/packages/angel3_route) has no `dart:io` or `dart:mirrors` dependency, and it also supports browser use \(both hash and push state\).
 
 ## Next Up
 
-Learn how [Requests and Responses](requests-and-responses.md) let you reuse functionality across your entire routing setup.
+Learn how [Requests and Responses](requests-and-responses.md) work, and then how [Middleware](middleware.md) lets you reuse functionality across your entire routing setup.

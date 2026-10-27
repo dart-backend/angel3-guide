@@ -6,18 +6,26 @@
   * [Named Middleware](middleware.md#named-middleware)
   * [Global Middleware](middleware.md#global-middleware)
   * [`chain([...])`](middleware.md#chain)
-  * [**Maintaining Code Readability](middleware.md#maintaining-code-readability)
+  * [Maintaining Code Readability](middleware.md#maintaining-code-readability)
 * [Next Up...](middleware.md#next-up)
 
 ## Middleware
 
-Sometimes, it becomes to recycle code to run on multiple routes. Angel3 allows for this in the form of _middleware_. Middleware are frequently used as authorization filters, or to serialize database data for use in subsequent routes. Middleware in Angel3 can be any route handler, whether a function or arbitrary data. You can also throw exceptions in middleware.
+Sometimes, it becomes necessary to recycle code to run on multiple routes. Angel3 allows for this in the form of _middleware_. Middleware are frequently used as authorization filters, or to serialize database data for use in subsequent routes. Middleware in Angel3 can be any route handler, whether a function or arbitrary data. You can also throw exceptions in middleware.
 
 ### Denying Requests via Middleware
 
 A middleware should return either `true` or `false`. If `false` is returned, no further routes will be executed. If `true` is returned, route evaluation will continue. \(more on request handler return values [here](requests-and-responses.md#return-values)\).
 
-In practice, you will only need to write a `return` statement when you are returning `true`.
+A middleware that returns anything other than `true`, such as `null` when it has no `return` statement, ends the request there, unless it has closed the response, so return `true` from every middleware that should let the request through. This applies to the handlers given to `chain` too: since 10.0.0, `chain` stops at the first handler that does not return `true`.
+
+```dart
+// Sets a value, and lets the next handler run.
+Future<bool> loadUser(RequestContext req, ResponseContext res) async {
+  req.params['user'] = await fetchUser(req.params['id']);
+  return true;
+}
+```
 
 As you can imagine, this is perfect for authorization filters.
 
@@ -42,13 +50,13 @@ app.chain([cors()]).get('/something', (req, res) {
 // multiple lines)
 app.get('/', chain([
   someMiddleware,
-  (req, res) => ...,
+  (req, res) => true,
   (req, res) {
     return 'world!';
   },
 ]));
 
-// The `middleware: ` parameter is used internally by `package:angel_route`.
+// The `middleware: ` parameter is used internally by `package:angel3_route`.
 // Avoid using it when you can.
 app.get('/', 'world!', middleware: [someListOfMiddleware]);
 ```
@@ -57,11 +65,11 @@ Though this might at first seem redundant, there are actually reasons for all th
 
 By convention, though, follow these _readability_ rules when building Angel3 servers:
 
-* Routes with no middleware should not use `chain`, `app.chain`, or `middleware. Self-explanatory.
+* Routes with no middleware should not use `chain`, `app.chain`, or `middleware`. Self-explanatory.
 * Routes with one middleware and one handler should use `app.chain([...])` when:
   * The construction of all the middleware does not take more than one line.
 * In all other cases, use the `chain` meta-handler.
-* Avoid using `middleware: ...` directly, as it is used internally `package:route`.
+* Avoid using `middleware: ...` directly, as it is used internally by `package:angel3_route`.
 
 ### Global Middleware
 
@@ -82,12 +90,13 @@ This is the same rationale behind [controllers](controllers.md) providing a `con
 
 ```dart
 class MyCanonicalHandler {
- Future<bool> handleRequest(RequestContext req, ResponseContext res) async {
-  // Do something cool...
- }
+  Future<bool> handleRequest(RequestContext req, ResponseContext res) async {
+    // Do something cool...
+    return true;
+  }
 }
 
-app.use(MyCanonicalHandler().handleRequest);
+app.fallback(MyCanonicalHandler().handleRequest);
 ```
 
 ### Maintaining Code Readability
@@ -100,7 +109,7 @@ app.get('/the-route', chain([
   'auth',
   ensureUserHasAccess(),
   (req, res) async => true,
-  takeOutTheTrash()
+  takeOutTheTrash(),
   (req, res) {
    // Your route handler here...
   }
@@ -123,15 +132,15 @@ var someOtherMiddleware = chain([
  takeOutTheTrash(),
 ]);
 
-var theActualRouteHandler = (req, res) async {
+Future theActualRouteHandler(RequestContext req, ResponseContext res) async {
  // Handle the request...
-};
+}
 
 app.get('/the-route', chain([
  authorizationMiddleware,
  someOtherMiddleware,
  theActualRouteHandler,
-]);
+]));
 
 ```
 

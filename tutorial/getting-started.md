@@ -7,13 +7,13 @@ In this first tutorial, we will:
 * Add some basic routing.
 * Add a 404 error handler.
 
-The source code for this example can be found at: <https://github.com/dukefirehawk/angel3-examples/tree/master/docs_examples/getting_started>
+The source code for this example can be found at: <https://github.com/dukefirehawk/belatuk-examples/tree/master/docs_examples/getting_started>
 
 ## Prerequisite
 
 * This tutorial uses command line interface. If you are not well-versed working with it, just copy/paste the code snippets while going through this tutorial.
 
-* The Dart SDK version 2.16 or later is required. Please follow the instructions on the [official dart site](https://dart.dev/get-dart) to download and install it. 
+* The Dart SDK version 3.13 or later is required. Please follow the instructions on the [official dart site](https://dart.dev/get-dart) to download and install it. 
 
 * The [`curl`](https://curl.haxx.se/download.html) tool will be used to send requests to the backend server.
 
@@ -33,16 +33,17 @@ Next, we create a `pubspec.yaml` file, and enter the following contents:
 ```yaml
 name: hello_angel
 dependencies:
-    angel3_framework: ^6.0.0
+    angel3_framework: ^10.0.0
 ```
 
 Now, just run `dart pub get`, which will install the `angel3_framework` library, and its related dependencies:
 
 ```bash
 Resolving dependencies... (3.3s)
-+ angel3_container 6.0.0
-+ angel3_framework 6.0.0
-+ angel3_http_exception 6.0.0
++ angel3_container 10.0.0
++ angel3_framework 10.0.0
++ angel3_http_exception 10.0.0
++ angel3_route 10.0.0
 (... more output omitted)
 Changed 33 dependencies!
 ```
@@ -68,7 +69,7 @@ Add the following to `bin/main.dart`:
 import 'package:angel3_framework/angel3_framework.dart';
 import 'package:angel3_framework/http.dart';
 
-void main() async {
+void void main() async {
     var app = Angel();
     var http = AngelHttp(app);
     await http.startServer('localhost', 3000);
@@ -89,7 +90,7 @@ You'll just see a blank line, but the fact that you *didn't see an error* means 
 
 By adding *routes* to our server, we can respond to requests sent to different URL's.
 
-Let's a handler at the *root* of our server, and print a simple `Hello, world!` message.
+Let's add a handler at the *root* of our server, and print a simple `Hello, world!` message.
 
 From this point, all new code needs to be added *before* the call to `http.startServer` (or else it will never run).
 
@@ -105,7 +106,7 @@ app.get('/', (req, res) => res.write('Hello, world!'));
 import 'package:angel3_framework/angel3_framework.dart';
 import 'package:angel3_framework/http.dart';
 
-main() async {
+void main() async {
     var app = Angel();
     var http = AngelHttp(app);
     app.get('/', (req, res) => res.write('Hello, world!'));
@@ -133,7 +134,7 @@ It consists of the following components:
 * A closure, taking two parameters: `req` and `res`
 * The call `res.write('Hello, world!')`, which is also the return value of the aforementioned closure.
 
-`Angel.get` is one of several methods (`addRoute`, `post`, `patch`, `delete`, `head`, `get`) that can be used to add routes that correspond to [HTTP methods](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html) to an `Angel` server instance.
+`Angel.get` is one of several methods (`addRoute`, `get`, `post`, `put`, `patch`, `delete`, `head`) that can be used to add routes that correspond to [HTTP methods](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html) to an `Angel` server instance.
 
 Combined with the path, `'/'`, this signifies that whenever a request is sent to the *root* of our server, which in this case is the URL `http://localhost:3000`, the attached closure should be invoked.
 
@@ -189,7 +190,7 @@ Web applications very often have users send data upstream, where it is then hand
 
 So, as long as the user sends data in one of the above forms, we can handle it in the same way.
 
-Add the following route.It will listen on the path `'/greet'` for a `POST` request, and then attempt to parse the incoming reques t body.
+Add the following route. It will listen on the path `'/greet'` for a `POST` request, and then attempt to parse the incoming request body.
 
 Afterwards, it reads the `name` value from the body, and computes a greeting string.
 
@@ -237,11 +238,12 @@ To add your own logic, set the `errorHandler` of your `Angel` instance. It is a 
 var oldErrorHandler = app.errorHandler;
 
 app.errorHandler = (e, req, res) {
-if (e.statusCode == 400) {
-    res.write('Oops! You forgot to include your name.');
-} else {
-    return oldErrorHandler(e, req, res);
-}
+    if (e.statusCode == 400) {
+        res.write('Oops! You forgot to include your name.');
+    } else {
+        return oldErrorHandler(e, req, res);
+    }
+};
 ```
 
 Note that we kept a reference to the previous error handler, so that existing logic can be reused if the case we wrote for is not handled.
@@ -263,4 +265,4 @@ The choice is now yours: either continue reading the other guides posted on this
 
 You can find `angel3_*` packages on the [Pub.dev](https://pub.dev) site, and read the documentation found in their respective `README` files.
 
-Don't forget that for discussion and support, you can either file a Github issue, or join the [Gitter chat](https://gitter.im/angel_dart/discussion)
+Don't forget that for discussion and support, you can either file a [GitHub issue](https://github.com/dart-backend/angel/issues), or join the [Discord server](https://discord.gg/3X6bxTUdCM).

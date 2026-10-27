@@ -1,6 +1,8 @@
 # Pattern Matching
 
-`package:angel3_framework` has nice support for injecting values from HTTP headers, query string, and session/cookie values, as well as pattern-matching for request handlers.
+`package:angel3_framework` has nice support for injecting values from HTTP headers, query string, and session/cookie values, as well as pattern-matching for request handlers. The values can be of any type the value converts to, such as `int`.
+
+The annotations are read with the app's reflector, so `ioc` handlers that use them need one; see [Enabling `dart:mirrors` or other Reflection](dependency-injection.md#enabling-dart-mirrors-or-other-reflection).
 
 These act as a clean shorthand for commonly-used
 functionality.
