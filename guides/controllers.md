@@ -37,7 +37,7 @@ main() async {
 }
 ```
 
-Rather than extending from `Routable`, controllers act as [plugins](using-plugins.md) when called. This pseudo-plugin will wire all your routes for you.
+Rather than extending from `Routable`, controllers act as [plugins](using-plug-ins.md) when called. This pseudo-plugin will wire all your routes for you.
 
 ### @Expose\(\)
 

@@ -48,4 +48,4 @@ Likewise, you can add hooks that run just before the app is shutdown, via `Angel
 
 ## Next Up
 
-Learn how to generate content for clients by [rendering views](rendering-views.md).
+Learn how to generate content for clients by [rendering views](../views/rendering-views.md).

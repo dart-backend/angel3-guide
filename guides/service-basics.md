@@ -102,15 +102,16 @@ As mentioned above, services extend `Routable`, so you can simply `app.use()` th
 ```dart
 app.get("/user/:id/todos", (req, res) => fetchUserTodos(req.params['id']));
 
-// Another way to apply a middleware to a service
-app.all("/user/*", [someMiddleware], middleware: ['some', 'more', 'middleware']);
+// Another way to apply a middleware to a service; it must return `true`.
+app.all('/user/*', someMiddleware);
 
-app.use('/user', TypedService<User>(MongoService(db.collection("users"))));
+// `map` turns a service of Maps into one of model classes.
+app.use('/user', MongoService(db.collection('users')).map(UserSerializer.fromMap, UserSerializer.toMap));
 
-// Access app services. Returns a HookedService if there is one, otherwise just the plain service.
+// Access app services. Returns the HookedService that `use` mounted.
 // Leading and trailing slashes are ignored.
 var service = app.findService('user'); // The user service
-var service = app.service<String, Map<String, dynamic>>('secret'); 
+var secrets = app.findServiceOf<String, Map<String, dynamic>>('secret');
 ```
 
 ## Additional Notes
@@ -118,7 +119,7 @@ var service = app.service<String, Map<String, dynamic>>('secret');
 Important things to consider when writing your own service:
 
 * [mongo](https://github.com/dart-backend/angel/blob/master/packages/mongo/lib/mongo_service.dart) is a good reference implementation]
-* Services need only worry about handling `Map`s. Object serialization should be handled by `angel3_serialize`, another serializer, or `TypedService`.
+* Services need only worry about handling `Map`s. Object serialization should be handled by `angel3_serialize`, or another serializer, with `Service.map`.
 * Allowing users to query the service via query string is optional (see `allowQuery`)
 * Allowing users to remove all entries is **optional**, and should be disabled by default
   

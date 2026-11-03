@@ -86,7 +86,13 @@ Open a new terminal window, and type the following:
 curl localhost:3000 && echo
 ```
 
-You'll just see a blank line, but the fact that you *didn't see an error* means that the server is indeed listening at port `3000`.
+You'll see a `404 Not Found` error, as JSON:
+
+```bash
+{"is_error":true,"status_code":404,"message":"404 Not Found","errors":[]}
+```
+
+The server has no routes yet, but the fact that it *answered* means that it is indeed listening at port `3000`.
 
 ## Adding a Route
 
@@ -140,7 +146,7 @@ It consists of the following components:
 
 Combined with the path, `'/'`, this signifies that whenever a request is sent to the *root* of our server, which in this case is the URL `http://localhost:3000`, the attached closure should be invoked.
 
-The path is important because it defines the conditions under which code should run. For example, if we were to visit `http://localhost:3000/foo`, we'd just see a blank line printed again, because there is no route mounted corresponding to the path `'/foo'`.
+The path is important because it defines the conditions under which code should run. For example, if we were to visit `http://localhost:3000/foo`, we'd see the `404 Not Found` error again, because there is no route mounted corresponding to the path `'/foo'`. (A browser, which asks for HTML, gets a `404 Not Found` page instead of JSON.)
 
 The two parameters, `req` and `res`, hold the types `RequestContext` and `ResponseContext`, respectively. We'll briefly cover these in the next section.
 

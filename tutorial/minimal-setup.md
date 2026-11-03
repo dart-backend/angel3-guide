@@ -36,7 +36,7 @@ void main() async {
 The specifics are not that important, but there are a few important calls here:
 
 * `var app = Angel()` - The base Angel3 server is a simple class, and we need an instance of it to run our server. The name `app` is a convention adopted from Express. In general, call an Angel3 instance `app`. This has no effect on functionality, but it makes it easier for other developers to understand your code.
-* `app.get("/", (req, res) => "Hello, world!");` - This is a [route](basic-routing.md), and tells our server to respond to all GET requests at our server root with `"Hello, world!"`. The response will automatically be encoded as JSON. Head over to the [Basic Routing](basic-routing.md) tutorial to learn about routes, and how they work.
+* `app.get("/", (req, res) => "Hello, world!");` - This is a [route](../guides/basic-routing.md), and tells our server to respond to all GET requests at our server root with `"Hello, world!"`. The response will automatically be encoded as JSON. Head over to the [Basic Routing](../guides/basic-routing.md) tutorial to learn about routes, and how they work.
 * `await http.startServer(...)` - This asynchronous call is what actually starts the server listening. Without it, your application won't be accessible over HTTP \(as it won't ever listen for requests\).
 
 That's it! Your server is ready to serve requests. You can easily start it from the command line like this:

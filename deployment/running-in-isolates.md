@@ -1,73 +1,57 @@
 # How to run Angel3 in multiple isolates
 
-The concept is pretty simple. A normal server would look like this:
+A Dart isolate runs on one CPU core. To use more of them, run the server in several isolates, which share one port.
 
-```dart
-var app = Angel();
+## With `angel3_production`
+
+The `Runner` of [`angel3_production`](https://github.com/dart-backend/angel/tree/master/packages/production), which the starter templates use in `bin/prod.dart`, does this for you. Pass the number of isolates with `-j`:
+
+```bash
+dart bin/prod.dart -j 4
 ```
 
-If you use the `Angel.custom` constructor, you can provide a custom `ServerGenerator`, which is
-a typedef for a function that binds an HTTP server:
+It also re-spawns isolates that crash, and handles shutdown. `dart bin/prod.dart --help` lists its options.
+
+Each isolate has its own memory, so data kept in memory, such as in a `MapService`, is not shared between them. Keep shared data in a database, and use [`angel3_sync`](https://github.com/dart-backend/angel/tree/master/packages/sync) to share WebSocket events between isolates.
+
+## By hand
+
+To bind several servers to one port, start each with `startShared`, which passes `shared: true` to `HttpServer.bind`:
 
 ```dart
-typedef Future<HttpServer> ServerGenerator(InternetAddress address, int port);
+var http = AngelHttp.custom(app, startShared);
 ```
 
-With this in mind, you can start a server passing the `shared` argument to `HttpServer.bind`:
+`startSharedSecure(securityContext)` does the same for HTTPS.
+
+Then start a server in each isolate:
 
 ```dart
-Angel.custom((address, port) => HttpServer.bind(address, port, shared: true));
-```
-
-`startShared` is a function that accomplishes this for you, since it's commonly-used functionality:
-
-```dart
-Angel.custom(startShared);
-```
-
-## Multiple Isolates
-
-To run in multiple isolates, the concept is simple as well:
-
-```dart
-import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
-import 'package:angel3_framework/angel3_framework.dart';
 
-void main(List<String> args) async {
-  int concurrency = Platform.numberOfProcessors;
+import 'package:angel3_framework/angel3_framework.dart';
+import 'package:angel3_framework/http.dart';
+
+void main() async {
+  var concurrency = Platform.numberOfProcessors;
 
   // Start child isolates...
-  for (int i = 1; i < concurrency; i++) {
-    Isolate.spawn(serverMain, i);
+  for (var i = 1; i < concurrency; i++) {
+    await Isolate.spawn(serverMain, i);
   }
 
-  // Spawn a server in the main isolate.
-  serverMain(concurrency);
+  // ...and a server in the main isolate.
+  await serverMain(0);
 }
 
-void serverMain(int id) {
-  // Start shared!!!
+Future<void> serverMain(int id) async {
   var app = Angel();
   var http = AngelHttp.custom(app, startShared);
-  
-  app.get('/json', () => {'hello': 'world'});
 
-  app.get('/db', () async {
-    // Run a query...
-    var connection = new PostgreSQLConnection(
-        '127.0.0.1', 5432, 'wrk_benchmark',
-        username: 'postgres', password: 'password');
-    await connection.open();
-    var rows = await connection.query('SELECT id, text from notes;');
-    return rows.map((row) => {'id': row[0], 'text': row[1]});
-  });
+  app.get('/json', (req, res) => {'hello': 'world'});
 
-  http.startServer(InternetAddress.ANY_IP_V4, 3000).then((server) {
-    print(
-        'Instance #$id listening at http://${server.address.address}:${server.port}');
-  });
+  var server = await http.startServer(InternetAddress.anyIPv4, 3000);
+  print('Instance #$id listening at http://${server.address.address}:${server.port}');
 }
-
 ```

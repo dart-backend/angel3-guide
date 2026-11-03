@@ -8,22 +8,29 @@ You'll need a public and private key, in PEM format:
 var context = SecurityContext()
     ..useCertificateChain('keys/server.crt')
     ..usePrivateKey('keys/server.key');
-var http = AngelHttp.fromSecurityContext(context);
+var http = AngelHttp.fromSecurityContext(app, context);
 ```
 
-However, a single AngelHttp instance only corresponds to one `HttpServer` instance. To handle secure requests, while also redirecting insecure users to our HTTPS server, you'll need to have a server listening at port 80.
+With `angel3_production`, pass `--ssl`, `--certificate-file` and `--key-file` to the `Runner` instead. To serve HTTP/2, see [HTTP/2](../guides/http2.md).
 
-The easiest way to do this is to use the `forceHttps()` function from `package:angel3_multiserver`. This returns a [middleware](../guides/middleware.md) that sends `302` redirects from plain HTTP URL's to their HTTPS counterparts.
+## Redirecting to HTTPS
+
+A single `AngelHttp` instance only corresponds to one `HttpServer` instance. To handle secure requests, while also redirecting insecure users to your HTTPS server, you'll need another server listening at port 80, which redirects each request to its HTTPS counterpart:
 
 ```dart
 /// Redirect HTTP URL's to their HTTPS counterparts...
-enforceHttps() async {
-  var enforcer = Angel()..use(forceHttps());
+Future<void> enforceHttps() async {
+  var enforcer = Angel();
+  enforcer.fallback((req, res) {
+    // The `Host` header, without its port.
+    var host = Uri.parse('http://${req.hostname}').host;
+    return res.redirect('https://$host${req.uri}', code: 301);
+  });
+
   var http = AngelHttp(enforcer);
   var server = await http.startServer('0.0.0.0', 80);
-  print(
-      'HTTPS enforcer listening at http://${server.address.address}:${server.port}');
+  print('HTTPS enforcer listening at http://${server.address.address}:${server.port}');
 }
 ```
 
-An example of this setup can be found here: [https://github.com/angel-example/ssl\_multiserver/blob/master/bin/server.dart](https://github.com/angel-example/ssl_multiserver/blob/master/bin/server.dart)
+In production, a reverse proxy such as [nginx](ubuntu-and-nginx.md) often terminates TLS, and redirects plain HTTP, instead of the app.

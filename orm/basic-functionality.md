@@ -50,7 +50,7 @@ Future<void> markAsComplete(Todo todo, QueryExecutor executor) async {
 
 The glue holding everything together is the `QueryExecutor` interface. To support the ORM for any arbitrary database, simply extend the class and implement its abstract methods.
 
-Consumers of a `QueryExecutor` typically inject it into the app's [dependency injection](../dependency-injection.md) container:
+Consumers of a `QueryExecutor` typically inject it into the app's [dependency injection](../guides/dependency-injection.md) container:
 
 ```dart
 app.container.registerSingleton<QueryExecutor>(PostgreSqlExecutor(...));

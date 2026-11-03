@@ -44,4 +44,4 @@ For more information, see the API docs:
 
 ## Next Up
 
-Now, let's learn about Angel3's [Request Lifecycle](request-lifecyle.md).
+Now, let's learn about Angel3's [Request Lifecycle](request-lifecycle.md).
