@@ -7,7 +7,7 @@ In this first tutorial, we will:
 * Add some basic routing.
 * Add a 404 error handler.
 
-The source code for this example can be found at: <https://github.com/dukefirehawk/belatuk-examples/tree/master/docs_examples/getting_started>
+The source code for this example can be found at: <https://github.com/dart-backend/belatuk-examples/tree/master/docs_examples/getting_started>
 
 ## Prerequisite
 
@@ -32,6 +32,8 @@ Next, we create a `pubspec.yaml` file, and enter the following contents:
 
 ```yaml
 name: hello_angel
+environment:
+    sdk: ^3.13.0
 dependencies:
     angel3_framework: ^10.0.0
 ```
@@ -39,13 +41,13 @@ dependencies:
 Now, just run `dart pub get`, which will install the `angel3_framework` library, and its related dependencies:
 
 ```bash
-Resolving dependencies... (3.3s)
+Resolving dependencies...
+Downloading packages...
 + angel3_container 10.0.0
-+ angel3_framework 10.0.0
++ angel3_framework 10.0.1
 + angel3_http_exception 10.0.0
-+ angel3_route 10.0.0
 (... more output omitted)
-Changed 33 dependencies!
+Changed 38 dependencies!
 ```
 
 ## Launching the Backend Server
@@ -76,7 +78,7 @@ void void main() async {
 }
 ```
 
-Next, in your terminal, run the command `dart bin/main.dart`. Your server will now be running, and will listen for input until you kill it by entering `Control-C` (the `SIGINT` signal) into the terminal.
+Next, in your terminal, run the command `dart bin/main.dart`. It prints a message that no `reflector` was passed to the `Angel` constructor: this tutorial does not need one, as the [Dependency Injection](../guides/dependency-injection.md#enabling-dart-mirrors-or-other-reflection) guide explains. Your server will now be running, and will listen for input until you kill it by entering `Control-C` (the `SIGINT` signal) into the terminal.
 
 Open a new terminal window, and type the following:
 
@@ -84,7 +86,13 @@ Open a new terminal window, and type the following:
 curl localhost:3000 && echo
 ```
 
-You'll just see a blank line, but the fact that you *didn't see an error* means that the server is indeed listening at port `3000`.
+You'll see a `404 Not Found` error, as JSON:
+
+```bash
+{"is_error":true,"status_code":404,"message":"404 Not Found","errors":[]}
+```
+
+The server has no routes yet, but the fact that it *answered* means that it is indeed listening at port `3000`.
 
 ## Adding a Route
 
@@ -138,7 +146,7 @@ It consists of the following components:
 
 Combined with the path, `'/'`, this signifies that whenever a request is sent to the *root* of our server, which in this case is the URL `http://localhost:3000`, the attached closure should be invoked.
 
-The path is important because it defines the conditions under which code should run. For example, if we were to visit `http://localhost:3000/foo`, we'd just see a blank line printed again, because there is no route mounted corresponding to the path `'/foo'`.
+The path is important because it defines the conditions under which code should run. For example, if we were to visit `http://localhost:3000/foo`, we'd see the `404 Not Found` error again, because there is no route mounted corresponding to the path `'/foo'`. (A browser, which asks for HTML, gets a `404 Not Found` page instead of JSON.)
 
 The two parameters, `req` and `res`, hold the types `RequestContext` and `ResponseContext`, respectively. We'll briefly cover these in the next section.
 
@@ -152,7 +160,7 @@ By reading the property `req.headers`, we can access the [HTTP headers](https://
 
 ```dart
 app.get('/headers', (req, res) {
-    req.headers.forEach((key, values) {
+    req.headers?.forEach((key, values) {
         res.write('$key=$values');
         res.writeln();
     });
@@ -265,4 +273,4 @@ The choice is now yours: either continue reading the other guides posted on this
 
 You can find `angel3_*` packages on the [Pub.dev](https://pub.dev) site, and read the documentation found in their respective `README` files.
 
-Don't forget that for discussion and support, you can either file a [GitHub issue](https://github.com/dart-backend/angel/issues), or join the [Discord server](https://discord.gg/3X6bxTUdCM).
+Don't forget that for discussion and support, you can either file a Github issue, or join the [Discord server](https://discord.gg/3X6bxTUdCM).

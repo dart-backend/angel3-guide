@@ -15,7 +15,6 @@ In the following case:
 
 ```dart
 @serializable
-@orm
 abstract class WheelEntity extends Model {
   @belongsTo
   CarEntity? get car;
@@ -26,37 +25,11 @@ The local key defaults to `car_id`, and the foreign key defaults to `id`.
 You can manually override these:
 
 ```dart
-@BelongsTo(localKey: 'car_id', foreignKey: 'license_number')
+@BelongsTo(localKey: 'carId', foreignKey: 'licenseNumber')
 CarEntity? get car;
 ```
 
-A relation names the other model by its entity class (`CarEntity`), because the generated class (`Car`) does not exist yet when the generator reads it.
-
-## Loading Relations
-
-Relations are loaded with every query that returns records: `get`, `getOne`, `insert`, `update` and `delete`.
-
-* `@hasOne` and `@belongsTo` are fetched with `JOIN`s, as each record is still one row.
-* `@hasMany` is loaded after the records, with one query for all of them (`WHERE car_id IN (...)`), rather than joined, which would return a row per item.
-* `@manyToMany` is loaded with a query of the pivot table, then one of the other model.
-
-The items loaded have their own relations loaded in turn, such as a `@hasMany` of a `@hasMany`, so the number of queries depends on the relations, not on the number of records. Fetching authors with their books and the books' reviews takes three queries, however many authors there are. As a record is one row, `limit` and `offset` count records.
-
-A relation back to a table that is being loaded is not loaded again, and is left empty: the `roles` of a `User` are loaded, but not the `users` of those roles, which would load the user again.
-
-The query of a `@hasMany` is the one its items are loaded with, so its conditions and order apply to them:
-
-```dart
-var query = AuthorQuery()..where!.name.equals('Jane');
-query.books
-  ..where!.published.isTrue
-  ..orderBy('title');
-
-// Jane, with only her published books, by title.
-var author = await query.getOne(executor);
-```
-
-Before 10.0.0, `@hasMany` and `@manyToMany` were joined too, so `limit` counted the rows of the joins. See the [10.0.0 Migration Guide](../migration/migration-guide-10.md).
+The ORM fetches `@hasOne` and `@belongsTo` relations with `JOIN`s, in the same query as the records, as each record is still one row. `@hasMany` and `@manyToMany` relations are loaded after the records, with one query for all of them (`WHERE car_id IN (...)`), so `limit` and `offset` count records rather than the rows of a join. In Angel3 9.x and earlier, these were joined too.
 
 ## Many-to-many Relationships
 
@@ -66,8 +39,7 @@ This is typically handled by creating a third table, which joins the two togethe
 
 ```dart
 @serializable
-@orm
-abstract class CourseEntity extends Model {
+abstract class ClassEntity extends Model {
   String? get courseName;
 
   @ManyToMany(EnrollmentEntity)
@@ -75,23 +47,21 @@ abstract class CourseEntity extends Model {
 }
 
 @serializable
-@orm
-abstract class StudentEntity extends Model {
+abstract class StudentEntity extends Model  {
   String? get name;
   int? get year;
 
   @ManyToMany(EnrollmentEntity)
-  List<CourseEntity> get courses;
+  List<ClassEntity> get classes;
 }
 
 @serializable
-@orm
 abstract class EnrollmentEntity {
-  @belongsTo
-  StudentEntity? get student;
+    @belongsTo
+    StudentEntity? get student;
 
-  @belongsTo
-  CourseEntity? get course;
+    @belongsTo
+    ClassEntity? get class_;
 }
 ```
 
