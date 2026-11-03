@@ -4,7 +4,7 @@ Installing `angel3_cli` installs a command line dart application in your local e
 
 ## Installation
 
-* Prerequisite: [Dart SDK](https://www.dartlang.org/downloads/) must be installed
+* Prerequisite: [Dart SDK](https://dart.dev/get-dart) must be installed
 
 * Open a terminal screen and run the following command.
 
@@ -26,7 +26,7 @@ Installing `angel3_cli` installs a command line dart application in your local e
     angel3 init
   ```
 
-* Follows the instructions given to complete setting up the new project. Choose from one of the available [Angel3 templates](https://github.com/dukefirehawk/boilerplates) to best represents what you would like your backend server to do. A well structured project will be generated and ready for development.
+* Follows the instructions given to complete setting up the new project. Choose from one of the available [Angel3 templates](https://github.com/dart-backend/boilerplates) to best represents what you would like your backend server to do. A well structured project will be generated and ready for development.
 
 ### Starting Backend Server
 

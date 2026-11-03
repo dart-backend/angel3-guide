@@ -7,7 +7,7 @@ In this first tutorial, we will:
 * Add some basic routing.
 * Add a 404 error handler.
 
-The source code for this example can be found at: <https://github.com/dukefirehawk/angel3-examples/tree/master/docs_examples/getting_started>
+The source code for this example can be found at: <https://github.com/dart-backend/belatuk-examples/tree/master/docs_examples/getting_started>
 
 ## Prerequisite
 
@@ -267,4 +267,4 @@ The choice is now yours: either continue reading the other guides posted on this
 
 You can find `angel3_*` packages on the [Pub.dev](https://pub.dev) site, and read the documentation found in their respective `README` files.
 
-Don't forget that for discussion and support, you can either file a Github issue, or join the [Gitter chat](https://gitter.im/angel_dart/discussion)
+Don't forget that for discussion and support, you can either file a Github issue, or join the [Discord server](https://discord.gg/3X6bxTUdCM).

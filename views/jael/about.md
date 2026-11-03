@@ -1,6 +1,6 @@
 # JAEL3
 
-**Jael3** is a simple, yet powerful, server-side HTML templating engine for Dart. Although it can be used in any application, it comes with first-class support for the [Angel3](https://github.com/dukefirehawk/angel) framework.
+**Jael3** is a simple, yet powerful, server-side HTML templating engine for Dart. Although it can be used in any application, it comes with first-class support for the [Angel3](https://github.com/dart-backend/angel) framework.
 
 Though its syntax is but a superset of HTML, it supports features such as:
 
@@ -59,6 +59,6 @@ Jael can easily be used in any application with the following two packages:
 * `package:jael3`
 * `package:jael3_preprocessor`
 
-However, [Angel3](https://github.com/dukefirehawk/angel) users only need install `package:angel3_jael` to include
+However, [Angel3](https://github.com/dart-backend/angel) users only need install `package:angel3_jael` to include
 templating in their server-side applications. One of Angel3's goals is to make Web development faster, and having
 a tool like Jael at its disposal only brings that goal even closer to fruition.

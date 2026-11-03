@@ -9,7 +9,7 @@
 
 One of the main concepts within Angel3, which is borrowed from FeathersJS, is a _service_. You more than likely have already dealt with another implementation of the service concept. In Angel3, a _service_ is a class that acts as a Web interface and exposes CRUD actions operating on a set of data. Angel3 services extend `Routable`, and thus can be mounted on a certain path and become REST endpoints.
 
-The Angel3 core library includes the `Service` base class, as well as two in-memory service classes. Database adapter packages, such as [`package:angel3_mongo`](https://github.com/dukefirehawk/angel/tree/master/packages/mongo) include service classes that let you interact with a database without writing complex code yourself.
+The Angel3 core library includes the `Service` base class, as well as two in-memory service classes. Database adapter packages, such as [`package:angel3_mongo`](https://github.com/dart-backend/angel/tree/master/packages/mongo) include service classes that let you interact with a database without writing complex code yourself.
 
 Services can also be filtered or reacted to with [service hooks](hooks.md).
 
@@ -117,7 +117,7 @@ var service = app.service<String, Map<String, dynamic>>('secret');
 
 Important things to consider when writing your own service:
 
-* [mongo](https://github.com/dukefirehawk/angel/tree/master/packages/mongo/lib/mongo_service.dart) is a good reference implementation]
+* [mongo](https://github.com/dart-backend/angel/blob/master/packages/mongo/lib/mongo_service.dart) is a good reference implementation]
 * Services need only worry about handling `Map`s. Object serialization should be handled by `angel3_serialize`, another serializer, or `TypedService`.
 * Allowing users to query the service via query string is optional (see `allowQuery`)
 * Allowing users to remove all entries is **optional**, and should be disabled by default
