@@ -13,7 +13,7 @@ The source code for this example can be found at: <https://github.com/dukefireha
 
 * This tutorial uses command line interface. If you are not well-versed working with it, just copy/paste the code snippets while going through this tutorial.
 
-* The Dart SDK version 2.16 or later is required. Please follow the instructions on the [official dart site](https://dart.dev/get-dart) to download and install it. 
+* The Dart SDK version 3.13 or later is required. Please follow the instructions on the [official dart site](https://dart.dev/get-dart) to download and install it. 
 
 * The [`curl`](https://curl.haxx.se/download.html) tool will be used to send requests to the backend server.
 
@@ -32,19 +32,22 @@ Next, we create a `pubspec.yaml` file, and enter the following contents:
 
 ```yaml
 name: hello_angel
+environment:
+    sdk: ^3.13.0
 dependencies:
-    angel3_framework: ^6.0.0
+    angel3_framework: ^10.0.0
 ```
 
 Now, just run `dart pub get`, which will install the `angel3_framework` library, and its related dependencies:
 
 ```bash
-Resolving dependencies... (3.3s)
-+ angel3_container 6.0.0
-+ angel3_framework 6.0.0
-+ angel3_http_exception 6.0.0
+Resolving dependencies...
+Downloading packages...
++ angel3_container 10.0.0
++ angel3_framework 10.0.1
++ angel3_http_exception 10.0.0
 (... more output omitted)
-Changed 33 dependencies!
+Changed 38 dependencies!
 ```
 
 ## Launching the Backend Server
@@ -75,7 +78,7 @@ void main() async {
 }
 ```
 
-Next, in your terminal, run the command `dart bin/main.dart`. Your server will now be running, and will listen for input until you kill it by entering `Control-C` (the `SIGINT` signal) into the terminal.
+Next, in your terminal, run the command `dart bin/main.dart`. It prints a message that no `reflector` was passed to the `Angel` constructor: this tutorial does not need one, as the [Dependency Injection](../guides/dependency-injection.md#enabling-dart-mirrors-or-other-reflection) guide explains. Your server will now be running, and will listen for input until you kill it by entering `Control-C` (the `SIGINT` signal) into the terminal.
 
 Open a new terminal window, and type the following:
 
@@ -151,7 +154,7 @@ By reading the property `req.headers`, we can access the [HTTP headers](https://
 
 ```dart
 app.get('/headers', (req, res) {
-    req.headers.forEach((key, values) {
+    req.headers?.forEach((key, values) {
         res.write('$key=$values');
         res.writeln();
     });
@@ -237,11 +240,12 @@ To add your own logic, set the `errorHandler` of your `Angel` instance. It is a 
 var oldErrorHandler = app.errorHandler;
 
 app.errorHandler = (e, req, res) {
-if (e.statusCode == 400) {
-    res.write('Oops! You forgot to include your name.');
-} else {
-    return oldErrorHandler(e, req, res);
-}
+    if (e.statusCode == 400) {
+        res.write('Oops! You forgot to include your name.');
+    } else {
+        return oldErrorHandler(e, req, res);
+    }
+};
 ```
 
 Note that we kept a reference to the previous error handler, so that existing logic can be reused if the case we wrote for is not handled.

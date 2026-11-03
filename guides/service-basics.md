@@ -100,7 +100,7 @@ class MyService extends Service {
 As mentioned above, services extend `Routable`, so you can simply `app.use()` them. You can also supplement them with additional routes or middleware, placed _before_ the mounting of a service:
 
 ```dart
-app.get("/user/:id/todos", ioc((id) => fetchUserTodos(id))));
+app.get("/user/:id/todos", (req, res) => fetchUserTodos(req.params['id']));
 
 // Another way to apply a middleware to a service
 app.all("/user/*", [someMiddleware], middleware: ['some', 'more', 'middleware']);

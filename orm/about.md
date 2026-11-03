@@ -8,30 +8,30 @@ Take, for example, the following class:
 
 ```dart
 @orm
-abstract class _Pokemon extends Model {
-    String get nickName;
+abstract class PokemonEntity extends Model {
+    String? get nickName;
 
-    int get level;
+    int? get level;
 
-    int get experiencePoints;
-
-    @belongsTo
-    PokemonTrainer get trainer;
+    int? get experiencePoints;
 
     @belongsTo
-    PokemonSpecies get species;
+    PokemonTrainerEntity? get trainer;
 
     @belongsTo
-    PokemonAttack get attack0;
+    PokemonSpeciesEntity? get species;
 
     @belongsTo
-    PokemonAttack get attack2;
+    PokemonAttackEntity? get attack0;
 
     @belongsTo
-    PokemonAttack get attack3;
+    PokemonAttackEntity? get attack2;
 
     @belongsTo
-    PokemonAttack get attack4;
+    PokemonAttackEntity? get attack3;
+
+    @belongsTo
+    PokemonAttackEntity? get attack4;
 }
 ```
 
@@ -41,10 +41,9 @@ abstract class _Pokemon extends Model {
 app.get('/trainer/int:id/first_moves', (req, res) async {
     var id = req.params['id'] as int;
     var executor = req.container.make<QueryExecutor>();
-    var trainer = await findTrainer(id);
-    var query = PokemonQuery()..where.trainerId.equals(id);
+    var query = PokemonQuery()..where!.trainerId.equals(id);
     var pokemon = await query.get(executor);
-    return pokemon.map((p) => p.attack0.name).toList();
+    return pokemon.map((p) => p.attack0?.name).toList();
 });
 ```
 
@@ -52,4 +51,4 @@ This section of the Angel3 documentation consists mostly of guides, rather than 
 
 For more in-depth documentation, see the actual `angel3_orm` project on Github:
 
-<https://github.com/dukefirehawk/angel/tree/master/packages/orm>
+<https://github.com/dart-backend/angel/tree/master/packages/orm>

@@ -1,6 +1,6 @@
 # README
 
-[![Angel 3 Framework](./angel3_logo.png)](https://github.com/dart-backend/angel)
+[![Angel3 Framework](assets/branding/angel3_logo.png)](https://github.com/dart-backend/angel)
 
 <!--- (https://angel-dart.dev) -->
 ![Pub Version (including pre-releases)](https://img.shields.io/pub/v/angel3_framework?include_prereleases)

@@ -30,12 +30,21 @@ var collection = db.collection('pets');
 
 ## In Routes and Controllers
 
-In Angel3, by wrapping a function in a call to `ioc`, you can automatically inject the dependencies of any route handler.
+In Angel3, by wrapping a function in a call to `ioc`, you can automatically inject the dependencies of any route handler. Reflecting on the function needs a reflector (see [below](#enabling-dart-mirrors-or-other-reflection)); without one, describe its parameters with `injection:`:
+
+```dart
+app.get('/greet/:name', ioc(
+  (Greeter greeter, String name) => greeter.greet(name),
+  injection: InjectionRequest.constant(required: [Greeter, ['name', String]]),
+));
+```
+
+With a reflector:
 
 ```dart
 app.get("/some/class/text", ioc((SomeClass singleton) => singleton.text)); // Always "foo"
 
-app.post("/foo", ioc((SomeClass singleton, {Foo optionalInjection}));
+app.post("/foo", ioc((SomeClass singleton, {Foo? optionalInjection}) => singleton.text));
 
 @Expose("/my/controller")
 class MyController extends Controller {
@@ -45,7 +54,7 @@ class MyController extends Controller {
   bar(SomeClass singleton, RequestContext req) => "${singleton.text} bar"; // Always "foo bar"
 
   @Expose("/baz")
-  baz({Foo optionalInjection});
+  baz({Foo? optionalInjection}) => 'baz';
 }
 ```
 
@@ -93,25 +102,30 @@ void main() async {
 
 ## Enabling `dart:mirrors` or other Reflection
 
-By default, Angel3 will use the `EmptyReflector()` to power its `Container` instances, which has no support for `dart:mirrors`, so that it can be used in contexts where Dart reflection is not available.
+By default, `Angel()` has no reflector, so that it can be used where `dart:mirrors` is not available, such as in apps compiled with `dart compile exe` and in Flutter. Without a reflector, these features are unavailable:
 
-However, by using a different `Reflector`, you can use the full power of Angel3's DI system. `angel3 init` projects use the `MirrorsReflector()` by default.
+* `@Expose` on controller methods
+* The `@Middleware` and `@Hooks` annotations, which are ignored
+* Dependency injection into **constructors**, whether in controllers or plain `container.make` calls
+* `ioc` without `injection:`
 
-If your application is using any sort of functionality reliant on annotations or reflection, either include the MirrorsReflector, or use a static reflector variant.
+To use them, pass a reflector to the app:
 
-The following use cases require reflection:
+* On the Dart VM, `MirrorsReflector` of `package:angel3_container_mirrors` uses `dart:mirrors`:
 
-* Use of `Controller`s, via `@Expose()` or `@ExposeWS()`
-* Use of dependency injection into **constructors**, whether in controllers or plain `container.make` calls
-* Use of the `ioc` function in any route
+  ```dart
+  import 'package:angel3_container_mirrors/angel3_container_mirrors.dart';
 
-The `MirrorsReflector` from `package:angel3_container/mirrors.dart` is by far the most convenient pattern, so use it if possible.
+  var app = Angel(reflector: MirrorsReflector());
+  ```
 
-However, the following alternatives exist:
+* To compile with `dart compile exe`, mark the classes with `@injectable`, generate their reflection data with `package:angel3_container_generator` and `dart run build_runner build`, and pass it to `StaticReflector`. Each library gets one variable named after its file, such as `servicesReflection` for `services.dart`:
 
-* Generation via `package:angel3_container_generator`
-* Creating an instance of `StaticReflector`
-* Manually implementing the `Reflector` interface (cumbersome; not recommended)
+  ```dart
+  var app = Angel(reflector: StaticReflector.combine([servicesReflection]));
+  ```
+
+Mark controllers, services with `@Hooks` or `@Middleware`, and top-level functions used as handlers with `@injectable`. A closure cannot be described, so `ioc((Foo foo) => ...)` still needs `injection:` with generated data. The [`angel3_container_generator` README](https://pub.dev/packages/angel3_container_generator) lists its limitations.
 
 ## Next Up
 

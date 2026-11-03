@@ -5,13 +5,15 @@ It's very easy to setup a bare-bones Angel3 server.
 Any Dart project needs a project file, called `pubspec.yaml`. This file almost always contains a `dependencies` section, where you will install the Angel3 framework libraries.
 
 ```yaml
+environment:
+    sdk: ^3.13.0
 dependencies:
-    angel3_framework: ^6.0.0
+    angel3_framework: ^10.0.0
 ```
 
 You might also want to install packages such as `angel3_static`, `angel3_cache`, `angel3_jael`, and `angel3_cors`.
 
-Next, run `pub get` on the command line, or in your IDE if it has Dart support. This will install the framework and all of its dependencies.
+Next, run `dart pub get` on the command line, or in your IDE if it has Dart support. This will install the framework and all of its dependencies.
 
 Next, create a file, `bin/main.dart`. Put this code in it:
 

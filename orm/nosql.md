@@ -8,10 +8,11 @@ With a NoSQL databases, you can use the `Service` API (you likely already are!),
 If you are using `package:angel3_serialize`, this is pretty easy:
 
 ```dart
-abstract class _Greeting extends Model {
-    String get text;
+@serializable
+abstract class GreetingEntity extends Model {
+    String? get text;
 
-    double get attachedMoney;
+    double? get attachedMoney;
 }
 
 var service = MongoService(...);

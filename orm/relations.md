@@ -16,9 +16,9 @@ In the following case:
 ```dart
 @orm
 @serializable
-abstract class _Wheel extends Model {
+abstract class WheelEntity extends Model {
   @belongsTo
-  Car get car;
+  CarEntity? get car;
 }
 ```
 
@@ -27,10 +27,10 @@ You can manually override these:
 
 ```dart
 @BelongsTo(localKey: 'carId', foreignKey: 'licenseNumber')
-Car get car;
+CarEntity? get car;
 ```
 
-The ORM computes relationships by performing `JOIN`s, so that even complex relationships can be fetched using just one query, rather than multiple.
+The ORM fetches `@hasOne` and `@belongsTo` relations with `JOIN`s, in the same query as the records, as each record is still one row. `@hasMany` and `@manyToMany` relations are loaded after the records, with one query for all of them (`WHERE car_id IN (...)`), so `limit` and `offset` count records rather than the rows of a join. In Angel3 9.x and earlier, these were joined too.
 
 ## Many-to-many Relationships
 
@@ -41,30 +41,30 @@ This is typically handled by creating a third table, which joins the two togethe
 ```dart
 @orm
 @serializable
-abstract class _Class extends Model {
-  String get courseName;
+abstract class ClassEntity extends Model {
+  String? get courseName;
 
-  @ManyToMany(_Enrollment)
-  List<_Student> get students;
+  @ManyToMany(EnrollmentEntity)
+  List<StudentEntity> get students;
 }
 
 @orm
 @serializable
-abstract class _Student extends Model  {
-  String get name;
-  int get year;
+abstract class StudentEntity extends Model  {
+  String? get name;
+  int? get year;
 
-  @ManyToMany(_Enrollment)
-  List<_Class> get classes;
+  @ManyToMany(EnrollmentEntity)
+  List<ClassEntity> get classes;
 }
 
 @orm
 @serializable
-abstract class _Enrollment {
+abstract class EnrollmentEntity {
     @belongsTo
-    _Student get student;
+    StudentEntity? get student;
 
     @belongsTo
-    _Class get class_;
+    ClassEntity? get class_;
 }
 ```

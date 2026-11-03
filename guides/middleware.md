@@ -15,9 +15,21 @@ Sometimes, it becomes to recycle code to run on multiple routes. Angel3 allows f
 
 ### Denying Requests via Middleware
 
-A middleware should return either `true` or `false`. If `false` is returned, no further routes will be executed. If `true` is returned, route evaluation will continue. \(more on request handler return values [here](requests-and-responses.md#return-values)\).
+A middleware must return `true` for the next handler to run. If it returns anything else, including nothing, no further handlers will be executed, whether they were given to a route or to `chain`. \(more on request handler return values [here](requests-and-responses.md#return-values)\).
 
-In practice, you will only need to write a `return` statement when you are returning `true`.
+A middleware that only sets a value must still return `true`:
+
+```dart
+app.get('/me', chain([
+  (req, res) {
+    req.params['user'] = 'me';
+    return true;
+  },
+  (req, res) => req.params['user'],
+]));
+```
+
+In Angel3 9.x and earlier, a handler given to `chain` that returned nothing let the next one run. Since 10.0.0, it stops the chain.
 
 As you can imagine, this is perfect for authorization filters.
 
@@ -42,7 +54,7 @@ app.chain([cors()]).get('/something', (req, res) {
 // multiple lines)
 app.get('/', chain([
   someMiddleware,
-  (req, res) => ...,
+  (req, res) => true,
   (req, res) {
     return 'world!';
   },
@@ -84,6 +96,7 @@ This is the same rationale behind [controllers](controllers.md) providing a `con
 class MyCanonicalHandler {
  Future<bool> handleRequest(RequestContext req, ResponseContext res) async {
   // Do something cool...
+  return true;
  }
 }
 
@@ -100,7 +113,7 @@ app.get('/the-route', chain([
   'auth',
   ensureUserHasAccess(),
   (req, res) async => true,
-  takeOutTheTrash()
+  takeOutTheTrash(),
   (req, res) {
    // Your route handler here...
   }
@@ -131,7 +144,7 @@ app.get('/the-route', chain([
  authorizationMiddleware,
  someOtherMiddleware,
  theActualRouteHandler,
-]);
+]));
 
 ```
 
