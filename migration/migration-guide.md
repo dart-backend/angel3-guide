@@ -1,6 +1,6 @@
 Based on [this discussion](https://github.com/angel-dart/angel/issues/49).
 
-Based on the changelog, up to `1.1.0`: https://pub.dartlang.org/packages/angel_framework/versions/1.1.1#-changelog-tab-
+Based on the changelog, up to `1.1.0`: https://pub.dev/packages/angel_framework/versions/1.1.1/changelog
 
 # Main Points
 * `angel_diagnostics` is deprecated - instead just pass a `Logger` and set it as `app.logger`.

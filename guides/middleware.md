@@ -15,17 +15,21 @@ Sometimes, it becomes necessary to recycle code to run on multiple routes. Angel
 
 ### Denying Requests via Middleware
 
-A middleware should return either `true` or `false`. If `false` is returned, no further routes will be executed. If `true` is returned, route evaluation will continue. \(more on request handler return values [here](requests-and-responses.md#return-values)\).
+A middleware must return `true` for the next handler to run. If it returns anything else, including nothing, no further handlers will be executed, whether they were given to a route or to `chain`. \(more on request handler return values [here](requests-and-responses.md#return-values)\).
 
-A middleware that returns anything other than `true`, such as `null` when it has no `return` statement, ends the request there, unless it has closed the response, so return `true` from every middleware that should let the request through. This applies to the handlers given to `chain` too: since 10.0.0, `chain` stops at the first handler that does not return `true`.
+A middleware that only sets a value must still return `true`:
 
 ```dart
-// Sets a value, and lets the next handler run.
-Future<bool> loadUser(RequestContext req, ResponseContext res) async {
-  req.params['user'] = await fetchUser(req.params['id']);
-  return true;
-}
+app.get('/me', chain([
+  (req, res) {
+    req.params['user'] = 'me';
+    return true;
+  },
+  (req, res) => req.params['user'],
+]));
 ```
+
+In Angel3 9.x and earlier, a handler given to `chain` that returned nothing let the next one run. Since 10.0.0, it stops the chain.
 
 As you can imagine, this is perfect for authorization filters.
 
@@ -90,10 +94,10 @@ This is the same rationale behind [controllers](controllers.md) providing a `con
 
 ```dart
 class MyCanonicalHandler {
-  Future<bool> handleRequest(RequestContext req, ResponseContext res) async {
-    // Do something cool...
-    return true;
-  }
+ Future<bool> handleRequest(RequestContext req, ResponseContext res) async {
+  // Do something cool...
+  return true;
+ }
 }
 
 app.fallback(MyCanonicalHandler().handleRequest);

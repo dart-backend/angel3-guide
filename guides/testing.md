@@ -9,19 +9,13 @@
 
 ## Testing
 
-Dart already has fantastic testing support, and Angel3 adds a library of [testing helpers](https://github.com/dart-backend/angel/tree/master/packages/test) that will make test writing faster. The following functions are exported by [`package:angel3_test`](https://pub.dev/packages/angel3_test), and will make your testing much easier.
-
-```yaml
-dev_dependencies:
-  angel3_test: ^10.0.0
-  test: ^1.25.0
-```
+Dart already has fantastic testing support, through a library of [testing helpers](https://github.com/dart-backend/angel/tree/master/packages/test) that will make test writing faster. The following functions are exported by [`package:angel3_test`](https://github.com/dart-backend/angel/tree/master/packages/test), and will make your testing much easier.
 
 ### connectTo
 
 [Full definition](https://pub.dev/documentation/angel3_test/latest/angel3_test/connectTo.html)
 
-This function returns a `TestClient` instance \(based on [`package:angel3_client`](https://github.com/dart-backend/angel/tree/master/packages/client)\) that sends mock requests to `app`, without binding it to a port. The client also supports session manipulation.
+This function will start `app` on an available port, and return a `TestClient` instance \(based on [`package:angel3_client`](https://github.com/dart-backend/angel/tree/master/packages/client)\) configured to send requests to the server. The client also supports session manipulation.
 
 ```dart
 void main() {
@@ -53,7 +47,7 @@ A `Matcher` that asserts the given `http.Response` has the given `status` code.
 
 ### More Matchers
 
-Other matchers include `hasContentType`, `hasHeader`, `hasBody`, `hasValidBody` and `isAngelHttpException`. The complete set of `angel3_test` Matchers can be found [here](https://pub.dev/documentation/angel3_test/latest/angel3_test/).
+The complete set of `angel3_test` Matchers can be found [here](https://pub.dev/documentation/angel3_test/latest/angel3_test/angel3_test-library.html).
 
 ## Next Up
 

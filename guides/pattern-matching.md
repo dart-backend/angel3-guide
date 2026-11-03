@@ -7,7 +7,7 @@ The annotations are read with the app's reflector, so `ioc` handlers that use th
 These act as a clean shorthand for commonly-used
 functionality.
 
-Here is a simple example of each of them in action:
+Here is a simple example of each of them in action. `ioc` reads the annotations by reflecting on the handler, so these examples need `MirrorsReflector` (see [Dependency Injection](dependency-injection.md#enabling-dart-mirrors-or-other-reflection)):
 
 ```dart
 app.get('/cookie', ioc((@CookieValue('token') String jwt) {
@@ -58,6 +58,18 @@ Gets the value of a cookie.
 ## `@Parameter()`
 
 The base class driving the above matchers.
+
+Without a reflector, pass the `Parameter`s to `ioc` in `injection:`, keyed by the name of the handler's parameter:
+
+```dart
+app.get('/query', ioc(
+  (String query) => query,
+  injection: InjectionRequest.constant(
+    required: ['query'],
+    parameters: {'query': Query('q')},
+  ),
+));
+```
 
 Supports:
 

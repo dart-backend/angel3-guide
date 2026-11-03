@@ -8,13 +8,17 @@
 
 Just like `res.render` in Express, Angel3's `ResponseContext` exposes a `Future` called `render`. This invokes whichever function is assigned to your server's `viewGenerator`.
 
-The following template engines have Angel3 plug-ins:
+There is a Mustache templating plug-in for Angel available: [https://github.com/dart-backend/angel/tree/master/packages/mustache](https://github.com/dart-backend/angel/tree/master/packages/mustache)
 
-* [Jael](jael/about.md), one of the few actively-developed HTML templating engines for Dart. Angel3 support for Jael is provided through [`package:angel3_jael`](https://pub.dev/packages/angel3_jael).
-* Mustache, through [`package:angel3_mustache`](https://pub.dev/packages/angel3_mustache).
-* Jinja, ported to Dart by [Olzhas Suleimen](https://github.com/ykmnkmi/jinja.dart), through [`package:angel3_jinja`](https://pub.dev/packages/angel3_jinja).
-* Markdown, through [`package:angel3_markdown`](https://pub.dev/packages/angel3_markdown).
-* HTML built in Dart with `belatuk_html_builder`, through [`package:angel3_html`](https://pub.dev/packages/angel3_html).
+There is also [Jael](https://github.com/dart-backend/angel/tree/master/packages/jael/jael), one of the few actively-developed HTML templating engines for Dart.
+
+Angel support for Jael is provided through [`package:angel3_jael`](https://github.com/dart-backend/angel/tree/master/packages/jael/angel_jael).
+
+Another is Jinja2, which was recently ported by to Dart by
+[Olzhas Suleimen](https://github.com/ykmnkmi/jinja.dart).
+
+Angel support for Jinja2 can be found here:
+<https://github.com/dart-backend/angel/tree/master/packages/jinja>
 
 ### Example
 

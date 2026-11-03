@@ -9,7 +9,7 @@
 
 One of the main concepts within Angel3, which is borrowed from FeathersJS, is a _service_. You more than likely have already dealt with another implementation of the service concept. In Angel3, a _service_ is a class that acts as a Web interface and exposes CRUD actions operating on a set of data. Angel3 services extend `Routable`, and thus can be mounted on a certain path and become REST endpoints.
 
-The Angel3 core library includes the `Service` base class, as well as the in-memory `MapService`. Database adapter packages, such as [`package:angel3_mongo`](https://github.com/dart-backend/angel/tree/master/packages/mongo), [`package:angel3_orm_service`](https://github.com/dart-backend/angel/tree/master/packages/orm/orm_service) or [`package:angel3_redis`](https://github.com/dart-backend/angel/tree/master/packages/redis), include service classes that let you interact with a database without writing complex code yourself.
+The Angel3 core library includes the `Service` base class, as well as two in-memory service classes. Database adapter packages, such as [`package:angel3_mongo`](https://github.com/dart-backend/angel/tree/master/packages/mongo) include service classes that let you interact with a database without writing complex code yourself.
 
 Services can also be filtered or reacted to with [service hooks](hooks.md).
 
@@ -102,16 +102,17 @@ class MyService extends Service {
 As mentioned above, services extend `Routable`, so you can simply `app.use()` them. You can also supplement them with additional routes or middleware, placed _before_ the mounting of a service:
 
 ```dart
-app.get('/user/:id/todos', (req, res) => fetchUserTodos(req.params['id']));
+app.get("/user/:id/todos", (req, res) => fetchUserTodos(req.params['id']));
 
-// Another way to apply a middleware to a service
+// Another way to apply a middleware to a service; it must return `true`.
 app.all('/user/*', someMiddleware);
 
-app.use('/user', MongoService(db.collection('users')));
+// `map` turns a service of Maps into one of model classes.
+app.use('/user', MongoService(db.collection('users')).map(UserSerializer.fromMap, UserSerializer.toMap));
 
 // Access app services. Returns the HookedService that `use` mounted.
 // Leading and trailing slashes are ignored.
-var users = app.findService('user'); // The user service
+var service = app.findService('user'); // The user service
 var secrets = app.findServiceOf<String, Map<String, dynamic>>('secret');
 ```
 
@@ -129,8 +130,8 @@ Ids are parsed from the URL to the service's `Id` type: a `Service<int, ...>` ge
 
 Important things to consider when writing your own service:
 
-* [`MapService`](https://github.com/dart-backend/angel/tree/master/packages/framework/lib/src/core/map_service.dart) and [mongo](https://github.com/dart-backend/angel/tree/master/packages/mongo/lib/mongo_service.dart) are good reference implementations
-* Services need only worry about handling `Map`s. Object serialization should be handled by `angel3_serialize`, another serializer, or `Service.map`.
+* [mongo](https://github.com/dart-backend/angel/blob/master/packages/mongo/lib/mongo_service.dart) is a good reference implementation]
+* Services need only worry about handling `Map`s. Object serialization should be handled by `angel3_serialize`, or another serializer, with `Service.map`.
 * Allowing users to query the service via query string is optional (see `allowQuery`)
 * Allowing users to remove all entries is **optional**, and should be disabled by default
   

@@ -9,29 +9,28 @@ var context = SecurityContext()
     ..useCertificateChain('keys/server.crt')
     ..usePrivateKey('keys/server.key');
 var http = AngelHttp.fromSecurityContext(app, context);
-await http.startServer('0.0.0.0', 443);
 ```
 
-Or, more briefly:
+With `angel3_production`, pass `--ssl`, `--certificate-file` and `--key-file` to the `Runner` instead. To serve HTTP/2, see [HTTP/2](../guides/http2.md).
 
-```dart
-var http = AngelHttp.secure(app, 'keys/server.crt', 'keys/server.key');
-```
+## Redirecting to HTTPS
 
-For HTTP/2, which browsers use only over HTTPS, use `AngelHttp2` with a `SecurityContext` instead; its `allowHttp1` option serves HTTP/1.1 clients on the same port.
-
-However, a single AngelHttp instance only corresponds to one `HttpServer` instance. To handle secure requests, while also redirecting insecure users to our HTTPS server, you'll need to have a server listening at port 80, whose only handler is a [middleware](../guides/middleware.md) that sends redirects from plain HTTP URL's to their HTTPS counterparts:
+A single `AngelHttp` instance only corresponds to one `HttpServer` instance. To handle secure requests, while also redirecting insecure users to your HTTPS server, you'll need another server listening at port 80, which redirects each request to its HTTPS counterpart:
 
 ```dart
 /// Redirect HTTP URL's to their HTTPS counterparts...
 Future<void> enforceHttps() async {
-  var enforcer = Angel()
-    ..fallback((req, res) =>
-        res.redirect(req.uri!.replace(scheme: 'https', port: 443).toString(), code: 301));
+  var enforcer = Angel();
+  enforcer.fallback((req, res) {
+    // The `Host` header, without its port.
+    var host = Uri.parse('http://${req.hostname}').host;
+    return res.redirect('https://$host${req.uri}', code: 301);
+  });
+
   var http = AngelHttp(enforcer);
   var server = await http.startServer('0.0.0.0', 80);
   print('HTTPS enforcer listening at http://${server.address.address}:${server.port}');
 }
 ```
 
-In production, the redirect and HTTPS are often left to a reverse proxy, such as [nginx](ubuntu-and-nginx.md), in front of the Angel3 server.
+In production, a reverse proxy such as [nginx](ubuntu-and-nginx.md) often terminates TLS, and redirects plain HTTP, instead of the app.

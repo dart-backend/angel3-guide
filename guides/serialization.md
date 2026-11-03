@@ -1,6 +1,7 @@
 # Angel3 Serialization
 
 ![Pub Version (including pre-releases)](https://img.shields.io/pub/v/angel3_serialize?include_prereleases)
+[![Null Safety](https://img.shields.io/badge/null-safety-brightgreen)](https://dart.dev/null-safety)
 [![Discord](https://img.shields.io/discord/1060322353214660698)](https://discord.gg/3X6bxTUdCM)
 [![License](https://img.shields.io/github/license/dart-backend/angel)](https://github.com/dart-backend/angel/tree/master/packages/serialize/serialize/LICENSE)
 
@@ -32,10 +33,10 @@ dependencies:
   angel3_serialize: ^10.0.0
 dev_dependencies:
   angel3_serialize_generator: ^10.0.0
-  build_runner: ^2.6.0
+  build_runner: ^2.4.0
 ```
 
-`angel3_serialize` exports `angel3_model`, so `Model` needs no other dependency. You can build models automatically, anywhere in your project structure, by running `dart run build_runner build`.
+`angel3_serialize` exports `angel3_model`, so `Model` needs no other import. Build models anywhere in your project structure by running `dart run build_runner build`.
 
 To tweak this: [Build Config](https://pub.dev/packages/build_config)
 
@@ -43,7 +44,7 @@ If you want to watch for file changes and re-build when necessary, replace the `
 
 ## Models
 
-There are a few changes opposed to normal Model classes. You need to add a `@serializable` annotation to your model class to have it serialized, and a serializable model class's name should end with the `Entity` suffix. The generated class is named without it: `BookEntity` generates `Book`. A leading underscore, as in `_Book`, also works, but the `Entity` suffix is preferred, as the class can then be used from other files, such as in a relation of the ORM.
+There are a few changes opposed to normal Model classes. You need to add a `@serializable` annotation to your model class to have it serialized, and a serializable model class's name should end with `Entity`. The generated class takes the name without the suffix. A leading underscore, such as `_Book`, still works, but `Entity` is the convention.
 
 In addition, you may consider using an `abstract` class to ensure immutability of models.
 
@@ -82,7 +83,7 @@ The following file will be generated:
 
 Producing these classes:
 
-- `Book`: Extends or implements `BookEntity`; may be `const`-enabled.
+- `Book`: Extends or implements `BookEntity`, with `copyWith`, `==` and `toJson`.
 - `BookSerializer`: static functionality for serializing `Book` models.
 - `BookFields`: The names of all fields from the `Book` model, statically-available.
 - `BookEncoder`: Allows `BookSerializer` to extend `Codec<Book, Map>`.
@@ -98,7 +99,7 @@ And the following other features:
 You can use the generated files as follows:
 
 ```dart
-void myFunction() {
+myFunction() {
   var warAndPeace = Book(
     author: 'Leo Tolstoy',
     title: 'War and Peace',
@@ -113,7 +114,7 @@ void myFunction() {
   var book = BookSerializer.fromMap(map);
   print(book.title); // 'War and Peace'
 
-  // For compatibility with `json.encode`, a `toJson` method
+  // For compatibility with `jsonEncode`, a `toJson` method
   // is included that forwards to `BookSerializer.toMap`:
   expect(book.toJson(), map);
 
@@ -143,7 +144,7 @@ You can customize these by means of `serializers`, a list of the `Serializers` e
 
 ```dart
 @Serializable(serializers: [Serializers.map, Serializers.json])
-class MyClassEntity extends Model {}
+abstract class MyClassEntity extends Model {}
 ```
 
 ## Subclasses
@@ -190,10 +191,10 @@ abstract class SpyEntity extends Model {
   /// it will use 'agency_id'.
   ///
   /// Hooray!
-  String? get agencyId;
+  String? agencyId;
 
   @SerializableField(alias: 'foo')
-  String? get someOtherField;
+  String? someOtherField;
 }
 ```
 
@@ -202,7 +203,7 @@ You can also override `autoSnakeCaseNames` per model:
 ```dart
 @Serializable(autoSnakeCaseNames: false)
 abstract class OtherCasingEntity extends Model {
-  String? get camelCasedField;
+  String? camelCasedField;
 }
 ```
 
@@ -214,8 +215,8 @@ In practice, there may be keys that you want to exclude from JSON. To accomplish
 @serializable
 abstract class WhisperEntity extends Model {
   /// Will never be serialized to JSON
-  @SerializableField(exclude: true)
-  String? get secret;
+  @SerializableField(exclude: true, isNullable: true)
+  String? secret;
 }
 ```
 
@@ -229,8 +230,8 @@ abstract class WhisperEntity extends Model {
   /// Will never be serialized to JSON
   ///
   /// ... But it can be deserialized
-  @SerializableField(exclude: true, canDeserialize: true)
-  String? get secret;
+  @SerializableField(exclude: true, canDeserialize: true, isNullable: true)
+  String? secret;
 }
 ```
 
@@ -274,8 +275,8 @@ They are typically used together. Note that the argument to `deserializer` will 
 In such a case, you might want to also provide a `serializesTo` argument. This lets the generator, as well as the ORM, apply the correct (de)serialization rules and validations.
 
 ```dart
-DateTime? dateFromString(s) => s is String ? HttpDate.parse(s) : null;
-String? dateToString(DateTime? v) => v == null ? null : HttpDate.format(v);
+DateTime? _dateFromString(s) => s is String ? HttpDate.parse(s) : null;
+String? _dateToString(DateTime? v) => v == null ? null : HttpDate.format(v);
 
 @serializable
 abstract class HttpRequestEntity {
@@ -283,7 +284,7 @@ abstract class HttpRequestEntity {
     serializer: #dateToString,
     deserializer: #dateFromString,
     serializesTo: String)
-  DateTime? get date;
+  DateTime? date;
 }
 ```
 
@@ -300,9 +301,9 @@ In other words, the following are all legal, and will be serialized/deserialized
 ```dart
 @serializable
 abstract class AuthorEntity extends Model {
-  List<BookEntity>? get books;
+  List<BookEntity> get books;
   BookEntity? get newestBook;
-  Map<String, BookEntity>? get booksByIsbn;
+  Map<String, BookEntity> get booksByIsbn;
 }
 ```
 
@@ -324,33 +325,33 @@ To accomplish this, add `Serializers.typescript` to your `@Serializable()` decla
 
 ```dart
 @Serializable(serializers: [Serializers.map, Serializers.json, Serializers.typescript])
-class FooEntity extends Model {}
+abstract class FooEntity extends Model {}
 ```
 
-The aforementioned `AuthorEntity` class will generate the following in `author.d.ts`:
+`Serializers.all` lists all three. An `AuthorEntity` with a required `name` and `age`, and a `LibraryEntity` with a `Map<String, BookEntity> get collection`, generate the following in a `.d.ts` file:
 
 ```typescript
 interface Author {
-  id: string;
+  id?: string;
+  created_at?: any;
+  updated_at?: any;
   name: string;
   age: number;
-  books: Book[];
-  newest_book: Book;
-  created_at: any;
-  updated_at: any;
+  books?: Book[];
+  newest_book?: Book;
 }
 interface Library {
-  id: string;
-  collection: BookCollection;
-  created_at: any;
-  updated_at: any;
+  id?: string;
+  created_at?: any;
+  updated_at?: any;
+  collection?: LibraryCollection;
 }
-interface BookCollection {
+interface LibraryCollection {
   [key: string]: Book;
 }
 ```
 
-Fields with an `@Exclude()` that specifies `canSerialize: false` will not be present in the TypeScript definition. The rationale for this is that if a field (i.e. `password`) will never be sent to the client, the client shouldn't even know the field exists.
+Excluded fields, such as those with `@exclude` or `@SerializableField(exclude: true)`, will not be present in the TypeScript definition. The rationale for this is that if a field (i.e. `password`) will never be sent to the client, the client shouldn't even know the field exists.
 
 ## Constructor Parameters
 
@@ -364,7 +365,9 @@ abstract class BookmarkEntity extends Model {
   @SerializableField(exclude: true)
   final BookEntity book;
 
+  @SerializableField(isNullable: false)
   int? get page;
+
   String? get comment;
 
   BookmarkEntity(this.book);
@@ -380,7 +383,7 @@ class Bookmark extends BookmarkEntity {
     this.id,
     this.createdAt,
     this.updatedAt,
-    this.page,
+    required this.page,
     this.comment,
   }) : super(book);
 

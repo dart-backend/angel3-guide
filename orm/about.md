@@ -26,13 +26,13 @@ abstract class PokemonEntity extends Model {
     PokemonAttackEntity? get attack0;
 
     @belongsTo
-    PokemonAttackEntity? get attack1;
-
-    @belongsTo
     PokemonAttackEntity? get attack2;
 
     @belongsTo
     PokemonAttackEntity? get attack3;
+
+    @belongsTo
+    PokemonAttackEntity? get attack4;
 }
 ```
 
@@ -41,7 +41,7 @@ abstract class PokemonEntity extends Model {
 ```dart
 app.get('/trainer/int:id/first_moves', (req, res) async {
     var id = req.params['id'] as int;
-    var executor = req.container!.make<QueryExecutor>();
+    var executor = req.container.make<QueryExecutor>();
     var query = PokemonQuery()..where!.trainerId.equals(id);
     var pokemon = await query.get(executor);
     return pokemon.map((p) => p.attack0?.name).toList();

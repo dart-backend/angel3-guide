@@ -2,10 +2,6 @@
 
 This is pretty simple, and doesn't require much in the way of DevOps.
 
-[![YouTube thumbnail](https://i.ytimg.com/vi/7tpO9vhUhf4/hqdefault.jpg)](https://www.youtube.com/watch?v=7tpO9vhUhf4&t=986s&list=PLl3P3tmiT-frEV50VdH_cIrA2YqIyHkkY&index=6)
-
-Watch the video tutorial [here](https://www.youtube.com/watch?v=7tpO9vhUhf4&t=986s&list=PLl3P3tmiT-frEV50VdH_cIrA2YqIyHkkY).
-
 1. Create unprivileged user `web`
   a. Can only operate in `/home/web`, where we'll host the application.
 2. Install Dart for `web`
