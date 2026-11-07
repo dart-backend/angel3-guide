@@ -12,7 +12,7 @@ and choose `ORM for PostgreSQL`. The template includes a `Greeting` model, in `l
 
 ## Setting up the database
 
-1. Install PostgreSQL 14 or later.
+1. Install PostgreSQL 16 or later.
 
 2. Create a user, and a database that it owns, with `psql`:
 
