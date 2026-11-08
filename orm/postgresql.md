@@ -1,14 +1,14 @@
 # PostgreSQL Support
 
 <<<<<<< HEAD
-PostgreSQL 14 or later is supported by way of `package:angel3_orm_postgres`, which uses version 3 of [`package:postgres`](https://pub.dev/packages/postgres). The `PostgreSqlExecutor` implements `QueryExecutor`, and takes care of running prepared queries, and passing values to the database server.
+PostgreSQL 16 or later is supported by way of `package:angel3_orm_postgres`, which uses version 3 of [`package:postgres`](https://pub.dev/packages/postgres). The `PostgreSqlExecutor` implements `QueryExecutor`, and takes care of running prepared queries, and passing values to the database server.
 
 ```yaml
 dependencies:
   angel3_orm_postgres: ^10.0.0
 ```
 =======
-PostgreSQL support is provided by way of `package:angel3_orm_postgres`, for PostgreSQL 14 or later. The `PostgreSqlExecutor` implements `QueryExecutor`, and takes care of
+PostgreSQL support is provided by way of `package:angel3_orm_postgres`, for PostgreSQL 16 or later. The `PostgreSqlExecutor` implements `QueryExecutor`, and takes care of
 running prepared queries, and passing values to the database server. It uses a `Connection` of `package:postgres` 3.x. To share a pool of connections, use `PostgreSqlPoolExecutor` with a `Pool` instead.
 >>>>>>> feature/refactor
 

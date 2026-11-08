@@ -2,7 +2,7 @@
 
 Angel3, like many other Web server frameworks, features support for object-relational mapping, or _ORM_. ORM tools allow for conversion from database results to Dart classes.
 
-Angel3's ORM uses Dart's `build` system to generate query builder classes from your `Model` classes, and takes advantage of Dart's strong typing to prevent errors at runtime. It supports PostgreSQL 14 or later, MySQL 8 or later, and MariaDB 10.2 or later.
+Angel3's ORM uses Dart's `build` system to generate query builder classes from your `Model` classes, and takes advantage of Dart's strong typing to prevent errors at runtime. It supports PostgreSQL 16 or later, MySQL 8 or later, and MariaDB 10.2 or later.
 
 Take, for example, the following class:
 
