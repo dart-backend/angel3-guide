@@ -1,0 +1,11 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+site:
+  title: Angel3 Guide
+  structure:
+    - type: space
+      key: space-angel3-guide
+      title: Angel3 Guide
+      path: guide
+      default: true
+      content:
+        directory: ./
