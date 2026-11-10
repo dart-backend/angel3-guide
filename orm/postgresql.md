@@ -5,11 +5,13 @@ PostgreSQL 16 or later is supported by way of `package:angel3_orm_postgres`, whi
 ```yaml
 dependencies:
   angel3_orm_postgres: ^10.0.0
+  postgres: ^3.5.20
 ```
 
 The [PostgreSQL ORM template](https://github.com/dart-backend/boilerplates/tree/master/templates/basic_postgres_orm) includes helpers like this to load app configuration into a database connection:
 
 ```dart
+import 'dart:async';
 import 'dart:io';
 
 import 'package:angel3_framework/angel3_framework.dart';
@@ -18,40 +20,75 @@ import 'package:angel3_orm_postgres/angel3_orm_postgres.dart';
 import 'package:postgres/postgres.dart';
 
 Future<void> configureServer(Angel app) async {
-  var connection = await connectToPostgres(app.configuration);
+  try {
+    var connection = await connectToPostgres(app.configuration);
 
-  app
-    ..container.registerSingleton<QueryExecutor>(
-        PostgreSqlExecutor(connection, logger: app.logger))
-    ..shutdownHooks.add((_) => connection.close());
+    // Given the endpoint and settings, the executor opens a new connection
+    // when this one breaks, as when the database restarts.
+    var executor = PostgreSqlExecutor(
+      connection,
+      endpoint: postgresEndpoint(app.configuration),
+      settings: postgresSettings(app.configuration),
+      logger: app.logger,
+    );
+
+    // The executor closes the connection it uses, which may be a new one.
+    app
+      ..container.registerSingleton<QueryExecutor>(executor)
+      ..shutdownHooks.add((_) => executor.close());
+  } catch (e) {
+    app.logger.severe("Failed to connect to PostgreSQL. ORM disabled.", e);
+  }
 }
 
-Future<Connection> connectToPostgres(Map configuration) async {
+// PostgreSQL connection, of the `postgres` section of the configuration.
+Future<Connection> connectToPostgres(Map configuration) => Connection.open(
+  postgresEndpoint(configuration),
+  settings: postgresSettings(configuration),
+);
+
+// The PostgreSQL server, of the `postgres` section of the configuration. The
+// POSTGRES_HOST, POSTGRES_USERNAME and POSTGRES_PASSWORD environment variables
+// override its `host`, `username` and `password`, as in a container, so they
+// need not be kept in a file.
+Endpoint postgresEndpoint(Map configuration) {
+  var postgresConfig = configuration['postgres'] as Map? ?? {};
+  return Endpoint(
+    host:
+        Platform.environment['POSTGRES_HOST'] ??
+        postgresConfig['host'] as String? ??
+        'localhost',
+    port: postgresConfig['port'] as int? ?? 5432,
+    database:
+        postgresConfig['database_name'] as String? ??
+        Platform.environment['USER'] ??
+        Platform.environment['USERNAME'] ??
+        '',
+    username:
+        Platform.environment['POSTGRES_USERNAME'] ??
+        postgresConfig['username'] as String?,
+    password:
+        Platform.environment['POSTGRES_PASSWORD'] ??
+        postgresConfig['password'] as String?,
+  );
+}
+
+// The settings of a connection, of the `postgres` section of the
+// configuration.
+ConnectionSettings postgresSettings(Map configuration) {
   var postgresConfig = configuration['postgres'] as Map? ?? {};
   var useSsl = postgresConfig['use_ssl'] as bool? ?? false;
-
-  return await Connection.open(
-    Endpoint(
-      host: postgresConfig['host'] as String? ?? 'localhost',
-      port: postgresConfig['port'] as int? ?? 5432,
-      database: postgresConfig['database_name'] as String? ??
-          Platform.environment['USER'] ??
-          Platform.environment['USERNAME'] ??
-          '',
-      username: postgresConfig['username'] as String?,
-      password: postgresConfig['password'] as String?,
-    ),
-    settings: ConnectionSettings(
-      sslMode: useSsl ? SslMode.require : SslMode.disable,
-      timeZone: postgresConfig['time_zone'] as String? ?? 'UTC',
-      connectTimeout:
-          Duration(seconds: postgresConfig['timeout_in_seconds'] as int? ?? 30),
+  return ConnectionSettings(
+    sslMode: useSsl ? SslMode.require : SslMode.disable,
+    timeZone: postgresConfig['time_zone'] as String? ?? 'UTC',
+    connectTimeout: Duration(
+      seconds: postgresConfig['timeout_in_seconds'] as int? ?? 30,
     ),
   );
 }
 ```
 
-Typically, you'll want to use app configuration to create the connection, rather than hard coding values.
+Typically, you'll want to use app configuration to create the connection, rather than hard coding values. The template also lets the `POSTGRES_HOST`, `POSTGRES_USERNAME` and `POSTGRES_PASSWORD` environment variables override the configuration, as in a container, so they need not be kept in a file.
 
 ## Connection Pools
 

@@ -10,6 +10,7 @@ dependencies:
   angel3_orm_postgres: ^10.0.0 # or angel3_orm_mysql for MySQL and MariaDB
   angel3_migration: ^10.0.0
   angel3_serialize: ^10.0.0
+  optional: ^6.1.0
 dev_dependencies:
   angel3_orm_generator: ^10.0.0
   build_runner: ^2.6.0

@@ -146,4 +146,4 @@
   * [Boilerplate Templates](https://github.com/dart-backend/boilerplates)
   * [YouTube Tutorials \(Angel 2\)](https://www.youtube.com/playlist?list=PLl3P3tmiT-fqGCB2vSPq8HhpugEDNWUo6)
   * [Ecosystem](https://github.com/dukefirehawk/angel3-awesome)
-  * [Changelog](CHANGELOG.md)
+* [Changelog](CHANGELOG.md)
