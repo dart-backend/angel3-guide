@@ -13,6 +13,7 @@ There is no build step and no Dart package here: every page is a Markdown file. 
 ```text
 README.md          Landing page of the GitBook site
 SUMMARY.md         GitBook sidebar: every published page is listed here
+gitbook-docs.yaml  GitBook site config for site-wide Git Sync: maps the site's space to this directory
 .gitbook.yaml      GitBook config: the root, the landing page and the sidebar file
 foreword.md        Foreword
 tutorial/          Step-by-step tutorial, from getting started to deployment
@@ -32,6 +33,7 @@ CHANGELOG.md       Changes to the guide, by guide version
 ## GitBook
 
 - **`SUMMARY.md` is the sidebar.** A page that isn't listed in it is not published. When you add, rename, move or delete a page, update `SUMMARY.md` in the same change. Keep its existing format: a `# Menu` title, `*` items indented by two spaces, group items without a link (such as `* Tutorial`), and external links for the package list. Each file is listed once.
+- **`gitbook-docs.yaml` belongs to GitBook.** GitBook rewrites it when the site's content mapping is saved, and recognises the space by its `key`. Never change a `key`: GitBook would create a new space and detach the old one. Change `title` to rename the space, and `path` to change its URL.
 - **Sync goes both ways.** Edits made in GitBook's editor become commits on the synced branch, so pull before you edit, and don't rewrite history on that branch.
 - **Write plain Markdown.** Pages are read both on GitBook and on GitHub. Don't use GitBook-only blocks (`{% hint %}`, `{% tabs %}`, `{% embed %}`) or GitHub-only callouts (`> [!NOTE]`). For a note, use a plain blockquote or a sentence starting with **Note:**.
 - **Links between pages are relative links to the `.md` file**, such as `[Controllers](../guides/controllers.md)` or `[Hooks](hooks.md#hooks)`. GitBook turns them into site URLs. Use a full URL only for other sites.
