@@ -56,11 +56,7 @@ import 'package:angel3_migration_runner/angel3_migration_runner.dart';
 import 'package:angel3_migration_runner/postgres.dart';
 import 'package:postgres/postgres.dart';
 
-<<<<<<< HEAD
 import 'package:my_app/models.dart';
-=======
-import 'todo.dart';
->>>>>>> feature/refactor
 
 void main(List<String> args) async {
   var connection = await Connection.open(
@@ -78,10 +74,7 @@ void main(List<String> args) async {
     migrations: [UserMigration(), TodoMigration()],
   );
 
-<<<<<<< HEAD
-=======
   // `dart bin/migrate.dart up`, `rollback`, `reset` or `refresh`
->>>>>>> feature/refactor
   await runMigrations(runner, args);
 }
 ```

@@ -2,7 +2,7 @@
 
 Before starting with the ORM, it is highly recommended to familiarize oneself with `package:angel3_serialize`, as it is the foundation for `package:angel3_orm`. See [Serialization](../guides/serialization.md).
 
-<https://github.com/dart-backend/angel/tree/master/packages/serialize>
+Add the ORM, its generator, and the package of your database to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
@@ -26,17 +26,18 @@ import 'package:optional/optional.dart';
 part 'todo.g.dart';
 
 @serializable
+@orm
 abstract class TodoEntity extends Model {
     bool? get isComplete;
 
     String? get text;
 
-    @Column(type: ColumnType.long)
+    @Column(type: ColumnType.bigInt)
     int? get score;
 }
 ```
 
-The generator will produce a `TodoQuery` class, which contains fields corresponding to each field declared in `TodoEntity`. Each of `TodoQuery`'s fields is a subclass of `SqlExpressionBuilder`, corresponding to the given type. For example, `TodoQuery` would look *something* like:
+Then run `dart run build_runner build`. The generator will produce a `Todo` model, a `TodoMigration`, and a `TodoQuery` class, which contains fields corresponding to each field declared in `TodoEntity`. Each of `TodoQuery`'s fields is a subclass of `SqlExpressionBuilder`, corresponding to the given type. For example, `TodoQuery` would look *something* like:
 
 ```dart
 class TodoQuery extends Query<Todo, TodoQueryWhere> {
@@ -73,7 +74,6 @@ Future<void> markAsComplete(Todo todo, QueryExecutor executor) async {
 
 `get` returns a `List`, and `getOne`, `insert`, `updateOne` and `deleteOne` return an `Optional` of a record, from `package:optional`.
 
-<<<<<<< HEAD
 The glue holding everything together is the `QueryExecutor` interface. To support the ORM for any arbitrary database, simply extend the class and implement its abstract methods. `QueryExecutor.transaction` runs queries in a transaction, which is rolled back if its callback throws:
 
 ```dart
@@ -90,12 +90,3 @@ app.container.registerSingleton<QueryExecutor>(PostgreSqlExecutor(connection));
 ```
 
 The ORM supports PostgreSQL, through [`angel3_orm_postgres`](postgresql.md), and MySQL and MariaDB, through [`angel3_orm_mysql`](mysql.md).
-=======
-Consumers of a `QueryExecutor` typically inject it into the app's [dependency injection](../guides/dependency-injection.md) container:
-
-```dart
-app.container.registerSingleton<QueryExecutor>(PostgreSqlExecutor(...));
-```
-
-Executors are provided for PostgreSQL ([`angel3_orm_postgres`](postgresql.md)), and for MySQL and MariaDB ([`angel3_orm_mysql`](postgresql.md#mysql-and-mariadb)).
->>>>>>> feature/refactor

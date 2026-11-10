@@ -38,7 +38,8 @@
     * [Basic Functionality](orm/basic-functionality.md)
     * [Relations](orm/relations.md)
     * [Migrations](orm/migrations.md)
-    * [PostgreSQL, MySQL and MariaDB](orm/postgresql.md)
+    * [PostgreSQL](orm/postgresql.md)
+    * [MySQL and MariaDB](orm/mysql.md)
   * [NoSQL](orm/nosql.md)
   * [Sembast](orm/sembast.md)
 * Extensions and Plugins
@@ -145,3 +146,4 @@
   * [Boilerplate Templates](https://github.com/dart-backend/boilerplates)
   * [YouTube Tutorials \(Angel 2\)](https://www.youtube.com/playlist?list=PLl3P3tmiT-fqGCB2vSPq8HhpugEDNWUo6)
   * [Ecosystem](https://github.com/dukefirehawk/angel3-awesome)
+  * [Changelog](CHANGELOG.md)
